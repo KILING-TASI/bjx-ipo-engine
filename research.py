@@ -4,6 +4,7 @@ import json
 from datetime import date, datetime
 from decimal import Decimal
 from urllib.parse import urlparse
+from audit import load
 
 
 def text(value, name):
@@ -215,8 +216,7 @@ def main():
     parser.add_argument('input')
     parser.add_argument('--output')
     args = parser.parse_args()
-    with open(args.input, encoding='utf-8-sig') as f:
-        data = json.load(f)
+    data = load(args.input)
     if args.mode == 'repo':
         out = repo_interest(data['trade'], Calendar(data['calendar']))
     else:

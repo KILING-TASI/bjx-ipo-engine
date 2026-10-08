@@ -1,0 +1,7 @@
+{
+  "security": "DEMO-A",
+  "documents": [
+    {"security": "DEMO-A", "title": "教学公司发行公告", "date": "2026-10-10", "url": "https://example.com/teaching-original"},
+    {"security": "DEMO-A", "title": "教学公司发行公告更正", "date": "2026-10-11", "url": "https://example.com/teaching-correction"}
+  ]
+}

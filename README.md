@@ -2,7 +2,7 @@
 
 面向北交所网上发行的获配、现金占用与净收益情景研究。由四份设计材料整合修订，首版交付可运行的测算内核与统一设计规范。
 
-**当前版本：v0.2.0-alpha.1，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。示例全部为人为教学假设，不代表真实新股或2026年市场统计。v0.1.0保留为首个稳定研究原型。
+**当前版本：v0.2.0-alpha.2，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。示例全部为人为教学假设，不代表真实新股或2026年市场统计。v0.1.0保留为首个稳定研究原型。
 
 ## 已实现
 
@@ -15,10 +15,12 @@
 - 发行事实候选登记：保留来源、单位、缺失和冲突，不自动认定原文已核验。
 - 多只发行及回购事件现金账：同日冻结冲突、退款、获配本金留存、卖出回款。
 - 显式交易日历覆盖检查，以及逐笔回购实际交收日计息。
+- research-workbench优势适配：研究包绑定、来源保存、事实候选原文哈希绑定、公告版本线索和PDF正文差异比较。
+- 获取/解析/计算/原文核验分别记录；失败保留原因与下一步，不用成功状态掩盖缺口。
 
 ## 快速开始
 
-Python 3.10及以上，无第三方依赖。在项目目录运行：
+Python 3.10及以上，基础情景、现金账和证据包无第三方依赖；PDF正文比较按需安装pypdf。在项目目录运行：
 
 ```bash
 python engine.py examples/scenarios.json
@@ -27,6 +29,18 @@ python research.py facts examples/facts.json
 python research.py ledger examples/ledger.json
 python -m unittest discover -s tests -v
 ```
+
+统一入口生成可读报告、输入快照、结果及摘要清单：
+
+```bash
+python bjx.py scenarios examples/scenarios.json --out-dir local-data/scenarios-01
+python bjx.py facts examples/facts.json --out-dir local-data/facts-01
+python bjx.py ledger examples/ledger.json --out-dir local-data/ledger-01
+python bjx.py versions examples/versions.json --out-dir local-data/versions-01
+python bjx.py verify local-data/scenarios-01
+```
+
+每份研究包含report.md、report.html、input.json、result.json和manifest.json。SHA256检查证明保存内容一致，不是数字签名、可信时间戳、来源认证或研究判断认证。HTML为转义后的纯文字阅读版，视觉状态单列未验收。联网来源仅在capture模式主动指定--online时访问。
 
 输出文件必须为新文件，避免覆盖研究记录。金额单位人民币，所有费率和收益率均为小数，例如0.0005表示0.05%，1.2表示120%。
 
@@ -48,9 +62,10 @@ python -m unittest discover -s tests -v
 - [开发路线和验收标准](docs/roadmap.md)
 - [现金账和发行事实接口](docs/cash-and-evidence.md)
 - [开发接续记录](docs/progress.md)
+- [从research-workbench补入的能力与使用方式](docs/workbench-integration.md)
 
 ## 发布与复用
 
-本仓库为独立编写的实现，不包含其他项目源码、Wind数据库、第三方公告附件或作者私人缓存。当前未授予开源许可证；公开可见不代表取得复制、分发或商用许可。后续授权由仓库所有者决定。
+本仓库复用research-workbench的两个MIT许可公告比较文件，来源固定提交、版权及许可见[第三方说明](THIRD_PARTY_NOTICES.md)。不附Wind数据库、第三方公告附件或作者私人缓存。其他代码尚未统一授予开源许可证；公开可见不代表取得其复制、分发或商用许可。后续授权由仓库所有者决定。
 
 研究输出不构成投资建议。实际配售、现金到账和费用以适用规则、发行公告及账户记录为准。

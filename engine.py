@@ -2,6 +2,7 @@
 import argparse
 import json
 import math
+from audit import load
 from datetime import date
 from decimal import Decimal, ROUND_FLOOR
 
@@ -89,8 +90,7 @@ def main():
     parser.add_argument('input')
     parser.add_argument('--output')
     args = parser.parse_args()
-    with open(args.input, encoding='utf-8-sig') as f:
-        result = evaluate(json.load(f))
+    result = evaluate(load(args.input))
     content = json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False)
     if args.output:
         with open(args.output, 'x', encoding='utf-8') as f:
