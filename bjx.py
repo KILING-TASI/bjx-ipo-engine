@@ -53,8 +53,12 @@ def run(mode, spec, online=False):
         blobs = [p.read_bytes() for p in paths]
         if not all(b.startswith(b'%PDF-') for b in blobs):
             raise ValueError('Both inputs must be PDF files')
-        before = extract(paths[0], spec['issuer_name'], spec['security'])
-        after = extract(paths[1], spec['issuer_name'], spec['security'])
+        from pypdf.errors import PyPdfError
+        try:
+            before = extract(paths[0], spec['issuer_name'], spec['security'])
+            after = extract(paths[1], spec['issuer_name'], spec['security'])
+        except PyPdfError as exc:
+            raise ValueError('PDF could not be parsed; original verification remains incomplete') from exc
         if any(len(record['lines']) > 20000 for record in (before, after)):
             raise ValueError('PDF extracted line limit exceeded')
         from audit import digest

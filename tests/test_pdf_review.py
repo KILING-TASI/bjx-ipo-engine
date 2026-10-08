@@ -9,6 +9,13 @@ from research import facts
 
 @unittest.skipUnless(importlib.util.find_spec('pypdf'), 'optional pypdf not installed')
 class PDFReviewTests(unittest.TestCase):
+    def test_malformed_pdf_preserves_expected_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)/'bad.pdf'
+            path.write_bytes(b'%PDF-1.4\ninvalid')
+            with self.assertRaisesRegex(ValueError, 'could not be parsed'):
+                run('compare-pdf', dict(before=str(path), after=str(path), issuer_name='DEMO', security='920001'))
+
     def pdf(self, path, text=None):
         from pypdf import PdfWriter
         from pypdf.generic import DictionaryObject, NameObject, DecodedStreamObject
