@@ -2,7 +2,7 @@
 
 面向北交所网上发行的获配、现金占用与净收益情景研究。由四份设计材料整合修订，首版交付可运行的测算内核与统一设计规范。
 
-**当前版本：v0.1.0，研究原型。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。示例全部为人为教学假设，不代表真实新股或2026年市场统计。
+**当前版本：v0.2.0-alpha.1，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。示例全部为人为教学假设，不代表真实新股或2026年市场统计。v0.1.0保留为首个稳定研究原型。
 
 ## 已实现
 
@@ -12,6 +12,9 @@
 - 比例整手为零仍计资金成本；不足百股余股获配保留未知。
 - 使用显式申购、退款可用和卖出现金可用日期，包含获配本金后续占用。
 - 输入校验、可复现教学示例与 GitHub Actions 检查。
+- 发行事实候选登记：保留来源、单位、缺失和冲突，不自动认定原文已核验。
+- 多只发行及回购事件现金账：同日冻结冲突、退款、获配本金留存、卖出回款。
+- 显式交易日历覆盖检查，以及逐笔回购实际交收日计息。
 
 ## 快速开始
 
@@ -20,6 +23,8 @@ Python 3.10及以上，无第三方依赖。在项目目录运行：
 ```bash
 python engine.py examples/scenarios.json
 python engine.py examples/scenarios.json --output result.json
+python research.py facts examples/facts.json
+python research.py ledger examples/ledger.json
 python -m unittest discover -s tests -v
 ```
 
@@ -41,6 +46,8 @@ python -m unittest discover -s tests -v
 - [原方案纠错与版本变更](docs/corrections.md)
 - [规则来源与类似项目](docs/sources.md)
 - [开发路线和验收标准](docs/roadmap.md)
+- [现金账和发行事实接口](docs/cash-and-evidence.md)
+- [开发接续记录](docs/progress.md)
 
 ## 发布与复用
 

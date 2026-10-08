@@ -1,0 +1,12 @@
+{
+  "security": "DEMO-A",
+  "rule_version": "教学示例，不代表已核验适用规则",
+  "required_fields": ["issue_price", "online_issue_shares", "subscription_date"],
+  "fields": {
+    "issue_price": [
+      {"value": 18, "unit": "CNY/share", "basis": "assumption", "source": "教学来源一"},
+      {"value": 19, "unit": "CNY/share", "basis": "assumption", "source": "教学来源二，故意制造冲突"}
+    ],
+    "subscription_date": [{"value": "2026-10-12", "unit": "date", "basis": "assumption", "source": "教学日期"}]
+  }
+}

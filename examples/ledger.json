@@ -1,0 +1,15 @@
+{
+  "initial_cash": 1000,
+  "calendar": {
+    "source": "教学日历，非官方已核验交易日历",
+    "basis": "assumption",
+    "coverage_start": "2026-10-12",
+    "coverage_end": "2026-10-20",
+    "trading_dates": ["2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-19", "2026-10-20"]
+  },
+  "events": [
+    {"id": "A-freeze", "instrument": "DEMO-A", "date": "2026-10-12", "kind": "freeze", "amount": 1000, "evidence": {"basis": "assumption", "source": "教学现金计划"}},
+    {"id": "A-refund", "instrument": "DEMO-A", "date": "2026-10-14", "kind": "refund", "amount": 800, "evidence": {"basis": "assumption", "source": "教学现金计划"}},
+    {"id": "A-sale", "instrument": "DEMO-A", "date": "2026-10-20", "kind": "sale", "amount": 250, "principal_released": 200, "evidence": {"basis": "assumption", "source": "教学现金计划，amount为扣除卖出费用后现金净回款"}}
+  ]
+}
