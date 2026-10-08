@@ -1,0 +1,17 @@
+{
+  "capital": 10000000,
+  "budget": 8000000,
+  "issue_price": 18,
+  "max_subscription_shares": 600000,
+  "subscription_date": "2026-10-12",
+  "refund_available_date": "2026-10-14",
+  "sale_cash_available_date": "2026-10-20",
+  "annual_cash_cost_rate": 0.02,
+  "fees": {"commission_rate": 0.00025, "minimum_commission": 5, "stamp_rate": 0.0005, "transfer_rate": 0.00001},
+  "probability_basis": "教学用人为权重，未经历史校准",
+  "scenarios": [
+    {"id": "low", "allocation_rate": 0.00015, "listing_return": -0.2, "probability": 0.3, "basis": "演示假设，不对应真实发行"},
+    {"id": "middle", "allocation_rate": 0.00033, "listing_return": 1.2, "probability": 0.4, "basis": "演示假设，不对应真实发行"},
+    {"id": "high", "allocation_rate": 0.0005, "listing_return": 2.0, "probability": 0.3, "basis": "演示假设，不对应真实发行"}
+  ]
+}
