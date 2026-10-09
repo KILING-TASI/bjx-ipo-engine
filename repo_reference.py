@@ -26,7 +26,7 @@ def repo_reference(spec):
         raise ValueError('Quote update requires timezone and valid date')
     row = quote['selected_row']
     parts = row.split(',')
-    if parts[0] != day.strftime('%Y%m%d') or money(parts[1], 'row percent') != money(quote['rate_percent'], 'percent'):
+    if len(parts) != 5 or parts[0] != day.strftime('%Y%m%d') or money(parts[1], 'row percent') != money(quote['rate_percent'], 'percent'):
         raise ValueError('Selected row differs from quote')
     status = 'saved_review_record_not_rechecked'
     if spec.get('raw_quote_path'):
@@ -37,7 +37,7 @@ def repo_reference(spec):
         if digest(blob) != quote['raw_sha256']:
             raise ValueError('Raw quote hash mismatch')
         body = blob.decode('utf-8')
-        if row not in body or stamp.strftime('%Y-%m-%d %H:%M:%S') not in body or 'RATE_1DAY' not in body:
+        if row not in body or stamp.strftime('%Y-%m-%d %H:%M:%S') not in body or 'RATE_1DAY' not in body or '204001' not in body:
             raise ValueError('Selected quote anchors missing')
         status = 'exact_hash_and_selected_numeric_anchors_match'
     principal = money(spec['principal'], 'principal')
