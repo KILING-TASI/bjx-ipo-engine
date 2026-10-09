@@ -37,3 +37,9 @@ python -S .github/scripts/check_bridge_cases.py --out-dir local-data/bridge-nati
 ## 更严格的工作台入口边界
 
 另有 [三条边界反例](../examples/bridge-boundary-cases.json)：额外滑点、融资率、年度发行只数。现有冻结 API 对这些未知字段会忽略，因此其 native 状态可能 completed_with_limits；这不能证明该参数参与计算。可选桥接须以字段白名单明确拒绝，不静默删除字段后计算。这三条验收的是 adapter 拒绝，与九条原生完整响应一致分开，不要求修改原生旧行为或伪造 native failed。概率模型和年度功能不进入此边界。
+
+## 旧实现有限交集实跑
+
+等待原生桥接期间，只读使用工作台已有 subscription_scenarios.evaluate 实跑前两条教学正例，每条三个联合情景。原生请求另外经 api.py 实跑并核对冻结响应；工作台请求使用显式单位映射：小数费率/涨跌幅乘 100 变成百分数字符串，滑点、融资率和借入占比明确声明零，合成代码 990000 仅作教学身份。
+
+[实跑字段及两侧输入](../examples/bridge-legacy-overlap.json)保存了两方提交、工作台实际源码摘要及 36 个选定数值比较。整手股数、卖出费用、机会成本、本金日数、扣机会成本前现金利润和扣成本后净收益在绝对 1e-8 容差内匹配；股数身份需相同，无概率权重，无个人余股认证。完整 JSON 类型/字段不同，因此 full_result_equivalent=false。账户本金收益率、工作台预算/资金日年化分母、年度以及非零滑点/融资均未比较，也不将本次显式对照映射部署为生产桥。
