@@ -290,7 +290,7 @@ def publish(destination, mode, spec, result, status='completed_with_limits', art
                     created_at=datetime.now(timezone.utc).isoformat(),
                     stages=dict(acquisition='completed' if artifacts else 'not_performed',
                                 parsing='completed_extracted_text' if mode == 'compare-pdf' and status != 'blocked' else 'not_performed',
-                                calculation='completed' if mode in ('scenarios', 'ledger', 'compare-cash', 'calendar') and status != 'blocked' else 'not_performed',
+                                calculation='completed' if mode in ('scenarios', 'ledger', 'compare-cash', 'calendar', 'freeze', 'review') and status != 'blocked' else 'not_performed',
                                 source_verification='not_performed', visual_review='not_performed'),
                     files={name: dict(sha256=digest(blob), size=len(blob)) for name, blob in files.items()})
     files['manifest.json'] = encoded(manifest)
