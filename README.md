@@ -105,3 +105,5 @@ python .github/scripts/check_package.py
 多发行方案及有限候选比较见 [说明](docs/plan-comparison.md)，主分支新增，未发布新版。
 
 一条官方定盘参考及显式净费用适配见 [说明](docs/public-repo-reference.md)，费用和到账为声明假设，非账户实收益。
+
+资金、历史样本与方案选择的 [方法卡及验收](docs/funding-history-methods.md)区分已实现与未实现统计能力。

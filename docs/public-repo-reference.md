@@ -1,6 +1,6 @@
 # 有限公开回购参考及净费用适配
 
-2026-10-09，PR #1 增量，未发布新版。方法 public-fixing-fee-adaptation.1。只有一条 204001 定盘参考，不是全市场报价服务。
+2026-10-09，PR #1 增量，未发布新版。方法 public-fixing-fee-adaptation.2（.1 为原冻结结果版本）。只有一条 204001 定盘参考，不是全市场报价服务。
 
 ## 已核选定字段
 
@@ -25,3 +25,5 @@ python -S demo.py --out-dir local-data/reference-demo-01
 默认离线状态 saved_review_record_not_rechecked；可明确传 raw_quote_path 对原始哈希与选定数值锚点复核，输出 exact_hash_and_selected_numeric_anchors_match。哈希和记录可修改，不是签名或独立可信时钟。错误通过现有研究包留 blocked 原因，不用教学 2% 回退；源抓取必须明确 --online，只新增官方 bond.sse.com.cn 允许域，重定向仍校验。
 
 公开参考晚于当日交易收盘，不是事前可得样本；不声称以此成交、不计算真实账户收益。真实账户验收继续暂停。成交盘口、账户净费率、实际到账、其他日期与期限仍未知，余股未知。原创计算代码 MIT，选定公开数值及原始资料权利独立；本仓库只保存字段摘要、来源及哈希。
+
+方法约束、历史分布与选择偏差见 [资金与历史统计方法卡](funding-history-methods.md)。明确免佣和取整为零的毛息仍保留数值，仅省略零现金移动，不将未知费用填零。

@@ -93,7 +93,10 @@ def repo_reference(spec):
                   {'id':'reference-principal','instrument':'REFERENCE-204001','date':dates['principal_available_date'],'kind':'repo_principal','amount':str(principal),'evidence':evidence},
                   {'id':'reference-interest','instrument':'REFERENCE-204001','date':dates['interest_available_date'],'kind':'repo_interest','amount':str(rounded),'evidence':evidence},
                   {'id':'reference-fee','instrument':'REFERENCE-204001','date':fee['paid_date'],'kind':'fee','amount':str(fee_amount),'evidence':evidence}]
-    return {'schema_version':'repo-reference.v1','method_version':'public-fixing-fee-adaptation.1',
+        # An explicit zero is retained in the result, but is not a cash movement.
+        # Unknown fees never reach this branch. Do not relax the ledger contract.
+        events = [event for event in events if Decimal(event['amount']) != 0]
+    return {'schema_version':'repo-reference.v1','method_version':'public-fixing-fee-adaptation.2',
             'input_sha256':digest(encoded(spec)), 'quote_record_sha256':digest(encoded(quote)),
             'quote':quote,'source_check':status,'principal':str(principal),'dates':dates,'fee':fee,
             'interest_days':checked['interest_days'],'gross_interest_exact':str(gross),
