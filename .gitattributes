@@ -1,1 +1,3 @@
 *.md text eol=lf
+docs/preview/*.html text eol=lf
+docs/preview/*.json text eol=lf

@@ -1,5 +1,7 @@
 """Check packaged Markdown file links and versions, without probing external services."""
 import re
+import json
+import hashlib
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -26,6 +28,17 @@ def main():
     if method not in readme:errors.append('README does not identify current calculation version')
     for filename in ('DISCLAIMER.md','THIRD_PARTY_NOTICES.md','CHANGELOG.md','data/bse-2026-schedule.json','data/public-samples/920188.json'):
         if not (ROOT/filename).is_file():errors.append('Required documentation/resource missing: '+filename)
+    preview=ROOT/'docs/preview'
+    capture=ROOT/'docs/screenshots/capture.json'
+    if capture.is_file():
+        manifest=json.loads((preview/'preview-manifest.json').read_text(encoding='utf-8'))
+        sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+        for name,expected in manifest['files'].items():
+            if name not in ('index.html','input.json','result.json') or sha(preview/name)!=expected:errors.append('Preview content binding differs: '+name)
+        record=json.loads(capture.read_text(encoding='utf-8'))
+        if sha(preview/'index.html')!=record['html_sha256']:errors.append('Screenshot source HTML changed')
+        if sha(capture.parent/'case-overview.png')!=record['sha256'] or sha(capture.parent/'first-screen.png')!=record['first_screen_sha256']:errors.append('Actual screenshot content changed')
+        if record['engine_version']!=manifest['engine_version']:errors.append('Screenshot/preview engine versions differ')
     if errors:raise ValueError('\n'.join(errors))
     print(f'Markdown file links ({count}), required resources and calculation-version reference passed; external URL/semantic checks not certified.')
 
