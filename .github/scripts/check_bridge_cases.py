@@ -39,7 +39,12 @@ def check(bridge_command=None):
                                'stdout_sha256':digest(run.stdout),'stderr':run.stderr.decode('utf-8', errors='replace')}
         records.append({'id':case['id'],'request':case['request'],'request_sha256':case['request_sha256'],
                         'status':expected['status'],'full_response_equal':True,'runs':outcomes})
+    source_hashes={name:digest((ROOT/name).read_bytes()) for name in ('api.py','engine.py','research.py','audit.py')}
+    revision=subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,capture_output=True,timeout=5)
+    commit=revision.stdout.decode('ascii').strip() if revision.returncode==0 else None
     return fixture, {'schema_version':'bridge-check.v1','cases':records,'case_count':len(records),
+                     'engine_source_sha256':source_hashes,'engine_git_commit':commit,
+                     'fixture_sha256':digest((ROOT/'examples/bridge-cases.json').read_bytes()),
                      'scope':'same native request and full envelope; no legacy annual/mapping equivalence',
                      'workbench_checked':bool(bridge_command),'real_sample_count':0}
 
