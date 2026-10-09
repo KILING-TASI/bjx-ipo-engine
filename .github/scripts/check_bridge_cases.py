@@ -49,12 +49,23 @@ def main():
     parser.add_argument('--bridge-command-json', help='Explicit optional JSON argv; expects stdin JSON and engine_response envelope')
     parser.add_argument('--out-dir')
     args=parser.parse_args()
+    if args.out_dir and Path(args.out_dir).exists():
+        parser.error('Output directory exists; preserve frozen results')
     command=json.loads(args.bridge_command_json) if args.bridge_command_json else None
-    fixture,result=check(command)
+    try:
+        fixture,result=check(command)
+    except (ValueError, KeyError, TypeError, UnicodeError, OSError, subprocess.SubprocessError) as exc:
+        if args.out_dir:
+            publish(Path(args.out_dir),'bridge-check',{'bridge_command':command},
+                    {'status':'blocked','error':{'kind':type(exc).__name__,'message':str(exc)},
+                     'workbench_checked':False,'scope':'No mismatched or failed run certified as equivalent'},status='blocked')
+        print(json.dumps({'status':'blocked','error':str(exc)}))
+        return 2
     if args.out_dir:
         publish(Path(args.out_dir),'bridge-check',{'fixture':fixture,'bridge_command':command},result)
     print(json.dumps({'case_count':result['case_count'],'workbench_checked':result['workbench_checked'],'status':'matched_frozen_native_contract'}))
+    return 0
 
 
 if __name__=='__main__':
-    main()
+    sys.exit(main())
