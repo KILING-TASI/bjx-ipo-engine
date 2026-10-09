@@ -33,3 +33,7 @@ python -S .github/scripts/check_bridge_cases.py --out-dir local-data/bridge-nati
 验收程序逐条用隔离子进程跑原生 stdin 协议，核对完整冻结响应及退出码。可显式给 --bridge-command-json 的 JSON argv 列表调用外部工作台 stdin 桥接；不使用 shell、不复制上游代码、输出另存。外部响应可直接是原生响应，或保留 engine_response 的外壳。更早的工作台入参拒绝应另记原因，不当作原生响应完全等价。
 
 目前原生九条固定输入验收通过，workbench_checked=false 表示尚未运行外部桥接；不以此宣称工作台旧实现等价。联调入口到位后再记录工作台提交、独立提交、具体命令和结果。本轮不修改旧冻结输入/结果，无 annual.v1、真实个人余股或真实账户验收，也不扩大预测能力。
+
+## 更严格的工作台入口边界
+
+另有 [三条边界反例](../examples/bridge-boundary-cases.json)：额外滑点、融资率、年度发行只数。现有冻结 API 对这些未知字段会忽略，因此其 native 状态可能 completed_with_limits；这不能证明该参数参与计算。可选桥接须以字段白名单明确拒绝，不静默删除字段后计算。这三条验收的是 adapter 拒绝，与九条原生完整响应一致分开，不要求修改原生旧行为或伪造 native failed。概率模型和年度功能不进入此边界。
