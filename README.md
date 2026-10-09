@@ -2,28 +2,33 @@
 
 研究北交所网上发行的比例获配情景、现金占用与公开发行证据，保存来源、假设和缺口。
 
+## 结果预览
+
+一页查看“预算是否跨过比例整手阶梯”“获配本金是否仍被占用”“退款公告能否代表可用现金”。实际报告截图如下，不是 AI 生成图：
+
+<img src="docs/screenshots/first-screen.png" alt="实际生成的悦龙公开字段与假设预算对比，2026-10-09，引擎alpha.8" width="900">
+
+[完整实际截图与生成说明](docs/preview-guide.md) · [本地 HTML 预览](docs/preview/index.html) · [对应输入](docs/preview/input.json)
+
+只有一只真实公开发行，三种预算与另一组收益情景属于假设；实际个人获配、余股与收益未知，未做真实账户验收。关键日期和假设在各结果旁单独标注。
+
+## 最短离线 demo
+
+在完整仓库目录运行，Python 3.10 及以上，标准库即可，不联网：
+
+```bash
+python -S demo.py --out-dir local-data/demo-01
+```
+
+打开 `local-data/demo-01/index.html`。同目录含输入、结果和摘要清单；输出目录必须不存在，重跑换新名称，不覆盖旧研究。保存的 HTML 在 GitHub 未必直接渲染，下载完整仓库后本地打开即可。
+
+PDF 原文比较按需使用 `pypdf`，当前验收版本为 6.14.2；离线 demo 不要求安装它。纯计算示例仍可运行 `python engine.py examples/scenarios.json`。
+
 ## 版本与状态
 
-已发布功能预览版：[v0.2.0-alpha.8](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.8)。源码计算版本为 `0.2.0-alpha.8`，工作台接口版本为 `1.0`；本次为文档快照整理，未新增计算能力。历史发布包保持冻结，主分支说明与下载包按各自版本阅读。
+已发布功能预览版：[v0.2.0-alpha.8](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.8)。源码计算版本为 `0.2.0-alpha.8`，接口版本为 `1.0`。当前主分支增加案例预览、离线 demo 和原创 MIT 许可，尚未发布新版本；旧发行包保持冻结，不默认含本次新增内容。
 
-文档整理日期：2026-10-09。安装包见 [Releases](https://github.com/KILING-TASI/bjx-ipo-engine/releases)，变更见 [CHANGELOG](CHANGELOG.md)。真实账户验收按用户要求暂停，公开资料工作继续。
-
-## 快速开始
-
-Python 3.10 及以上。在仓库目录运行，基础示例不联网、不需要第三方组件：
-
-```bash
-python engine.py examples/scenarios.json
-```
-
-这是人为教学参数，不代表真实新股、用户账户或未来收益。生成可读报告与输入底稿：
-
-```bash
-python bjx.py scenarios examples/scenarios.json --out-dir local-data/scenarios-01
-python bjx.py verify local-data/scenarios-01
-```
-
-输出目录必须是新目录，避免覆盖旧研究。PDF 原文比较按需使用 `pypdf`，当前验收版本为 6.14.2；基础例子不要求安装它。下载和代码许可不代表获得第三方资料使用权。
+说明日期：2026-10-09。[原创代码：MIT](LICENSE)，第三方和资料范围见 [许可清单](THIRD_PARTY_NOTICES.md)。下载及历史状态见 [Releases](https://github.com/KILING-TASI/bjx-ipo-engine/releases)和 [CHANGELOG](CHANGELOG.md)。
 
 ## 已实现与边界
 
@@ -87,7 +92,9 @@ python .github/scripts/check_package.py
 
 ## 许可与第三方资料
 
-两个复用公告模块保留 research-workbench 的 MIT 许可，见 [第三方说明](THIRD_PARTY_NOTICES.md)和 [许可原文](licenses/research-workbench-MIT.txt)。其他代码尚未统一授予开源许可；本次未新增或更换 LICENSE，公开可见不代表获得复制、分发或商用授权。
+[![Original code: MIT](https://img.shields.io/badge/original_code-MIT-blue.svg)](LICENSE)
+
+两个复用公告模块保留 research-workbench 的 MIT 许可，见 [第三方说明](THIRD_PARTY_NOTICES.md)和 [许可原文](licenses/research-workbench-MIT.txt)。用户已授权原创代码和有权授权的原创说明采用根 [MIT 许可证](LICENSE)。第三方材料不因根许可而整体转为 MIT；具体范围与未明事项见第三方说明。
 
 不附 Wind 数据库、用户账户、私人缓存或完整原公告。行情、公告、研报、商标及外部组件的权利独立适用；代码许可不授予第三方数据使用权。
 

@@ -1,0 +1,20 @@
+{
+  "captured_on": "2026-10-09",
+  "engine_version": "0.2.0-alpha.8",
+  "viewport": {
+    "width": 1440,
+    "height": 1500
+  },
+  "renderer": "Installed Google Chrome via Playwright; headless full-page capture",
+  "source_html": "../preview/index.html",
+  "source_input": "../preview/input.json",
+  "source_result": "../preview/result.json",
+  "image": "case-overview.png",
+  "sha256": "0fde4b7fb9a0d9676a9a38d788e2ae8d231d50335cecaad00ec9b947d896516e",
+  "html_sha256": "7cfd371c98ecc6622306bfde9071ae1825c559f2b0521cc064dcbd15faa5cec8",
+  "visual_review": "full-page image viewed: headings, both tables, data labels, assumptions, warnings and footer visible; no horizontal overflow",
+  "rights_scope": "Original report layout with public numerical field summaries and synthetic teaching assumptions; no original PDF pages, accounts, font files or third-party logos redistributed",
+  "browser_version": "155.0.8059.40",
+  "first_screen": "first-screen.png",
+  "first_screen_sha256": "025658c877f6c3892ad72d9fbc153a4caf811666f654ef10c9b97f46ea84f6aa"
+}

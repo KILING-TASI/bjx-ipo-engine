@@ -1,0 +1,12 @@
+{
+  "engine_version": "0.2.0-alpha.8",
+  "generated_on": "2026-10-09",
+  "real_issuance_count": 1,
+  "source_review_date": "2026-10-09",
+  "visual_review": "not_performed_at_generation",
+  "files": {
+    "index.html": "7cfd371c98ecc6622306bfde9071ae1825c559f2b0521cc064dcbd15faa5cec8",
+    "input.json": "3dc6d6ec2d34d2a1832d7692a658829a9aaac8b76df5351cb3286f434dce3962",
+    "result.json": "dcdfb2eac103900f713da2bfe56a77d1894801468acacbdc0b71dcf0150b9e49"
+  }
+}

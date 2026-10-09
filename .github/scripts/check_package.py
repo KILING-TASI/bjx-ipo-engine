@@ -25,7 +25,9 @@ def main():
             zipped.extractall(target)
         for filename in ('vendor/announcement_versions.py', 'vendor/compare_original_versions.py',
                          'licenses/research-workbench-MIT.txt', 'THIRD_PARTY_NOTICES.md',
-                         'README.md','DISCLAIMER.md','CHANGELOG.md','data/bse-2026-schedule.json','data/public-samples/920188.json'):
+                         'README.md','DISCLAIMER.md','CHANGELOG.md','LICENSE','pyproject.toml','demo.py',
+                         'docs/preview/index.html','docs/screenshots/case-overview.png','docs/screenshots/first-screen.png',
+                         'data/bse-2026-schedule.json','data/public-samples/920188.json'):
             if not (target / filename).is_file():
                 raise ValueError('Dependency/attribution missing from package')
         if (target/'README.md').read_bytes()!=(ROOT/'README.md').read_bytes():
@@ -33,6 +35,10 @@ def main():
             if (target/'README.md').read_text(encoding='utf-8')!=(ROOT/'README.md').read_text(encoding='utf-8'):
                 raise ValueError('Packaged README differs from current checkout')
         subprocess.run([sys.executable,'-S','.github/scripts/check_docs.py'],cwd=target,check=True)
+        subprocess.run([sys.executable,'-S','demo.py','--out-dir',str(temp/'short-demo')],cwd=target,check=True)
+        license_text=(target/'LICENSE').read_text(encoding='utf-8')
+        if 'MIT License' not in license_text or 'Copyright (c) 2026 KILING-TASI' not in license_text:
+            raise ValueError('Original code license missing or unexpectedly changed')
         for mode, example in [('scenarios', 'scenarios'), ('facts', 'facts'), ('ledger', 'ledger'), ('versions', 'versions'), ('compare-cash', 'compare-cash'), ('freeze','freeze'), ('archive','archive'),('public-sample','public-sample'),('sample-validation','sample-validation')]:
             destination = temp / ('report-' + mode)
             subprocess.run([sys.executable, '-S', 'bjx.py', mode, f'examples/{example}.json',
