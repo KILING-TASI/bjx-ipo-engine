@@ -7,7 +7,7 @@ from decimal import Decimal
 from research import facts, text
 from comparison import compare_cash
 
-FIELDS = {'issue_price', 'effective_subscription_shares', 'online_issue_shares',
+FIELDS = {'issue_price', 'max_subscription_shares', 'effective_subscription_shares', 'online_issue_shares',
           'online_allocation_rate', 'subscription_date', 'announced_refund_date', 'listing_date'}
 
 

@@ -11,7 +11,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-METHOD_VERSION = '0.2.0-alpha.6'
+METHOD_VERSION = '0.2.0-alpha.7'
 MAX_BYTES = 10 * 1024 * 1024
 ALLOWED_HOSTS = {'www.bse.cn', 'bse.cn', 'www.sse.com.cn', 'sse.com.cn',
                  'www.szse.cn', 'szse.cn', 'www.cninfo.com.cn', 'static.cninfo.com.cn'}
@@ -108,7 +108,8 @@ def report(mode, result, status):
                'facts': '发行事实候选与缺口', 'versions': '公告版本线索',
                'capture': '公告来源保存', 'compare-pdf': '公告原文版本差异',
                'compare-cash': '同本金同期间现金方案对照', 'calendar': '北交所官方排期日历',
-               'freeze': '事前假设本地快照', 'archive': '公开发行结果档案', 'review': '事前与事后分离复盘'}.get(mode, mode)
+               'freeze': '事前假设本地快照', 'archive': '公开发行结果档案', 'review': '事前与事后分离复盘',
+               'public-sample':'官方历史发行样本回放'}.get(mode, mode)
     lines = ['# ' + heading, '', '状态：' + status, '']
     if status == 'blocked':
         lines += ['本次未完成。原因：' + result['message'], '',
@@ -158,6 +159,18 @@ def report(mode, result, status):
         else:
             lines += ['', '第一方案减第二方案的声明现金盈亏差：'+result['first_minus_second_cash_profit']+'元。']
         lines += ['', '闲置现金利息及尚未到账利息只在显式录入时计入；结果不认证事件完整性。']
+    elif mode=='public-sample':
+        lines += ['样本：'+result['name']+'（'+result['security']+'）；记录类型：历史重建，非事前预测。',
+                  '原文重查状态：'+result['source_verification'], '', '| 字段 | 原文数值 | 单位 | 来源页码 |', '|---|---|---|---|']
+        for name,field in result['reviewed_fields'].items():
+            lines.append(f"| {name} | {field['value']} | {field['unit']} | {field['source_id']}，第{field['page']}页 |")
+        lines += ['', '假设资金下比例获配：'+str(result['proportional_shares'])+'股；真实个人获配及余股未知。',
+                  '冻结金额：'+result['frozen_amount']+'元（假设预算与原文价格推算）。']
+        if result['opportunity_cost_assumption']:
+            c=result['opportunity_cost_assumption']
+            lines += ['假设退款到账条件下本金资金日：'+c['capital_days']+'；假设机会成本：'+c['opportunity_cost']+'元。',
+                      '留存本金：'+c['retained_principal']+'元；未模拟卖出或确认实际收益。']
+        lines += ['公告退款日不等于券商到账；未提供到账假设时不生成现金回放。']
     elif mode == 'freeze':
         lines += ['记录类别：'+result['record_kind'], '本地保存时间：'+result['frozen_at'],
                   '现在补录过去假设只能是历史重建；本地摘要与时钟不提供外部可信时间证明。']
@@ -290,7 +303,7 @@ def publish(destination, mode, spec, result, status='completed_with_limits', art
                     created_at=datetime.now(timezone.utc).isoformat(),
                     stages=dict(acquisition='completed' if artifacts else 'not_performed',
                                 parsing='completed_extracted_text' if mode == 'compare-pdf' and status != 'blocked' else 'not_performed',
-                                calculation='completed' if mode in ('scenarios', 'ledger', 'compare-cash', 'calendar', 'freeze', 'review') and status != 'blocked' else 'not_performed',
+                                calculation='completed' if mode in ('scenarios', 'ledger', 'compare-cash', 'calendar', 'freeze', 'review','public-sample') and status != 'blocked' else 'not_performed',
                                 source_verification='not_performed', visual_review='not_performed'),
                     files={name: dict(sha256=digest(blob), size=len(blob)) for name, blob in files.items()})
     files['manifest.json'] = encoded(manifest)

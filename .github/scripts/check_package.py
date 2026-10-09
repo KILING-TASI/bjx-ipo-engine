@@ -27,7 +27,7 @@ def main():
                          'licenses/research-workbench-MIT.txt', 'THIRD_PARTY_NOTICES.md'):
             if not (target / filename).is_file():
                 raise ValueError('Dependency/attribution missing from package')
-        for mode, example in [('scenarios', 'scenarios'), ('facts', 'facts'), ('ledger', 'ledger'), ('versions', 'versions'), ('compare-cash', 'compare-cash'), ('freeze','freeze'), ('archive','archive')]:
+        for mode, example in [('scenarios', 'scenarios'), ('facts', 'facts'), ('ledger', 'ledger'), ('versions', 'versions'), ('compare-cash', 'compare-cash'), ('freeze','freeze'), ('archive','archive'),('public-sample','public-sample')]:
             destination = temp / ('report-' + mode)
             subprocess.run([sys.executable, '-S', 'bjx.py', mode, f'examples/{example}.json',
                             '--out-dir', str(destination)], cwd=target, check=True)

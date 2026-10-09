@@ -1,0 +1,9 @@
+{
+  "sample": "data/public-samples/920188.json",
+  "capital": "10000000.00",
+  "budget": "10000000.00",
+  "refund_available_date_assumption": "2026-03-18",
+  "observation_end": "2026-03-30",
+  "opportunity_cost_rate_assumption": "0.02",
+  "calendar_schedule": "data/bse-2026-schedule.json"
+}
