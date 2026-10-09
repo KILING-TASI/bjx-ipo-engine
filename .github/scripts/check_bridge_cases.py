@@ -57,7 +57,7 @@ def main():
     except (ValueError, KeyError, TypeError, UnicodeError, OSError, subprocess.SubprocessError) as exc:
         if args.out_dir:
             publish(Path(args.out_dir),'bridge-check',{'bridge_command':command},
-                    {'status':'blocked','error':{'kind':type(exc).__name__,'message':str(exc)},
+                    {'status':'blocked','message':str(exc),'error':{'kind':type(exc).__name__,'message':str(exc)},
                      'workbench_checked':False,'scope':'No mismatched or failed run certified as equivalent'},status='blocked')
         print(json.dumps({'status':'blocked','error':str(exc)}))
         return 2
