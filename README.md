@@ -2,7 +2,7 @@
 
 面向北交所网上发行的获配、现金占用与净收益情景研究。由四份设计材料整合修订，首版交付可运行的测算内核与统一设计规范。
 
-**当前版本：v0.2.0-alpha.4，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。教学示例不代表真实新股；data中的2026北交所排期来自已核对的官方公告，仍不认证实际临时开停市。真实账户验收按用户要求暂停，其他公开资料工作继续。
+**当前版本：v0.2.0-alpha.5，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。教学示例不代表真实新股；data中的2026北交所排期来自已核对的官方公告，仍不认证实际临时开停市。真实账户验收按用户要求暂停，其他公开资料工作继续。
 
 ## 已实现
 
@@ -19,6 +19,7 @@
 - 获取/解析/计算/原文核验分别记录；失败保留原因与下一步，不用成功状态掩盖缺口。
 - 同本金、同期间的两个显式现金方案对照；费用单列、精确小数现金保存，撞资或未回收本金时不比较盈亏。
 - 根据已核对的北交所2026年度与专项休市公告生成计划交易日历，调休工作周末保持休市。
+- 盈亏平衡卖出涨幅与额外100股条件敏感性，费用和留存本金重新计算，不虚构余股概率。
 
 ## 快速开始
 
@@ -44,7 +45,7 @@ python bjx.py calendar data/bse-2026-schedule.json --out-dir local-data/calendar
 python bjx.py verify local-data/scenarios-01
 ```
 
-每份研究包含report.md、report.html、input.json、result.json和manifest.json。SHA256检查证明保存内容一致，不是数字签名、可信时间戳、来源认证或研究判断认证。HTML为转义后的纯文字阅读版，视觉状态单列未验收。联网来源仅在capture模式主动指定--online时访问。
+每份研究包含report.md、report.html、input.json、result.json和manifest.json。SHA256检查证明保存内容一致，不是数字签名、可信时间戳、来源认证或研究判断认证。HTML为转义后的标题与表格阅读版，结构检查不代替完整视觉验收。联网来源仅在capture模式主动指定--online时访问。
 
 输出文件必须为新文件，避免覆盖研究记录。金额单位人民币，所有费率和收益率均为小数，例如0.0005表示0.05%，1.2表示120%。
 
@@ -69,6 +70,7 @@ python bjx.py verify local-data/scenarios-01
 - [从research-workbench补入的能力与使用方式](docs/workbench-integration.md)
 - [同期间现金方案对照口径](docs/cash-comparison.md)
 - [官方交易日历核验记录](docs/calendar-verification.md)
+- [盈亏平衡与余股敏感性](docs/scenario-sensitivity.md)
 
 ## 发布与复用
 

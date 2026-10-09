@@ -11,7 +11,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-METHOD_VERSION = '0.2.0-alpha.4'
+METHOD_VERSION = '0.2.0-alpha.5'
 MAX_BYTES = 10 * 1024 * 1024
 ALLOWED_HOSTS = {'www.bse.cn', 'bse.cn', 'www.sse.com.cn', 'sse.com.cn',
                  'www.szse.cn', 'szse.cn', 'www.cninfo.com.cn', 'static.cninfo.com.cn'}
@@ -113,12 +113,26 @@ def report(mode, result, status):
         lines += ['本次未完成。原因：' + result['message'], '',
                   '下一步：' + result['next_step']]
     elif mode == 'scenarios':
+        a = result['assumptions']
+        lines += [f"账户本金：{a['capital']:,.2f}元；实际冻结：{result['frozen_amount']:,.2f}元；发行价假设：{a['issue_price']:.2f}元。",
+                  f"资金成本年率假设：{a['annual_cash_cost_rate']:.2%}；申购/退款可用/卖出现金可用日期：{a['subscription_date']} / {a['refund_available_date']} / {a['sale_cash_available_date']}。"]
         lines += ['以下是声明参数下的比例整手测算，余股获配未知。', '',
                   '| 情景 | 比例手数 | 毛收益 | 卖出费用 | 资金成本 | 净收益 |',
                   '|---|---:|---:|---:|---:|---:|']
         for r in result['scenarios']:
             label = str(r['id']).replace('|', '\\|').replace('\n', ' ')
             lines.append(f"| {label} | {r['proportional_hands']} | {r['gross_profit']:.2f} | {r['sell_cost']:.2f} | {r['cash_cost']:.2f} | {r['net_profit']:.2f} |")
+        lines += ['', '## 盈亏平衡与余股敏感性', '',
+                  '盈亏平衡涨幅是固定获配股数、日期及费用假设下覆盖成本所需的卖出涨幅，不是价格预测。',
+                  '额外100股是假设余股排序获配后的重新计算，不给获配概率，也不是收益或损失界。', '',
+                  '| 情景 | 配售率假设 | 卖出涨幅假设 | 盈亏平衡涨幅 | 假设额外100股后净收益 |',
+                  '|---|---:|---:|---:|---:|']
+        for r in result['scenarios']:
+            label = str(r['id']).replace('|', '\\|').replace('\n', ' ')
+            breakeven = '无比例整手，无法计算' if r['breakeven_listing_return'] is None else f"{r['breakeven_listing_return']:.2%}"
+            extra = r['residual_extra_100_share_sensitivity']
+            net = '不适用' if extra is None else f"{extra['net_profit']:.2f}"
+            lines.append(f"| {label} | {r['allocation_rate']:.5%} | {r['listing_return']:.2%} | {breakeven} | {net} |")
         if 'weighted' in result:
             w = result['weighted']
             lines += ['', f"声明权重下期望净收益：{w['expected_net_profit']:.2f}元；比例零整手概率：{w['probability_zero_proportional_hands']:.2%}。",
@@ -166,9 +180,40 @@ def report(mode, result, status):
               '获取、解析、计算、原文核验和视觉检查分别记录；不构成投资建议。',
               '详情、参数及来源见同目录input.json、result.json与manifest.json。']
     markdown = '\n'.join(lines) + '\n'
-    # Escape all input text: the portable HTML is a literal reading view.
-    page = '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>' + html.escape(heading) + '</title><style>body{max-width:1000px;margin:40px auto;padding:0 20px;font-family:system-ui;line-height:1.7}pre{white-space:pre-wrap;overflow-wrap:anywhere}</style><body><pre>' + html.escape(markdown) + '</pre></body></html>'
+    page = render_html(markdown, heading)
     return markdown.encode('utf-8'), page.encode('utf-8')
+
+
+def render_html(markdown, heading):
+    """Render only generated headings/paragraphs/tables; escape every source cell."""
+    blocks = []
+    table_open = False
+    for line in markdown.splitlines():
+        if line.startswith('|'):
+            cells = [cell.replace('\\|', '|').strip() for cell in re.split(r'(?<!\\)\|', line)[1:-1]]
+            if cells and all(re.fullmatch(r':?-+:?', c) for c in cells):
+                continue
+            if not table_open:
+                blocks.append('<div class="table-wrap"><table>')
+                tag = 'th'
+                table_open = True
+            else:
+                tag = 'td'
+            blocks.append('<tr>' + ''.join(f'<{tag}>'+html.escape(c)+f'</{tag}>' for c in cells) + '</tr>')
+            continue
+        if table_open:
+            blocks.append('</table></div>')
+            table_open = False
+        if line.startswith('## '):
+            blocks.append('<h2>'+html.escape(line[3:])+'</h2>')
+        elif line.startswith('# '):
+            blocks.append('<h1>'+html.escape(line[2:])+'</h1>')
+        elif line.strip():
+            blocks.append('<p>'+html.escape(line)+'</p>')
+    if table_open:
+        blocks.append('</table></div>')
+    style = 'body{max-width:1050px;margin:32px auto;padding:0 20px;font-family:system-ui;line-height:1.7;color:#172536;background:#fafbfc}h1{font-size:26px}h2{margin-top:32px;font-size:20px}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;background:white}th,td{padding:10px 12px;border:1px solid #dbe2eb;text-align:left}th{background:#eef3f8}p{overflow-wrap:anywhere}'
+    return '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>'+html.escape(heading)+'</title><style>'+style+'</style><body>'+''.join(blocks)+'</body></html>'
 
 
 def bind_fact_sources(spec, result):

@@ -15,6 +15,28 @@ def number(value, name, minimum=0):
     return value
 
 
+def proceeds_metrics(shares, price, gain, frozen_amount, start, refund, sale, annual_rate, fees):
+    retained = shares * price
+    proceeds = retained * (1 + gain)
+    sell_cost = (max(proceeds * fees['commission_rate'], fees['minimum_commission']) +
+                 proceeds * (fees['stamp_rate'] + fees['transfer_rate'])) if shares else 0
+    capital_days = frozen_amount * (refund - start).days + retained * (sale - refund).days
+    cash_cost = capital_days * annual_rate / 365
+    gross = retained * gain
+    breakeven = None
+    if shares:
+        proportional = fees['stamp_rate'] + fees['transfer_rate']
+        # Solve each commission branch, rather than adding minimum commission twice.
+        required_proceeds = (retained + cash_cost) / (1 - proportional - fees['commission_rate'])
+        if required_proceeds * fees['commission_rate'] < fees['minimum_commission']:
+            required_proceeds = (retained + cash_cost + fees['minimum_commission']) / (1 - proportional)
+        breakeven = required_proceeds / retained - 1
+    return dict(gross_profit=gross, sell_cost=sell_cost, cash_cost=cash_cost,
+                capital_days=capital_days, net_profit=gross-sell_cost-cash_cost,
+                cash_profit_before_opportunity_cost=gross-sell_cost,
+                breakeven_listing_return=breakeven)
+
+
 def evaluate(data):
     capital = number(data['capital'], 'capital', 0.01)
     price = number(data['issue_price'], 'issue_price', 0.01)
@@ -35,6 +57,8 @@ def evaluate(data):
     fees = data['fees']
     for key in ('commission_rate', 'minimum_commission', 'stamp_rate', 'transfer_rate'):
         number(fees[key], key)
+    if fees['commission_rate'] + fees['stamp_rate'] + fees['transfer_rate'] >= 1:
+        raise ValueError('Combined proportional sell fee must be below 100%')
     scenarios = data['scenarios']
     if not scenarios or len(scenarios) > 100:
         raise ValueError('require 1..100 scenarios')
@@ -56,20 +80,26 @@ def evaluate(data):
         gain = number(s['listing_return'], 'listing_return', -1)
         if not s.get('basis'):
             raise ValueError('each scenario requires basis')
-        hands = int((Decimal(subscribed) * Decimal(str(allocation_rate)) / 100).to_integral_value(rounding=ROUND_FLOOR))
+        continuous_hands = Decimal(subscribed) * Decimal(str(allocation_rate)) / 100
+        hands = int(continuous_hands.to_integral_value(rounding=ROUND_FLOOR))
         shares = hands * 100
-        retained = shares * price
-        proceeds = retained * (1 + gain)
-        sell_cost = (max(proceeds * fees['commission_rate'], fees['minimum_commission']) + proceeds * (fees['stamp_rate'] + fees['transfer_rate'])) if shares else 0
-        capital_days = amount * (refund - start).days + retained * (sale - refund).days
-        cash_cost = capital_days * rate / 365
-        gross = retained * gain
-        rows.append(dict(id=s['id'], probability=s.get('probability'), proportional_hands=hands,
-                         proportional_shares=shares, gross_profit=gross, sell_cost=sell_cost,
-                         cash_cost=cash_cost, capital_days=capital_days, net_profit=gross-sell_cost-cash_cost,
-                         account_period_return=(gross-sell_cost-cash_cost)/capital, basis=s['basis']))
+        metrics = proceeds_metrics(shares, price, gain, amount, start, refund, sale, rate, fees)
+        residual = None
+        if continuous_hands > hands and shares + 100 <= subscribed:
+            residual = dict(assumed_total_shares=shares+100,
+                            **proceeds_metrics(shares+100, price, gain, amount, start, refund, sale, rate, fees))
+        rows.append(dict(id=s['id'], probability=s.get('probability'), allocation_rate=allocation_rate,
+                         listing_return=gain, proportional_hands=hands,
+                         proportional_shares=shares, **metrics,
+                         residual_extra_100_share_sensitivity=residual,
+                         account_period_return=metrics['net_profit']/capital, basis=s['basis']))
     result = dict(schema_version='0.1', subscribed_shares=subscribed, frozen_amount=amount,
+                  assumptions=dict(capital=capital, requested_budget=budget, issue_price=price,
+                                   annual_cash_cost_rate=rate, fees=fees,
+                                   subscription_date=start.isoformat(), refund_available_date=refund.isoformat(),
+                                   sale_cash_available_date=sale.isoformat()),
                   scenarios=rows, warnings=['Proportional whole lots only; residual allocation is unknown.',
+                  'Extra-100-share sensitivity is conditional, not a probability, bound or guaranteed allocation.',
                   'Scenario inputs and probabilities are assumptions, not calibrated forecasts.',
                   'Cash costs use explicit dates and a simple annual rate; repo alternatives require a separate ledger.'])
     if weighted:
