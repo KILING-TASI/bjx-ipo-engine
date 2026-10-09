@@ -9,10 +9,13 @@ from urllib.parse import urlsplit
 from audit import MAX_BYTES, bind_fact_sources, capture, load, publish, verify
 from engine import evaluate
 from research import facts, ledger
+from comparison import compare_cash
 from vendor.announcement_versions import version_review
 
 
 def run(mode, spec, online=False):
+    if mode == 'compare-cash':
+        return compare_cash(spec), {}
     if mode == 'scenarios':
         return evaluate(spec), {}
     if mode == 'ledger':
@@ -70,7 +73,7 @@ def run(mode, spec, online=False):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['scenarios', 'ledger', 'facts', 'versions', 'capture', 'compare-pdf', 'verify'])
+    parser.add_argument('mode', choices=['scenarios', 'ledger', 'facts', 'versions', 'capture', 'compare-pdf', 'compare-cash', 'verify'])
     parser.add_argument('input', help='input JSON, or research directory for verify')
     parser.add_argument('--out-dir')
     parser.add_argument('--online', action='store_true')

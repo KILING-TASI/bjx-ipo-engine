@@ -128,7 +128,7 @@ def ledger(data):
     calendar = Calendar(data['calendar'])
     events = []
     ids = set()
-    allowed = {'freeze', 'refund', 'sale', 'repo_open', 'repo_principal', 'repo_interest'}
+    allowed = {'freeze', 'refund', 'sale', 'repo_open', 'repo_principal', 'repo_interest', 'fee'}
     for e in data['events']:
         identity = text(e['id'], 'event id')
         if identity in ids:
@@ -155,7 +155,7 @@ def ledger(data):
     keys = {}
     for e in events:
         d, order, _, kind, _, _ = e
-        rank = order if ordered_days[d] else (0 if kind in ('freeze', 'repo_open') else 1)
+        rank = order if ordered_days[d] else (0 if kind in ('freeze', 'repo_open', 'fee') else 1)
         keys.setdefault((d, rank), []).append(e)
     cash = initial
     frozen = {}
@@ -163,14 +163,16 @@ def ledger(data):
     rows = []
     conflicts = []
     for (day, rank), group in sorted(keys.items()):
-        needed = sum((e[4] for e in group if e[3] in ('freeze', 'repo_open')), Decimal(0))
+        needed = sum((e[4] for e in group if e[3] in ('freeze', 'repo_open', 'fee')), Decimal(0))
         if needed > cash:
             conflicts.append(dict(date=day.isoformat(), required=float(needed), available=float(cash),
                                   shortage=float(needed-cash), event_ids=[e[5] for e in group]))
             # Do not pretend that a partially executable user plan was executed.
             break
         for _, _, instrument, kind, amount, identity in sorted(group, key=lambda e: e[5]):
-            if kind == 'freeze':
+            if kind == 'fee':
+                cash -= amount
+            elif kind == 'freeze':
                 cash -= amount
                 frozen[instrument] = frozen.get(instrument, Decimal(0)) + amount
             elif kind == 'refund':
@@ -200,10 +202,16 @@ def ledger(data):
                 cash += amount
             rows.append(dict(date=day.isoformat(), order=rank, event_id=identity, kind=kind,
                              available_cash=float(cash), ipo_principal=float(sum(frozen.values())),
-                             repo_principal=float(sum(repos.values()))))
+                             repo_principal=float(sum(repos.values())),
+                             available_cash_exact=str(cash),
+                             ipo_principal_exact=str(sum(frozen.values(), Decimal(0))),
+                             repo_principal_exact=str(sum(repos.values(), Decimal(0)))))
     return dict(schema_version='0.2-alpha', executable=not conflicts, conflicts=conflicts, events=rows,
                 final_available_cash=float(cash), outstanding_ipo_principal=float(sum(frozen.values())),
                 outstanding_repo_principal=float(sum(repos.values())),
+                final_available_cash_exact=str(cash),
+                outstanding_ipo_principal_exact=str(sum(frozen.values(), Decimal(0))),
+                outstanding_repo_principal_exact=str(sum(repos.values(), Decimal(0))),
                 calendar_basis=calendar.basis,
                 warnings=['Explicit input events only; no automatic order selection or trading.',
                           'Without complete same-day timing, commitments precede releases.',

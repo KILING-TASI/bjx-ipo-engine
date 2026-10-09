@@ -2,7 +2,7 @@
 
 面向北交所网上发行的获配、现金占用与净收益情景研究。由四份设计材料整合修订，首版交付可运行的测算内核与统一设计规范。
 
-**当前版本：v0.2.0-alpha.2，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。示例全部为人为教学假设，不代表真实新股或2026年市场统计。v0.1.0保留为首个稳定研究原型。
+**当前版本：v0.2.0-alpha.3，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。示例全部为人为教学假设，不代表真实新股或2026年市场统计。v0.1.0保留为首个稳定研究原型。
 
 ## 已实现
 
@@ -17,6 +17,7 @@
 - 显式交易日历覆盖检查，以及逐笔回购实际交收日计息。
 - research-workbench优势适配：研究包绑定、来源保存、事实候选原文哈希绑定、公告版本线索和PDF正文差异比较。
 - 获取/解析/计算/原文核验分别记录；失败保留原因与下一步，不用成功状态掩盖缺口。
+- 同本金、同期间的两个显式现金方案对照；费用单列、精确小数现金保存，撞资或未回收本金时不比较盈亏。
 
 ## 快速开始
 
@@ -37,6 +38,7 @@ python bjx.py scenarios examples/scenarios.json --out-dir local-data/scenarios-0
 python bjx.py facts examples/facts.json --out-dir local-data/facts-01
 python bjx.py ledger examples/ledger.json --out-dir local-data/ledger-01
 python bjx.py versions examples/versions.json --out-dir local-data/versions-01
+python bjx.py compare-cash examples/compare-cash.json --out-dir local-data/cash-comparison-01
 python bjx.py verify local-data/scenarios-01
 ```
 
@@ -63,6 +65,7 @@ python bjx.py verify local-data/scenarios-01
 - [现金账和发行事实接口](docs/cash-and-evidence.md)
 - [开发接续记录](docs/progress.md)
 - [从research-workbench补入的能力与使用方式](docs/workbench-integration.md)
+- [同期间现金方案对照口径](docs/cash-comparison.md)
 
 ## 发布与复用
 

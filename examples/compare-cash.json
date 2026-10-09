@@ -1,0 +1,35 @@
+{
+  "start": "2026-10-12",
+  "end": "2026-10-20",
+  "currency": "CNY",
+  "input_kind": "teaching",
+  "initial_cash": "1000.00",
+  "calendar": {
+    "source": "教学日历，非已核验官方交易日历",
+    "basis": "assumption",
+    "coverage_start": "2026-10-12",
+    "coverage_end": "2026-10-20",
+    "trading_dates": ["2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-19", "2026-10-20"]
+  },
+  "plans": [
+    {
+      "id": "ipo-plan",
+      "basis": "教学申购现金方案，发行及回款金额均为假设，卖出回款已扣卖出费用",
+      "events": [
+        {"id": "A-freeze", "instrument": "DEMO-A", "date": "2026-10-12", "kind": "freeze", "amount": "1000.00", "evidence": {"basis": "assumption", "source": "教学现金事件"}},
+        {"id": "A-refund", "instrument": "DEMO-A", "date": "2026-10-14", "kind": "refund", "amount": "800.00", "evidence": {"basis": "assumption", "source": "教学现金事件"}},
+        {"id": "A-sale", "instrument": "DEMO-A", "date": "2026-10-20", "kind": "sale", "amount": "250.00", "principal_released": "200.00", "evidence": {"basis": "assumption", "source": "教学卖出净现金回款"}}
+      ]
+    },
+    {
+      "id": "cash-alternative",
+      "basis": "教学现金替代方案，利息5元为人为假设，不代表真实回购报价，另付0.10元费用",
+      "events": [
+        {"id": "R-open", "instrument": "DEMO-R", "date": "2026-10-12", "kind": "repo_open", "amount": "1000.00", "evidence": {"basis": "assumption", "source": "教学现金事件"}},
+        {"id": "R-principal", "instrument": "DEMO-R", "date": "2026-10-13", "kind": "repo_principal", "amount": "1000.00", "evidence": {"basis": "assumption", "source": "教学本金可用日"}},
+        {"id": "R-interest", "instrument": "DEMO-R", "date": "2026-10-13", "kind": "repo_interest", "amount": "5.00", "evidence": {"basis": "assumption", "source": "教学利息到账，不是实测报价"}},
+        {"id": "R-fee", "instrument": "DEMO-R", "date": "2026-10-14", "kind": "fee", "amount": "0.10", "evidence": {"basis": "assumption", "source": "教学单列费用"}}
+      ]
+    }
+  ]
+}

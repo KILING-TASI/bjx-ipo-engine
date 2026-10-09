@@ -11,7 +11,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-METHOD_VERSION = '0.2.0-alpha.2'
+METHOD_VERSION = '0.2.0-alpha.3'
 MAX_BYTES = 10 * 1024 * 1024
 ALLOWED_HOSTS = {'www.bse.cn', 'bse.cn', 'www.sse.com.cn', 'sse.com.cn',
                  'www.szse.cn', 'szse.cn', 'www.cninfo.com.cn', 'static.cninfo.com.cn'}
@@ -106,7 +106,8 @@ def capture(spec):
 def report(mode, result, status):
     heading = {'scenarios': '北交所获配与收益情景', 'ledger': '多只资金现金账',
                'facts': '发行事实候选与缺口', 'versions': '公告版本线索',
-               'capture': '公告来源保存', 'compare-pdf': '公告原文版本差异'}.get(mode, mode)
+               'capture': '公告来源保存', 'compare-pdf': '公告原文版本差异',
+               'compare-cash': '同本金同期间现金方案对照'}.get(mode, mode)
     lines = ['# ' + heading, '', '状态：' + status, '']
     if status == 'blocked':
         lines += ['本次未完成。原因：' + result['message'], '',
@@ -128,6 +129,20 @@ def report(mode, result, status):
         lines += ['计划现金是否足够：' + ('足够（仅声明事件）' if result['executable'] else '不足，已停止回放'),
                   f"最后已回放可用现金：{result['final_available_cash']:.2f}元。",
                   '冲突时该余额不是计划期末余额；不得据此假定融资。']
+    elif mode == 'compare-cash':
+        lines += [f"共同期间：{result['start']}至{result['end']}；期初本金：{result['initial_cash']}元。",
+                  '以下仅对照声明的现金事件，未扣机会成本；不是全年或复利年化。', '',
+                  '| 方案 | 状态 | 期末现金 | 已结清现金盈亏 | 本金占用资金日 |',
+                  '|---|---|---:|---:|---:|']
+        for plan in result['plans']:
+            label = plan['id'].replace('|', '\\|').replace('\n', ' ')
+            values = [plan['closing_cash'], plan['realized_cash_profit'], plan['locked_capital_days']]
+            lines.append('| '+label+' | '+plan['status']+' | '+' | '.join('未完成' if v is None else v for v in values)+' |')
+        if result['first_minus_second_cash_profit'] is None:
+            lines += ['', '存在撞资或未回收本金，当前不比较盈亏优劣。']
+        else:
+            lines += ['', '第一方案减第二方案的声明现金盈亏差：'+result['first_minus_second_cash_profit']+'元。']
+        lines += ['', '闲置现金利息及尚未到账利息只在显式录入时计入；结果不认证事件完整性。']
     elif mode == 'facts':
         lines += ['事实候选保留全部来源，不自动选择冲突值。', '']
         for name, field in result['fields'].items():
@@ -210,7 +225,7 @@ def publish(destination, mode, spec, result, status='completed_with_limits', art
                     created_at=datetime.now(timezone.utc).isoformat(),
                     stages=dict(acquisition='completed' if artifacts else 'not_performed',
                                 parsing='completed_extracted_text' if mode == 'compare-pdf' and status != 'blocked' else 'not_performed',
-                                calculation='completed' if mode in ('scenarios', 'ledger') and status != 'blocked' else 'not_performed',
+                                calculation='completed' if mode in ('scenarios', 'ledger', 'compare-cash') and status != 'blocked' else 'not_performed',
                                 source_verification='not_performed', visual_review='not_performed'),
                     files={name: dict(sha256=digest(blob), size=len(blob)) for name, blob in files.items()})
     files['manifest.json'] = encoded(manifest)
