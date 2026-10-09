@@ -32,7 +32,7 @@ python -S .github/scripts/check_bridge_cases.py --out-dir local-data/bridge-nati
 
 验收程序逐条用隔离子进程跑原生 stdin 协议，核对完整冻结响应及退出码。可显式给 --bridge-command-json 的 JSON argv 列表调用外部工作台 stdin 桥接；不使用 shell、不复制上游代码、输出另存。外部响应可直接是原生响应，或保留 engine_response 的外壳。更早的工作台入参拒绝应另记原因，不当作原生响应完全等价。
 
-目前原生九条固定输入验收通过，workbench_checked=false 表示尚未运行外部桥接；不以此宣称工作台旧实现等价。联调入口到位后再记录工作台提交、独立提交、具体命令和结果。本轮不修改旧冻结输入/结果，无 annual.v1、真实个人余股或真实账户验收，也不扩大预测能力。
+原生九条固定输入验收及下文所列工作台原生透传联调已经通过；workbench_checked=false 仍仅表示该次记录没有完成外部验收，不证明工作台旧实现等价。本轮不修改旧冻结输入/结果，无 annual.v1、真实个人余股或真实账户验收，也不扩大预测能力。
 
 ## 更严格的工作台入口边界
 
@@ -43,3 +43,19 @@ python -S .github/scripts/check_bridge_cases.py --out-dir local-data/bridge-nati
 等待原生桥接期间，只读使用工作台已有 subscription_scenarios.evaluate 实跑前两条教学正例，每条三个联合情景。原生请求另外经 api.py 实跑并核对冻结响应；工作台请求使用显式单位映射：小数费率/涨跌幅乘 100 变成百分数字符串，滑点、融资率和借入占比明确声明零，合成代码 990000 仅作教学身份。
 
 [实跑字段及两侧输入](../examples/bridge-legacy-overlap.json)保存了两方提交、工作台实际源码摘要及 36 个选定数值比较。整手股数、卖出费用、机会成本、本金日数、扣机会成本前现金利润和扣成本后净收益在绝对 1e-8 容差内匹配；股数身份需相同，无概率权重，无个人余股认证。完整 JSON 类型/字段不同，因此 full_result_equivalent=false。账户本金收益率、工作台预算/资金日年化分母、年度以及非零滑点/融资均未比较，也不将本次显式对照映射部署为生产桥。
+
+## 已提交入口联合验收（2026-10-09）
+
+工作台 PR #6 提交 `32e42b41a33688a47decd2540d823ff475b19b44`，网关 `scripts/bounded_engine_gateway.py` 实际 SHA256 `38123e66d683441a226987ab00ed6c25941615d222eee3f6769f871302c14945`。独立引擎本次实跑提交 `fe49372`，API 1.0 / 引擎 0.2.0-alpha.8。工作台方法 bounded-native-gateway-1；原生计算接口保持冻结。此前 801f224 / a2b80e 的运行记录留档，不作为新源码验收。
+
+九条完整 engine_response 均与同输入独立 api.py 及冻结快照相等；请求原始字节 SHA、原生 input_sha256、API/引擎版本、两方提交、网关 SHA 和原生退出码核对通过。completed_with_limits / infeasible / failed 不混用；失败原生响应完整保留，未变成成功。三条额外滑点、融资率、年度字段在工作台边界明确 ValueError 拒绝，无原生结果，不声称与旧 permissive 行为等价。新验收包与历史包分开，manifest核验通过。
+
+[联合摘要回执](../examples/bridge-joint-receipt.json)保存每例状态/输入摘要/退出码及三条拒绝原因。此回执只覆盖 BJX，不为组合、可转债或规则引擎验收，也不声明旧工作台完整模型/年度等价。全部是教学输入，账户继续暂停；个人余股、实际到账及无证据期望收益不补齐。
+
+工作台可选原生调用（在其仓库目录内，显式指定可信本地引擎目录，REQUEST.json 为上述完整原生请求）：
+
+```text
+python scripts/bounded_engine_gateway.py bjx --project-dir ENGINE_DIR --input REQUEST.json --out-dir NEW_DIR
+```
+
+该入口不下载安装引擎、不自动替换原内置专题。完整跨进程核对使用本仓库 check_bridge_cases.py 和只供验收的 stdin→临时请求文件→工作台 run(...) 包装；包装不转换单位、不改字段，并按 native-response-preserved/blocked 保留退出状态。三条入口拒绝另记，不将其伪造为 native failed。联调不需要也没有请求真实账户材料。

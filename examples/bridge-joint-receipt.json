@@ -1,0 +1,276 @@
+{
+  "scope": "BJX only: native full-output delegation and stricter adapter boundary; no annual or other-engine signoff",
+  "real_sample_count": 0,
+  "workbench_commit": "32e42b41a33688a47decd2540d823ff475b19b44",
+  "workbench_gateway_sha256": "38123e66d683441a226987ab00ed6c25941615d222eee3f6769f871302c14945",
+  "engine_commit": "fe49372d1bc491ba42cdf6ab7d913dd9c77b9fa6",
+  "native_cases": 9,
+  "full_native_response_match": true,
+  "boundaries": [
+    {
+      "id": "unsupported-slippage",
+      "request": {
+        "api_version": "1.0",
+        "operation": "scenario.v1",
+        "input": {
+          "capital": 10000000,
+          "budget": 8000000,
+          "issue_price": 18,
+          "max_subscription_shares": 600000,
+          "subscription_date": "2026-10-12",
+          "refund_available_date": "2026-10-14",
+          "sale_cash_available_date": "2026-10-20",
+          "annual_cash_cost_rate": 0.02,
+          "fees": {
+            "commission_rate": 0.00025,
+            "minimum_commission": 5,
+            "stamp_rate": 0.0005,
+            "transfer_rate": 1e-05,
+            "slippage_rate": 0.001
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ]
+        }
+      },
+      "response": {
+        "adapter_rejection": true,
+        "error": {
+          "kind": "ValueError",
+          "message": "北交原生桥不支持滑点或额外费用，不能静默忽略"
+        }
+      },
+      "exit_code": 2,
+      "expected_rejection_field": "slippage_rate",
+      "matched": true
+    },
+    {
+      "id": "unsupported-financing",
+      "request": {
+        "api_version": "1.0",
+        "operation": "scenario.v1",
+        "input": {
+          "capital": 10000000,
+          "budget": 8000000,
+          "issue_price": 18,
+          "max_subscription_shares": 600000,
+          "subscription_date": "2026-10-12",
+          "refund_available_date": "2026-10-14",
+          "sale_cash_available_date": "2026-10-20",
+          "annual_cash_cost_rate": 0.02,
+          "fees": {
+            "commission_rate": 0.00025,
+            "minimum_commission": 5,
+            "stamp_rate": 0.0005,
+            "transfer_rate": 1e-05
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ],
+          "financing_rate": 0.08
+        }
+      },
+      "response": {
+        "adapter_rejection": true,
+        "error": {
+          "kind": "ValueError",
+          "message": "北交原生桥不支持额外年度、融资或概率字段"
+        }
+      },
+      "exit_code": 2,
+      "expected_rejection_field": "financing_rate",
+      "matched": true
+    },
+    {
+      "id": "unsupported-annual",
+      "request": {
+        "api_version": "1.0",
+        "operation": "scenario.v1",
+        "input": {
+          "capital": 10000000,
+          "budget": 8000000,
+          "issue_price": 18,
+          "max_subscription_shares": 600000,
+          "subscription_date": "2026-10-12",
+          "refund_available_date": "2026-10-14",
+          "sale_cash_available_date": "2026-10-20",
+          "annual_cash_cost_rate": 0.02,
+          "fees": {
+            "commission_rate": 0.00025,
+            "minimum_commission": 5,
+            "stamp_rate": 0.0005,
+            "transfer_rate": 1e-05
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ],
+          "annual_issues": 20
+        }
+      },
+      "response": {
+        "adapter_rejection": true,
+        "error": {
+          "kind": "ValueError",
+          "message": "北交原生桥不支持额外年度、融资或概率字段"
+        }
+      },
+      "exit_code": 2,
+      "expected_rejection_field": "annual_issues",
+      "matched": true
+    }
+  ],
+  "native_input_and_wrapper_hash_match": true,
+  "legacy_full_equivalence": false,
+  "account_acceptance": "paused",
+  "limits": [
+    "Native failure responses preserved; stricter adapter refusal is distinct from native semantics.",
+    "Teaching input only, unknown fragments and cash dates not certified.",
+    "No installation, merge, release or annual replacement."
+  ],
+  "api_version": "1.0",
+  "engine_version": "0.2.0-alpha.8",
+  "gateway_method_version": "bounded-native-gateway-1",
+  "engine_sources_sha256": {
+    "api.py": "8787b7eeb66cbbd73550a2c8bd1ac54363b2e675cd8d86a6a0bc1e798976280b",
+    "engine.py": "ec67f2f9e8bb9516e4d338e0057eb604eb38be8c2b2c16d8bde769f114711ba2",
+    "research.py": "2a9d59d814f7a234f7e95fe64857da86cbf235787eb8abca114cc8e60bc4751f",
+    "audit.py": "5466e3da1484755cb7901eeea0e99337ffeb0492525d2a6b4db6412558b0c0ac"
+  },
+  "fixture_sha256": "e33f092c702e8e3703193cdf91d0b832d6ab155a4531a199b31d70f66b113746",
+  "native_case_checks": [
+    {
+      "id": "joint-unweighted",
+      "status": "completed_with_limits",
+      "request_sha256": "ee7e6e95f60eee46c2b75d9e1e723befdf413b51e7fbe55b71d6988d72cffe71",
+      "native_input_sha256": "75226531bfd7288fc17c7e781d7cd736e5a55a25ead4f18b77704decd186fc45",
+      "native_exit": 0,
+      "bridge_exit": 0,
+      "full_native_response_equal": true
+    },
+    {
+      "id": "announcement-cap",
+      "status": "completed_with_limits",
+      "request_sha256": "8bc1cc044844519f8749348dfdce0939ddb13eaf161182c019e4f1680a550311",
+      "native_input_sha256": "6f21d74aef507aa831fb53bf6be3962998ff575bdb535eded88b71daa1c6d550",
+      "native_exit": 0,
+      "bridge_exit": 0,
+      "full_native_response_equal": true
+    },
+    {
+      "id": "retained-principal-ledger",
+      "status": "completed_with_limits",
+      "request_sha256": "d6a4716d214c5fdccd669817fb363e76c273fd33973e75c759b6f4f241ff17bc",
+      "native_input_sha256": "f5b4c2f7e75f0b50d2b69f40828a44300da2eb58fbdf5e9e5d48a9dde6349c7b",
+      "native_exit": 0,
+      "bridge_exit": 0,
+      "full_native_response_equal": true
+    },
+    {
+      "id": "same-day-shortage",
+      "status": "infeasible",
+      "request_sha256": "f7a2363b1954cfbaebe15db37bdc8d16538cc5d051790c00c2b873e02c477b91",
+      "native_input_sha256": "c94e462b1cfb72c67f5745b47fcf1a342e1e151b65d63937ea780b25f3c325ab",
+      "native_exit": 0,
+      "bridge_exit": 0,
+      "full_native_response_equal": true
+    },
+    {
+      "id": "missing-refund-cash-date",
+      "status": "failed",
+      "request_sha256": "a3ee07be388106308f72c90ce2bf049cbd594288dc4c16d3f00b6cc59c78d099",
+      "native_input_sha256": null,
+      "native_exit": 2,
+      "bridge_exit": 2,
+      "full_native_response_equal": true
+    },
+    {
+      "id": "missing-explicit-fee",
+      "status": "failed",
+      "request_sha256": "e00b6e0de9d6ad66ccd1c0de5a330cd96d1ff229a851cd8a0757d37984ed7b4c",
+      "native_input_sha256": null,
+      "native_exit": 2,
+      "bridge_exit": 2,
+      "full_native_response_equal": true
+    },
+    {
+      "id": "wrong-native-number-type",
+      "status": "failed",
+      "request_sha256": "844c37e976543d0593e5264d29af8a29b72d0ca109186e9e654256006201a552",
+      "native_input_sha256": null,
+      "native_exit": 2,
+      "bridge_exit": 2,
+      "full_native_response_equal": true
+    },
+    {
+      "id": "annual-operation-unsupported",
+      "status": "failed",
+      "request_sha256": "563b7a6570a7915fa276620fc71a7c9c700b750a8e6c4b02480a6fee021ffd41",
+      "native_input_sha256": null,
+      "native_exit": 2,
+      "bridge_exit": 2,
+      "full_native_response_equal": true
+    },
+    {
+      "id": "api-version-mismatch",
+      "status": "failed",
+      "request_sha256": "e7ea6442382af5cc652f3d5c440eef6a372a8931f98af6692671288b291ec22a",
+      "native_input_sha256": null,
+      "native_exit": 2,
+      "bridge_exit": 2,
+      "full_native_response_equal": true
+    }
+  ],
+  "native_receipt_sha256": "bab0ba4e9346ad60d91fb709b67a938ab4d64c110fe5689744b15747ffb301c8",
+  "reviewed_on": "2026-10-09"
+}
