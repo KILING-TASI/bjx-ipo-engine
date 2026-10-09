@@ -53,3 +53,7 @@
 情景测算内核、教学例、设计纠错与基础检查；首版标签不是实盘认证。
 
 完整包与发布说明见 [Releases](https://github.com/KILING-TASI/bjx-ipo-engine/releases)。当前未完成范围见 [路线](docs/roadmap.md)，历史证据与限制见 [开发记录](docs/progress.md)。
+
+### 主分支多方案增量（未发行）
+
+新增声明方案比较、有限子集、毛成本敏感性及案例切换/资金占用图。旧两方案接口与历史结果保持，真实账户暂停。
