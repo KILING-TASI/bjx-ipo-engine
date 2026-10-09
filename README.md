@@ -102,8 +102,10 @@ python .github/scripts/check_package.py
 
 仅供学习与研究，不构成投资建议或交易指令，不保证收益、获配或结果准确性。使用前请阅读 [免责声明与使用边界](DISCLAIMER.md)，核对本次来源、日期和假设。
 
-多发行方案及有限候选比较见 [说明](docs/plan-comparison.md)，主分支新增，未发布新版。
+多发行方案及有限候选比较见 [说明](docs/plan-comparison.md)，开发 PR #1 新增，未合并、未发布新版。
 
 一条官方定盘参考及显式净费用适配见 [说明](docs/public-repo-reference.md)，费用和到账为声明假设，非账户实收益。
 
 资金、历史样本与方案选择的 [方法卡及验收](docs/funding-history-methods.md)区分已实现与未实现统计能力。
+
+当前职责、数据入口、版本分层和本批结案范围统一见 [数据与交付契约目录](docs/data-contract-inventory.md)。包装样例仅本地无损验证，跨仓数据读取待核验，不代表九仓统一。
