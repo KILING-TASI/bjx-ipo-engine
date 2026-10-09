@@ -1,0 +1,32 @@
+{
+  "schema": "public-repo-fixing.v1",
+  "instrument": "204001",
+  "tenor_days": 1,
+  "quote_kind": "daily_fixing_not_executable_quote",
+  "trade_date": "2026-10-08",
+  "rate_percent": "1.392",
+  "annual_rate_fraction": "0.01392",
+  "page_updated_at": "2026-10-08T22:30:00+08:00",
+  "retrieved_at": "2026-10-09T12:31:46.201422+00:00",
+  "reviewed_on": "2026-10-09",
+  "source": "https://bond.sse.com.cn/data/standard/repocurve/onerepo/",
+  "selected_row": "20261008,1.392,1.277,1.404,1.333",
+  "selected_field": "RATE_1DAY / first numeric field; not close price or four/five-day mean",
+  "raw_sha256": "6393895722ef0cf633806d56535f9525cc364de89a1d77ec27e157b473864093",
+  "rule_source": "https://www.sse.com.cn/lawandrules/sselawsrules2025/bond/trading/currency/c/c_20250606_10781048.shtml",
+  "rule_attachment_sha256": "b148bd3ce4e9fae7bce6d4328cfa4caf95999e068fa29f03d9a65f74550d1844",
+  "supporting_sources": {
+    "fixing-method": {
+      "url": "https://www.sse.com.cn/disclosure/bond/ratios/",
+      "sha256": "5dccba498be1e8f0682337f5dbbeb3fec60b920848e8e90cecc16f8042d4ab07",
+      "status": "captured_selected_text_reviewed"
+    },
+    "sse-holiday": {
+      "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+      "sha256": "779cbf7cc7ab2c4b34db17ceee29e266bc483e075860d8313b85c1d5d0f307bc",
+      "status": "captured_selected_text_reviewed"
+    }
+  },
+  "source_status": "saved selected-field review; source contains damaged text labels in raw HTML; numeric row/table/code/time matched with rendered web text",
+  "rights": "Selected numerical fact summary and provenance only; no official HTML or attachment redistribution"
+}

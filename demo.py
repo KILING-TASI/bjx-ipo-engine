@@ -6,7 +6,8 @@ from pathlib import Path
 import tempfile
 from audit import METHOD_VERSION, digest, encoded, load
 from engine import evaluate
-from comparison import compare_plans
+from comparison import compare_plans, compare_cash
+from repo_reference import repo_reference
 from public_sample import replay_sample
 from sample_validation import validate_sample
 
@@ -29,7 +30,10 @@ def demo(destination):
         inputs={'public_sample':sample_input,'teaching_scenarios':scenarios_input,'matrix_cases':{'budgets':['3000000.00','4500000.00','10000000.00'],'basis':'same public issuance with hypothetical budgets; teaching second issuance'}}
         plans_input=load(ROOT/'examples/compare-plans.json');plans_result=compare_plans(plans_input)
         inputs['teaching_plans']=plans_input
-        results={'teaching_plans':plans_result,'public_sample':public,'teaching_scenarios':scenarios,'matrix':matrix}
+        reference_input=load(ROOT/'examples/repo-reference.json');reference=repo_reference(reference_input)
+        reference_cash_input=load(ROOT/'examples/public-reference-cash.json');reference_cash=compare_cash(reference_cash_input)
+        inputs['public_reference']=reference_input;inputs['public_reference_cash']=reference_cash_input
+        results={'public_reference':reference,'public_reference_cash':reference_cash,'teaching_plans':plans_result,'public_sample':public,'teaching_scenarios':scenarios,'matrix':matrix}
         (stage/'input.json').write_bytes(encoded(inputs));(stage/'result.json').write_bytes(encoded(results))
         stamp=datetime.now(timezone(timedelta(hours=8))).date().isoformat()
         table=[]
@@ -48,7 +52,8 @@ def demo(destination):
         payload=json.dumps(plans_result,ensure_ascii=False).replace('<','\\u003c')
         panel='<section class="card wide"><span class="tag teaching">教学多发行方案 · 不是实际发行组合</span><h2>方案选择与现金占用</h2><label>方案 <select id="plan"></select></label> <label>排序 <select id="sort"><option value="input">输入顺序</option><option value="locked">占用资金天数（可回放方案优先）</option></select></label><p id="plan-status"></p><p id="plan-cost"></p><div id="cash-chart"></div><p class="note">柱长表示事件后锁定本金 / 初始本金；同日事件先后仍以现金账为准。冲突方案只显示停止前事件，不延伸为完整期间。成本按人为 2% 教学参数，费用未知，不代表净替代收益。无概率，不计算期望或最优申购。</p></section>'
         script="<script>const comparison=PAYLOAD;const select=document.getElementById('plan'),sort=document.getElementById('sort');function options(){let items=[...comparison.plans];if(sort.value==='locked')items.sort((a,b)=>(a.locked_capital_days===null?Infinity:Number(a.locked_capital_days))-(b.locked_capital_days===null?Infinity:Number(b.locked_capital_days)));select.replaceChildren();for(const p of items){let o=document.createElement('option');o.value=p.id;o.textContent=p.id;select.append(o)}render()}function render(){const p=comparison.plans.find(p=>p.id===select.value);document.getElementById('plan-status').textContent='状态：'+p.status+'；现金利润：'+(p.realized_cash_profit??'未知 / 不完整')+'；占用资金天数：'+(p.locked_capital_days??'未完整回放');document.getElementById('plan-cost').textContent='毛机会成本敏感性：'+(p.reference_sensitivity[0]?.gross_locked_capital_cost??'未知')+' 元；计算方法 '+comparison.method_version;const chart=document.getElementById('cash-chart');chart.replaceChildren();for(const e of p.ledger.events){const row=document.createElement('div'),bar=document.createElement('div');const locked=Number(e.ipo_principal_exact)+Number(e.repo_principal_exact);row.textContent=e.date+' '+e.event_id+'：'+locked+' 元';bar.style.cssText='height:10px;background:#3678ae;margin-bottom:9px;width:'+Math.min(100,locked/Number(comparison.initial_cash)*100)+'%';row.append(bar);chart.append(row)}}select.onchange=render;sort.onchange=options;options();</script>".replace('PAYLOAD',payload)
-        page=page.replace('</main>',panel+'</main>').replace('</body>',script+'</body>')
+        reference_panel='<section class="card wide"><span class="tag">公开定盘参考 + 假设本金 / 费用 / 可用日</span><h2>204001 · 2026-10-08 定盘参考 1.392%</h2><p>页面更新时间 2026-10-08 22:30（北京时间），1 天品种。不是收盘价、实时可成交报价或个人账户收益。</p><p>假设本金 100,000 元；首次交收 10 月 9 日，到期交收 10 月 12 日，实际计息 3 个自然日。假设本金可用 10 月 9 日、利息到账 10 月 12 日，未经券商认证。</p><p>毛利息 '+reference['gross_interest_cent']+' 元；单列假设费用 '+reference['fee_exact']+' 元；参考净额 '+reference['net_reference_interest']+' 元。费用公式为本金×0.00001、无最低或固定加项，按分四舍五入；不是已核券商费率。</p><p class="note">同期间现金示例初始本金 100,001 元，为当日费用预留 1 元。若只剩 100,000 元且仍声明当日付费，现金账会阻断，不能把未来利息借来付费。费用未知则净额和现金计划未知。离线页复用保存字段记录，本次生成不重新下载。</p><a href="https://bond.sse.com.cn/data/standard/repocurve/onerepo/">上交所原始参考</a></section>'
+        page=page.replace('</main>',panel+reference_panel+'</main>').replace('</body>',script+'</body>')
         (stage/'index.html').write_text(page,encoding='utf-8',newline='\n')
         manifest={'engine_version':METHOD_VERSION,'generated_on':stamp,'real_issuance_count':1,'source_review_date':'2026-10-09','visual_review':'not_performed_at_generation','files':{name:digest((stage/name).read_bytes()) for name in ('index.html','input.json','result.json')}}
         (stage/'preview-manifest.json').write_bytes(encoded(manifest))

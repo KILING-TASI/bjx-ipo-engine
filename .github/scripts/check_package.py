@@ -39,7 +39,7 @@ def main():
         license_text=(target/'LICENSE').read_text(encoding='utf-8')
         if 'MIT License' not in license_text or 'Copyright (c) 2026 KILING-TASI' not in license_text:
             raise ValueError('Original code license missing or unexpectedly changed')
-        for mode, example in [('scenarios', 'scenarios'), ('facts', 'facts'), ('ledger', 'ledger'), ('versions', 'versions'), ('compare-cash', 'compare-cash'), ('freeze','freeze'), ('archive','archive'),('public-sample','public-sample'),('sample-validation','sample-validation')]:
+        for mode, example in [('scenarios', 'scenarios'), ('facts', 'facts'), ('ledger', 'ledger'), ('versions', 'versions'), ('compare-cash', 'compare-cash'), ('compare-plans','compare-plans'), ('repo-reference','repo-reference'), ('freeze','freeze'), ('archive','archive'),('public-sample','public-sample'),('sample-validation','sample-validation')]:
             destination = temp / ('report-' + mode)
             subprocess.run([sys.executable, '-S', 'bjx.py', mode, f'examples/{example}.json',
                             '--out-dir', str(destination)], cwd=target, check=True)

@@ -103,3 +103,5 @@ python .github/scripts/check_package.py
 仅供学习与研究，不构成投资建议或交易指令，不保证收益、获配或结果准确性。使用前请阅读 [免责声明与使用边界](DISCLAIMER.md)，核对本次来源、日期和假设。
 
 多发行方案及有限候选比较见 [说明](docs/plan-comparison.md)，主分支新增，未发布新版。
+
+一条官方定盘参考及显式净费用适配见 [说明](docs/public-repo-reference.md)，费用和到账为声明假设，非账户实收益。

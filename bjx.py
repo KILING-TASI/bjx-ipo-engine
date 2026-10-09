@@ -10,6 +10,7 @@ from audit import MAX_BYTES, bind_fact_sources, capture, load, publish, verify
 from engine import evaluate
 from research import facts, ledger
 from comparison import compare_cash, compare_plans
+from repo_reference import repo_reference
 from trading_calendar import build_calendar
 from history import freeze, archive, review
 from public_sample import replay_sample
@@ -19,6 +20,8 @@ from vendor.announcement_versions import version_review
 
 
 def run(mode, spec, online=False):
+    if mode=='repo-reference':
+        return repo_reference(spec), {}
     if mode=='compare-plans':
         return compare_plans(spec), {}
     if mode=='api':
@@ -94,7 +97,7 @@ def run(mode, spec, online=False):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['scenarios', 'ledger', 'facts', 'versions', 'capture', 'compare-pdf', 'compare-cash', 'compare-plans', 'calendar', 'freeze', 'archive', 'review', 'public-sample', 'sample-validation','api','verify'])
+    parser.add_argument('mode', choices=['scenarios', 'ledger', 'facts', 'versions', 'capture', 'compare-pdf', 'compare-cash', 'compare-plans', 'repo-reference', 'calendar', 'freeze', 'archive', 'review', 'public-sample', 'sample-validation','api','verify'])
     parser.add_argument('input', help='input JSON, or research directory for verify')
     parser.add_argument('--out-dir')
     parser.add_argument('--online', action='store_true')
