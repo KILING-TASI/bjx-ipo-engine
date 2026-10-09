@@ -16,8 +16,8 @@ class BridgeFailureTests(unittest.TestCase):
             command=[sys.executable,'-c','print("{}")']
             run=subprocess.run([sys.executable,'-S',str(ROOT/'.github/scripts/check_bridge_cases.py'),
                 '--bridge-command-json',json.dumps(command),'--out-dir',str(out)],
-                cwd=ROOT,capture_output=True,encoding='utf-8',timeout=20)
-            self.assertEqual(run.returncode,2,run.stderr)
+                cwd=ROOT,capture_output=True,timeout=20)
+            self.assertEqual(run.returncode,2,run.stderr.decode('utf-8',errors='replace'))
             result=load(out/'result.json')
             self.assertEqual(result['status'],'blocked')
             self.assertIn('joint-unweighted',result['message'])
