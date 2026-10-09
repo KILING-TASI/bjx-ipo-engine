@@ -46,7 +46,10 @@ def main():
     run([py,'-I','-m','pip','install','--no-deps',wheel],out)
     origins=json.loads(run([py,'-I','-c',"import sys,json,engine,api,audit,research,public_sample; print(json.dumps({'sys_path':sys.path,'origins':{m.__name__:m.__file__ for m in [engine,api,audit,research,public_sample]},'version':audit.METHOD_VERSION}))"],out))
     assert all(Path(v).resolve().is_relative_to(out/'venv') for v in origins['origins'].values())
-    assert not any('research-workbench' in p or str(ROOT) in p for p in origins['sys_path'])
+    assert not any('research-workbench' in p or
+                   (p and Path(p).resolve().is_relative_to(ROOT) and
+                    not Path(p).resolve().is_relative_to(out))
+                   for p in origins['sys_path'])
     scenario=json.loads((source/'examples/scenarios.json').read_bytes())
     request=json.dumps({'api_version':'1.0','operation':'scenario.v1','input':scenario})
     response=json.loads(run([py,'-I','-m','api'],out,stdin=request))
