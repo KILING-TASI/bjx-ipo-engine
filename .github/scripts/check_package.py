@@ -1,5 +1,6 @@
 """Check an independently extracted Git archive, without site packages or user data."""
 import subprocess
+import json
 import sys
 import tempfile
 import zipfile
@@ -26,7 +27,7 @@ def main():
                          'licenses/research-workbench-MIT.txt', 'THIRD_PARTY_NOTICES.md'):
             if not (target / filename).is_file():
                 raise ValueError('Dependency/attribution missing from package')
-        for mode, example in [('scenarios', 'scenarios'), ('facts', 'facts'), ('ledger', 'ledger'), ('versions', 'versions'), ('compare-cash', 'compare-cash')]:
+        for mode, example in [('scenarios', 'scenarios'), ('facts', 'facts'), ('ledger', 'ledger'), ('versions', 'versions'), ('compare-cash', 'compare-cash'), ('freeze','freeze'), ('archive','archive')]:
             destination = temp / ('report-' + mode)
             subprocess.run([sys.executable, '-S', 'bjx.py', mode, f'examples/{example}.json',
                             '--out-dir', str(destination)], cwd=target, check=True)
@@ -34,6 +35,11 @@ def main():
         destination=temp/'report-calendar'
         subprocess.run([sys.executable, '-S', 'bjx.py', 'calendar', 'data/bse-2026-schedule.json', '--out-dir', str(destination)],cwd=target,check=True)
         subprocess.run([sys.executable, '-S', 'bjx.py', 'verify', str(destination)],cwd=target,check=True)
+        review_input=temp/'review-input.json'
+        review_input.write_text(json.dumps(dict(frozen_bundle=str(temp/'report-freeze'),actual_bundle=str(temp/'report-archive'),comparison_values={'issue_price':{'value':18,'unit':'CNY/share'}})),encoding='utf-8')
+        destination=temp/'report-review'
+        subprocess.run([sys.executable,'-S','bjx.py','review',str(review_input),'--out-dir',str(destination)],cwd=target,check=True)
+        subprocess.run([sys.executable,'-S','bjx.py','verify',str(destination)],cwd=target,check=True)
     print('Portable package examples and content binding passed; no source or visual certification.')
 
 

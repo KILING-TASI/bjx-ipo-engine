@@ -1,0 +1,33 @@
+{
+  "security": "DEMO-A",
+  "input_kind": "teaching",
+  "rule_version": "教学口径，非官方发行",
+  "fields": {
+    "issue_price": [
+      {
+        "value": 18,
+        "unit": "CNY/share",
+        "basis": "assumption",
+        "source": "教学事后声明"
+      }
+    ],
+    "online_allocation_rate": [
+      {
+        "value": 0.0003,
+        "unit": "fraction",
+        "basis": "assumption",
+        "source": "教学事后声明"
+      }
+    ],
+    "subscription_date": [
+      {
+        "value": "2026-01-12",
+        "unit": "date",
+        "basis": "assumption",
+        "source": "教学日期"
+      }
+    ],
+    "announced_refund_date": [],
+    "listing_date": []
+  }
+}

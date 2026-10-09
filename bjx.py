@@ -11,10 +11,17 @@ from engine import evaluate
 from research import facts, ledger
 from comparison import compare_cash
 from trading_calendar import build_calendar
+from history import freeze, archive, review
 from vendor.announcement_versions import version_review
 
 
 def run(mode, spec, online=False):
+    if mode == 'freeze':
+        return freeze(spec), {}
+    if mode == 'archive':
+        return archive(spec)
+    if mode == 'review':
+        return review(spec), {}
     if mode == 'calendar':
         return build_calendar(spec), {}
     if mode == 'compare-cash':
@@ -76,7 +83,7 @@ def run(mode, spec, online=False):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['scenarios', 'ledger', 'facts', 'versions', 'capture', 'compare-pdf', 'compare-cash', 'calendar', 'verify'])
+    parser.add_argument('mode', choices=['scenarios', 'ledger', 'facts', 'versions', 'capture', 'compare-pdf', 'compare-cash', 'calendar', 'freeze', 'archive', 'review', 'verify'])
     parser.add_argument('input', help='input JSON, or research directory for verify')
     parser.add_argument('--out-dir')
     parser.add_argument('--online', action='store_true')

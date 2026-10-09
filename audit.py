@@ -11,7 +11,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-METHOD_VERSION = '0.2.0-alpha.5'
+METHOD_VERSION = '0.2.0-alpha.6'
 MAX_BYTES = 10 * 1024 * 1024
 ALLOWED_HOSTS = {'www.bse.cn', 'bse.cn', 'www.sse.com.cn', 'sse.com.cn',
                  'www.szse.cn', 'szse.cn', 'www.cninfo.com.cn', 'static.cninfo.com.cn'}
@@ -107,7 +107,8 @@ def report(mode, result, status):
     heading = {'scenarios': '北交所获配与收益情景', 'ledger': '多只资金现金账',
                'facts': '发行事实候选与缺口', 'versions': '公告版本线索',
                'capture': '公告来源保存', 'compare-pdf': '公告原文版本差异',
-               'compare-cash': '同本金同期间现金方案对照', 'calendar': '北交所官方排期日历'}.get(mode, mode)
+               'compare-cash': '同本金同期间现金方案对照', 'calendar': '北交所官方排期日历',
+               'freeze': '事前假设本地快照', 'archive': '公开发行结果档案', 'review': '事前与事后分离复盘'}.get(mode, mode)
     lines = ['# ' + heading, '', '状态：' + status, '']
     if status == 'blocked':
         lines += ['本次未完成。原因：' + result['message'], '',
@@ -157,6 +158,20 @@ def report(mode, result, status):
         else:
             lines += ['', '第一方案减第二方案的声明现金盈亏差：'+result['first_minus_second_cash_profit']+'元。']
         lines += ['', '闲置现金利息及尚未到账利息只在显式录入时计入；结果不认证事件完整性。']
+    elif mode == 'freeze':
+        lines += ['记录类别：'+result['record_kind'], '本地保存时间：'+result['frozen_at'],
+                  '现在补录过去假设只能是历史重建；本地摘要与时钟不提供外部可信时间证明。']
+    elif mode == 'archive':
+        lines += ['公开发行候选独立保存，未核值与冲突不自动选定；余股获配未知。']
+        for name, field in result['fields'].items():
+            lines.append('- '+name+'：'+field['status'])
+        lines += ['公告退款日不等于券商资金可用日。']
+    elif mode == 'review':
+        lines += ['事前记录类别：'+result['frozen_record_kind'],
+                  '只比较声明值，不输出真实预测准确率；事后档案不覆盖事前快照。']
+        for item in result['comparisons']:
+            lines.append('- '+item['field']+'：'+str(item['signed_error_frozen_minus_actual'])+'（事前减事后，单位'+item['unit']+'，来源状态'+item['source_status']+'）')
+        lines += ['余股未知；附加现金回放是另行明确输入的计划，不认证实际账户收益。']
     elif mode == 'calendar':
         lines += [f"排期覆盖：{result['coverage_start']}至{result['coverage_end']}。",
                   f"按官方假期和周一至周五规则推导的计划交易日数：{result['scheduled_trading_date_count']}。",
