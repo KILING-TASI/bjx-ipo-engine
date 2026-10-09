@@ -1,0 +1,836 @@
+{
+  "schema_version": "bjx-bridge-cases.v1",
+  "reviewed_on": "2026-10-09",
+  "scope": "Native same-input isolated bridge only; no full legacy workbench equivalence",
+  "api_version": "1.0",
+  "engine_version": "0.2.0-alpha.8",
+  "real_sample_count": 0,
+  "cases": [
+    {
+      "id": "joint-unweighted",
+      "sample_kind": "teaching",
+      "note": "Declared rates/gains; no probabilities. Compare full native result; individual extra allocation remains unknown.",
+      "request": {
+        "api_version": "1.0",
+        "operation": "scenario.v1",
+        "input": {
+          "capital": 10000000,
+          "budget": 8000000,
+          "issue_price": 18,
+          "max_subscription_shares": 600000,
+          "subscription_date": "2026-10-12",
+          "refund_available_date": "2026-10-14",
+          "sale_cash_available_date": "2026-10-20",
+          "annual_cash_cost_rate": 0.02,
+          "fees": {
+            "commission_rate": 0.00025,
+            "minimum_commission": 5,
+            "stamp_rate": 0.0005,
+            "transfer_rate": 1e-05
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ]
+        }
+      },
+      "request_sha256": "ee7e6e95f60eee46c2b75d9e1e723befdf413b51e7fbe55b71d6988d72cffe71",
+      "expected_response": {
+        "api_version": "1.0",
+        "engine_version": "0.2.0-alpha.8",
+        "operation": "scenario.v1",
+        "status": "completed_with_limits",
+        "input_sha256": "75226531bfd7288fc17c7e781d7cd736e5a55a25ead4f18b77704decd186fc45",
+        "result": {
+          "schema_version": "0.1",
+          "subscribed_shares": 444400,
+          "frozen_amount": 7999200,
+          "assumptions": {
+            "capital": 10000000,
+            "requested_budget": 8000000,
+            "issue_price": 18,
+            "annual_cash_cost_rate": 0.02,
+            "fees": {
+              "commission_rate": 0.00025,
+              "minimum_commission": 5,
+              "stamp_rate": 0.0005,
+              "transfer_rate": 1e-05
+            },
+            "subscription_date": "2026-10-12",
+            "refund_available_date": "2026-10-14",
+            "sale_cash_available_date": "2026-10-20"
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "probability": null,
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "proportional_hands": 0,
+              "proportional_shares": 0,
+              "gross_profit": -0.0,
+              "sell_cost": 0,
+              "cash_cost": 876.6246575342466,
+              "capital_days": 15998400,
+              "net_profit": -876.6246575342466,
+              "cash_profit_before_opportunity_cost": -0.0,
+              "breakeven_listing_return": null,
+              "residual_extra_100_share_sensitivity": {
+                "assumed_total_shares": 100,
+                "gross_profit": -360.0,
+                "sell_cost": 5.7344,
+                "cash_cost": 877.2164383561644,
+                "capital_days": 16009200,
+                "net_profit": -1242.9508383561645,
+                "cash_profit_before_opportunity_cost": -365.7344,
+                "breakeven_listing_return": 0.4908805926334454
+              },
+              "account_period_return": -8.766246575342465e-05,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "probability": null,
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "proportional_hands": 1,
+              "proportional_shares": 100,
+              "gross_profit": 2160.0,
+              "sell_cost": 7.0196000000000005,
+              "cash_cost": 877.2164383561644,
+              "capital_days": 16009200,
+              "net_profit": 1275.7639616438355,
+              "cash_profit_before_opportunity_cost": 2152.9804,
+              "breakeven_listing_return": 0.4908805926334454,
+              "residual_extra_100_share_sensitivity": {
+                "assumed_total_shares": 200,
+                "gross_profit": 4320.0,
+                "sell_cost": 9.039200000000001,
+                "cash_cost": 877.8082191780821,
+                "capital_days": 16020000,
+                "net_profit": 3433.1525808219176,
+                "cash_profit_before_opportunity_cost": 4310.9608,
+                "breakeven_listing_return": 0.24585989387312046
+              },
+              "account_period_return": 0.00012757639616438354,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "probability": null,
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "proportional_hands": 2,
+              "proportional_shares": 200,
+              "gross_profit": 7200.0,
+              "sell_cost": 10.508,
+              "cash_cost": 877.8082191780821,
+              "capital_days": 16020000,
+              "net_profit": 6311.683780821918,
+              "cash_profit_before_opportunity_cost": 7189.492,
+              "breakeven_listing_return": 0.24585989387312046,
+              "residual_extra_100_share_sensitivity": {
+                "assumed_total_shares": 300,
+                "gross_profit": 10800.0,
+                "sell_cost": 13.262,
+                "cash_cost": 878.4,
+                "capital_days": 16030800,
+                "net_profit": 9908.338,
+                "cash_profit_before_opportunity_cost": 10786.738,
+                "breakeven_listing_return": 0.16418632761967866
+              },
+              "account_period_return": 0.0006311683780821918,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ],
+          "warnings": [
+            "Proportional whole lots only; residual allocation is unknown.",
+            "Extra-100-share sensitivity is conditional, not a probability, bound or guaranteed allocation.",
+            "Scenario inputs and probabilities are assumptions, not calibrated forecasts.",
+            "Cash costs use explicit dates and a simple annual rate; repo alternatives require a separate ledger."
+          ]
+        },
+        "error": null,
+        "scope": "Exact legacy delegation; source verification and account acceptance not performed"
+      }
+    },
+    {
+      "id": "announcement-cap",
+      "sample_kind": "teaching",
+      "note": "Announcement cap truncates subscription before allocation; no invented probability.",
+      "request": {
+        "api_version": "1.0",
+        "operation": "scenario.v1",
+        "input": {
+          "capital": 10000000,
+          "budget": 8000000,
+          "issue_price": 18,
+          "max_subscription_shares": 100000,
+          "subscription_date": "2026-10-12",
+          "refund_available_date": "2026-10-14",
+          "sale_cash_available_date": "2026-10-20",
+          "annual_cash_cost_rate": 0.02,
+          "fees": {
+            "commission_rate": 0.00025,
+            "minimum_commission": 5,
+            "stamp_rate": 0.0005,
+            "transfer_rate": 1e-05
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ]
+        }
+      },
+      "request_sha256": "8bc1cc044844519f8749348dfdce0939ddb13eaf161182c019e4f1680a550311",
+      "expected_response": {
+        "api_version": "1.0",
+        "engine_version": "0.2.0-alpha.8",
+        "operation": "scenario.v1",
+        "status": "completed_with_limits",
+        "input_sha256": "6f21d74aef507aa831fb53bf6be3962998ff575bdb535eded88b71daa1c6d550",
+        "result": {
+          "schema_version": "0.1",
+          "subscribed_shares": 100000,
+          "frozen_amount": 1800000,
+          "assumptions": {
+            "capital": 10000000,
+            "requested_budget": 8000000,
+            "issue_price": 18,
+            "annual_cash_cost_rate": 0.02,
+            "fees": {
+              "commission_rate": 0.00025,
+              "minimum_commission": 5,
+              "stamp_rate": 0.0005,
+              "transfer_rate": 1e-05
+            },
+            "subscription_date": "2026-10-12",
+            "refund_available_date": "2026-10-14",
+            "sale_cash_available_date": "2026-10-20"
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "probability": null,
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "proportional_hands": 0,
+              "proportional_shares": 0,
+              "gross_profit": -0.0,
+              "sell_cost": 0,
+              "cash_cost": 197.26027397260273,
+              "capital_days": 3600000,
+              "net_profit": -197.26027397260273,
+              "cash_profit_before_opportunity_cost": -0.0,
+              "breakeven_listing_return": null,
+              "residual_extra_100_share_sensitivity": {
+                "assumed_total_shares": 100,
+                "gross_profit": -360.0,
+                "sell_cost": 5.7344,
+                "cash_cost": 197.85205479452054,
+                "capital_days": 3610800,
+                "net_profit": -563.5864547945205,
+                "cash_profit_before_opportunity_cost": -365.7344,
+                "breakeven_listing_return": 0.11326335030561174
+              },
+              "account_period_return": -1.9726027397260273e-05,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "probability": null,
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "proportional_hands": 0,
+              "proportional_shares": 0,
+              "gross_profit": 0.0,
+              "sell_cost": 0,
+              "cash_cost": 197.26027397260273,
+              "capital_days": 3600000,
+              "net_profit": -197.26027397260273,
+              "cash_profit_before_opportunity_cost": 0.0,
+              "breakeven_listing_return": null,
+              "residual_extra_100_share_sensitivity": {
+                "assumed_total_shares": 100,
+                "gross_profit": 2160.0,
+                "sell_cost": 7.0196000000000005,
+                "cash_cost": 197.85205479452054,
+                "capital_days": 3610800,
+                "net_profit": 1955.1283452054795,
+                "cash_profit_before_opportunity_cost": 2152.9804,
+                "breakeven_listing_return": 0.11326335030561174
+              },
+              "account_period_return": -1.9726027397260273e-05,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "probability": null,
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "proportional_hands": 0,
+              "proportional_shares": 0,
+              "gross_profit": 0.0,
+              "sell_cost": 0,
+              "cash_cost": 197.26027397260273,
+              "capital_days": 3600000,
+              "net_profit": -197.26027397260273,
+              "cash_profit_before_opportunity_cost": 0.0,
+              "breakeven_listing_return": null,
+              "residual_extra_100_share_sensitivity": {
+                "assumed_total_shares": 100,
+                "gross_profit": 3600.0,
+                "sell_cost": 7.754,
+                "cash_cost": 197.85205479452054,
+                "capital_days": 3610800,
+                "net_profit": 3394.3939452054797,
+                "cash_profit_before_opportunity_cost": 3592.246,
+                "breakeven_listing_return": 0.11326335030561174
+              },
+              "account_period_return": -1.9726027397260273e-05,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ],
+          "warnings": [
+            "Proportional whole lots only; residual allocation is unknown.",
+            "Extra-100-share sensitivity is conditional, not a probability, bound or guaranteed allocation.",
+            "Scenario inputs and probabilities are assumptions, not calibrated forecasts.",
+            "Cash costs use explicit dates and a simple annual rate; repo alternatives require a separate ledger."
+          ]
+        },
+        "error": null,
+        "scope": "Exact legacy delegation; source verification and account acceptance not performed"
+      }
+    },
+    {
+      "id": "retained-principal-ledger",
+      "sample_kind": "teaching",
+      "note": "Refund leaves allocated principal outstanding; do not treat cash as completed realized profit.",
+      "request": {
+        "api_version": "1.0",
+        "operation": "cash_ledger.v1",
+        "input": {
+          "initial_cash": 1000,
+          "calendar": {
+            "source": "教学日历，非官方已核验交易日历",
+            "basis": "assumption",
+            "coverage_start": "2026-10-12",
+            "coverage_end": "2026-10-20",
+            "trading_dates": [
+              "2026-10-12",
+              "2026-10-13",
+              "2026-10-14",
+              "2026-10-15",
+              "2026-10-16",
+              "2026-10-19",
+              "2026-10-20"
+            ]
+          },
+          "events": [
+            {
+              "id": "A-freeze",
+              "instrument": "DEMO-A",
+              "date": "2026-10-12",
+              "kind": "freeze",
+              "amount": 1000,
+              "evidence": {
+                "basis": "assumption",
+                "source": "教学现金计划"
+              }
+            },
+            {
+              "id": "A-refund",
+              "instrument": "DEMO-A",
+              "date": "2026-10-14",
+              "kind": "refund",
+              "amount": 800,
+              "evidence": {
+                "basis": "assumption",
+                "source": "教学现金计划"
+              }
+            }
+          ]
+        }
+      },
+      "request_sha256": "d6a4716d214c5fdccd669817fb363e76c273fd33973e75c759b6f4f241ff17bc",
+      "expected_response": {
+        "api_version": "1.0",
+        "engine_version": "0.2.0-alpha.8",
+        "operation": "cash_ledger.v1",
+        "status": "completed_with_limits",
+        "input_sha256": "f5b4c2f7e75f0b50d2b69f40828a44300da2eb58fbdf5e9e5d48a9dde6349c7b",
+        "result": {
+          "schema_version": "0.2-alpha",
+          "executable": true,
+          "conflicts": [],
+          "events": [
+            {
+              "date": "2026-10-12",
+              "order": 0,
+              "event_id": "A-freeze",
+              "kind": "freeze",
+              "available_cash": 0.0,
+              "ipo_principal": 1000.0,
+              "repo_principal": 0.0,
+              "available_cash_exact": "0",
+              "ipo_principal_exact": "1000",
+              "repo_principal_exact": "0"
+            },
+            {
+              "date": "2026-10-14",
+              "order": 1,
+              "event_id": "A-refund",
+              "kind": "refund",
+              "available_cash": 800.0,
+              "ipo_principal": 200.0,
+              "repo_principal": 0.0,
+              "available_cash_exact": "800",
+              "ipo_principal_exact": "200",
+              "repo_principal_exact": "0"
+            }
+          ],
+          "final_available_cash": 800.0,
+          "outstanding_ipo_principal": 200.0,
+          "outstanding_repo_principal": 0.0,
+          "final_available_cash_exact": "800",
+          "outstanding_ipo_principal_exact": "200",
+          "outstanding_repo_principal_exact": "0",
+          "calendar_basis": "assumption",
+          "warnings": [
+            "Explicit input events only; no automatic order selection or trading.",
+            "Without complete same-day timing, commitments precede releases.",
+            "Source records and calendar completeness require independent review."
+          ]
+        },
+        "error": null,
+        "scope": "Exact legacy delegation; source verification and account acceptance not performed"
+      }
+    },
+    {
+      "id": "same-day-shortage",
+      "sample_kind": "teaching",
+      "note": "No partial execution or financing: infeasible is distinct from malformed input.",
+      "request": {
+        "api_version": "1.0",
+        "operation": "cash_ledger.v1",
+        "input": {
+          "initial_cash": 500,
+          "calendar": {
+            "source": "教学日历，非官方已核验交易日历",
+            "basis": "assumption",
+            "coverage_start": "2026-10-12",
+            "coverage_end": "2026-10-20",
+            "trading_dates": [
+              "2026-10-12",
+              "2026-10-13",
+              "2026-10-14",
+              "2026-10-15",
+              "2026-10-16",
+              "2026-10-19",
+              "2026-10-20"
+            ]
+          },
+          "events": [
+            {
+              "id": "A-freeze",
+              "instrument": "DEMO-A",
+              "date": "2026-10-12",
+              "kind": "freeze",
+              "amount": 1000,
+              "evidence": {
+                "basis": "assumption",
+                "source": "教学现金计划"
+              }
+            },
+            {
+              "id": "A-refund",
+              "instrument": "DEMO-A",
+              "date": "2026-10-14",
+              "kind": "refund",
+              "amount": 800,
+              "evidence": {
+                "basis": "assumption",
+                "source": "教学现金计划"
+              }
+            },
+            {
+              "id": "A-sale",
+              "instrument": "DEMO-A",
+              "date": "2026-10-20",
+              "kind": "sale",
+              "amount": 250,
+              "principal_released": 200,
+              "evidence": {
+                "basis": "assumption",
+                "source": "教学现金计划，amount为扣除卖出费用后现金净回款"
+              }
+            }
+          ]
+        }
+      },
+      "request_sha256": "f7a2363b1954cfbaebe15db37bdc8d16538cc5d051790c00c2b873e02c477b91",
+      "expected_response": {
+        "api_version": "1.0",
+        "engine_version": "0.2.0-alpha.8",
+        "operation": "cash_ledger.v1",
+        "status": "infeasible",
+        "input_sha256": "c94e462b1cfb72c67f5745b47fcf1a342e1e151b65d63937ea780b25f3c325ab",
+        "result": {
+          "schema_version": "0.2-alpha",
+          "executable": false,
+          "conflicts": [
+            {
+              "date": "2026-10-12",
+              "required": 1000.0,
+              "available": 500.0,
+              "shortage": 500.0,
+              "event_ids": [
+                "A-freeze"
+              ]
+            }
+          ],
+          "events": [],
+          "final_available_cash": 500.0,
+          "outstanding_ipo_principal": 0.0,
+          "outstanding_repo_principal": 0.0,
+          "final_available_cash_exact": "500",
+          "outstanding_ipo_principal_exact": "0",
+          "outstanding_repo_principal_exact": "0",
+          "calendar_basis": "assumption",
+          "warnings": [
+            "Explicit input events only; no automatic order selection or trading.",
+            "Without complete same-day timing, commitments precede releases.",
+            "Source records and calendar completeness require independent review."
+          ]
+        },
+        "error": null,
+        "scope": "Exact legacy delegation; source verification and account acceptance not performed"
+      }
+    },
+    {
+      "id": "missing-refund-cash-date",
+      "sample_kind": "teaching",
+      "note": "No default T+2/T+3 or automatic cash date.",
+      "request": {
+        "api_version": "1.0",
+        "operation": "scenario.v1",
+        "input": {
+          "capital": 10000000,
+          "budget": 8000000,
+          "issue_price": 18,
+          "max_subscription_shares": 600000,
+          "subscription_date": "2026-10-12",
+          "sale_cash_available_date": "2026-10-20",
+          "annual_cash_cost_rate": 0.02,
+          "fees": {
+            "commission_rate": 0.00025,
+            "minimum_commission": 5,
+            "stamp_rate": 0.0005,
+            "transfer_rate": 1e-05
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ]
+        }
+      },
+      "request_sha256": "a3ee07be388106308f72c90ce2bf049cbd594288dc4c16d3f00b6cc59c78d099",
+      "expected_response": {
+        "api_version": "1.0",
+        "engine_version": "0.2.0-alpha.8",
+        "status": "failed",
+        "result": null,
+        "input_sha256": null,
+        "error": {
+          "kind": "KeyError",
+          "message": "'refund_available_date'"
+        },
+        "scope": "No partial result promoted to success"
+      }
+    },
+    {
+      "id": "missing-explicit-fee",
+      "sample_kind": "teaching",
+      "note": "No default zero fee.",
+      "request": {
+        "api_version": "1.0",
+        "operation": "scenario.v1",
+        "input": {
+          "capital": 10000000,
+          "budget": 8000000,
+          "issue_price": 18,
+          "max_subscription_shares": 600000,
+          "subscription_date": "2026-10-12",
+          "refund_available_date": "2026-10-14",
+          "sale_cash_available_date": "2026-10-20",
+          "annual_cash_cost_rate": 0.02,
+          "fees": {
+            "commission_rate": 0.00025,
+            "stamp_rate": 0.0005,
+            "transfer_rate": 1e-05
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ]
+        }
+      },
+      "request_sha256": "e00b6e0de9d6ad66ccd1c0de5a330cd96d1ff229a851cd8a0757d37984ed7b4c",
+      "expected_response": {
+        "api_version": "1.0",
+        "engine_version": "0.2.0-alpha.8",
+        "status": "failed",
+        "result": null,
+        "input_sha256": null,
+        "error": {
+          "kind": "KeyError",
+          "message": "'minimum_commission'"
+        },
+        "scope": "No partial result promoted to success"
+      }
+    },
+    {
+      "id": "wrong-native-number-type",
+      "sample_kind": "teaching",
+      "note": "Do not silently convert formatted/text units to native numbers.",
+      "request": {
+        "api_version": "1.0",
+        "operation": "scenario.v1",
+        "input": {
+          "capital": 10000000,
+          "budget": 8000000,
+          "issue_price": "18",
+          "max_subscription_shares": 600000,
+          "subscription_date": "2026-10-12",
+          "refund_available_date": "2026-10-14",
+          "sale_cash_available_date": "2026-10-20",
+          "annual_cash_cost_rate": 0.02,
+          "fees": {
+            "commission_rate": 0.00025,
+            "minimum_commission": 5,
+            "stamp_rate": 0.0005,
+            "transfer_rate": 1e-05
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ]
+        }
+      },
+      "request_sha256": "844c37e976543d0593e5264d29af8a29b72d0ca109186e9e654256006201a552",
+      "expected_response": {
+        "api_version": "1.0",
+        "engine_version": "0.2.0-alpha.8",
+        "status": "failed",
+        "result": null,
+        "input_sha256": null,
+        "error": {
+          "kind": "ValueError",
+          "message": "issue_price: expected numeric value"
+        },
+        "scope": "No partial result promoted to success"
+      }
+    },
+    {
+      "id": "annual-operation-unsupported",
+      "sample_kind": "teaching",
+      "note": "Legacy annual workbench must remain; no replacement API.",
+      "request": {
+        "api_version": "1.0",
+        "operation": "annual.v1",
+        "input": {
+          "capital": 10000000,
+          "budget": 8000000,
+          "issue_price": 18,
+          "max_subscription_shares": 600000,
+          "subscription_date": "2026-10-12",
+          "refund_available_date": "2026-10-14",
+          "sale_cash_available_date": "2026-10-20",
+          "annual_cash_cost_rate": 0.02,
+          "fees": {
+            "commission_rate": 0.00025,
+            "minimum_commission": 5,
+            "stamp_rate": 0.0005,
+            "transfer_rate": 1e-05
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ]
+        }
+      },
+      "request_sha256": "563b7a6570a7915fa276620fc71a7c9c700b750a8e6c4b02480a6fee021ffd41",
+      "expected_response": {
+        "api_version": "1.0",
+        "engine_version": "0.2.0-alpha.8",
+        "status": "failed",
+        "result": null,
+        "input_sha256": null,
+        "error": {
+          "kind": "ValueError",
+          "message": "Unsupported API version or operation"
+        },
+        "scope": "No partial result promoted to success"
+      }
+    },
+    {
+      "id": "api-version-mismatch",
+      "sample_kind": "teaching",
+      "note": "Unsupported API version rejects.",
+      "request": {
+        "api_version": "2.0",
+        "operation": "scenario.v1",
+        "input": {
+          "capital": 10000000,
+          "budget": 8000000,
+          "issue_price": 18,
+          "max_subscription_shares": 600000,
+          "subscription_date": "2026-10-12",
+          "refund_available_date": "2026-10-14",
+          "sale_cash_available_date": "2026-10-20",
+          "annual_cash_cost_rate": 0.02,
+          "fees": {
+            "commission_rate": 0.00025,
+            "minimum_commission": 5,
+            "stamp_rate": 0.0005,
+            "transfer_rate": 1e-05
+          },
+          "scenarios": [
+            {
+              "id": "low",
+              "allocation_rate": 0.00015,
+              "listing_return": -0.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "middle",
+              "allocation_rate": 0.00033,
+              "listing_return": 1.2,
+              "basis": "演示假设，不对应真实发行"
+            },
+            {
+              "id": "high",
+              "allocation_rate": 0.0005,
+              "listing_return": 2.0,
+              "basis": "演示假设，不对应真实发行"
+            }
+          ]
+        }
+      },
+      "request_sha256": "e7ea6442382af5cc652f3d5c440eef6a372a8931f98af6692671288b291ec22a",
+      "expected_response": {
+        "api_version": "1.0",
+        "engine_version": "0.2.0-alpha.8",
+        "status": "failed",
+        "result": null,
+        "input_sha256": null,
+        "error": {
+          "kind": "ValueError",
+          "message": "Unsupported API version or operation"
+        },
+        "scope": "No partial result promoted to success"
+      }
+    }
+  ],
+  "limits": [
+    "Hypothetical inputs; no real account acceptance.",
+    "External workbench must preserve full response, input hash, versions, failure and unknowns.",
+    "Cannot drop slippage, financing or annual fields to claim equivalence."
+  ]
+}
