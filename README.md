@@ -1,92 +1,96 @@
 # 北交所打新研究引擎
 
-面向北交所网上发行的获配、现金占用与净收益情景研究。由四份设计材料整合修订，首版交付可运行的测算内核与统一设计规范。
+研究北交所网上发行的比例获配情景、现金占用与公开发行证据，保存来源、假设和缺口。
 
-**当前版本：v0.2.0-alpha.8，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。教学示例不代表真实新股；data包含已核对的官方排期及一个公开发行样本，核验范围与资金假设分别标注。真实账户验收按用户要求暂停，其他公开资料工作继续。
+## 版本与状态
 
-## 已实现
+已发布功能预览版：[v0.2.0-alpha.8](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.8)。源码计算版本为 `0.2.0-alpha.8`，工作台接口版本为 `1.0`；本次为文档快照整理，未新增计算能力。历史发布包保持冻结，主分支说明与下载包按各自版本阅读。
 
-- 根据预算、公告申购上限与100股单位计算有效申购金额。
-- 成对输入配售率及上市涨跌幅，计算比例整手获配、卖出费用与资金成本。
-- 支持无权重情景比较；只有声明完整概率及依据才计算加权期望、标准差与亏损概率。
-- 比例整手为零仍计资金成本；不足百股余股获配保留未知。
-- 使用显式申购、退款可用和卖出现金可用日期，包含获配本金后续占用。
-- 输入校验、可复现教学示例与 GitHub Actions 检查。
-- 发行事实候选登记：保留来源、单位、缺失和冲突，不自动认定原文已核验。
-- 多只发行及回购事件现金账：同日冻结冲突、退款、获配本金留存、卖出回款。
-- 显式交易日历覆盖检查，以及逐笔回购实际交收日计息。
-- research-workbench优势适配：研究包绑定、来源保存、事实候选原文哈希绑定、公告版本线索和PDF正文差异比较。
-- 获取/解析/计算/原文核验分别记录；失败保留原因与下一步，不用成功状态掩盖缺口。
-- 同本金、同期间的两个显式现金方案对照；费用单列、精确小数现金保存，撞资或未回收本金时不比较盈亏。
-- 根据已核对的北交所2026年度与专项休市公告生成计划交易日历，调休工作周末保持休市。
-- 盈亏平衡卖出涨幅与额外100股条件敏感性，费用和留存本金重新计算，不虚构余股概率。
-- 历史发行档案、事前本地快照与事后复盘分离；补录标为历史重建，信息时点与来源缺口保留。
-- 一个官方历史发行样本：悦龙科技920188，八项字段/来源/版本核验记录、配售率复算及假设现金占用回放。
-- 小规模公开/教学验收矩阵与v1.0计算接口，旧入口保留；主包年度情景尚未等价迁移。
+文档整理日期：2026-10-09。安装包见 [Releases](https://github.com/KILING-TASI/bjx-ipo-engine/releases)，变更见 [CHANGELOG](CHANGELOG.md)。真实账户验收按用户要求暂停，公开资料工作继续。
 
 ## 快速开始
 
-Python 3.10及以上，基础情景、现金账和证据包无第三方依赖；PDF正文比较按需安装pypdf。在项目目录运行：
+Python 3.10 及以上。在仓库目录运行，基础示例不联网、不需要第三方组件：
 
 ```bash
 python engine.py examples/scenarios.json
-python engine.py examples/scenarios.json --output result.json
-python research.py facts examples/facts.json
-python research.py ledger examples/ledger.json
-python -m unittest discover -s tests -v
 ```
 
-统一入口生成可读报告、输入快照、结果及摘要清单：
+这是人为教学参数，不代表真实新股、用户账户或未来收益。生成可读报告与输入底稿：
 
 ```bash
 python bjx.py scenarios examples/scenarios.json --out-dir local-data/scenarios-01
-python bjx.py facts examples/facts.json --out-dir local-data/facts-01
-python bjx.py ledger examples/ledger.json --out-dir local-data/ledger-01
-python bjx.py versions examples/versions.json --out-dir local-data/versions-01
-python bjx.py compare-cash examples/compare-cash.json --out-dir local-data/cash-comparison-01
-python bjx.py calendar data/bse-2026-schedule.json --out-dir local-data/calendar-2026-01
-python bjx.py public-sample examples/public-sample.json --out-dir local-data/yuelong-01
-python bjx.py sample-validation examples/sample-validation.json --out-dir local-data/validation-01
 python bjx.py verify local-data/scenarios-01
 ```
 
-每份研究包含report.md、report.html、input.json、result.json和manifest.json。SHA256检查证明保存内容一致，不是数字签名、可信时间戳、来源认证或研究判断认证。HTML为转义后的标题与表格阅读版，结构检查不代替完整视觉验收。联网来源仅在capture模式主动指定--online时访问。
+输出目录必须是新目录，避免覆盖旧研究。PDF 原文比较按需使用 `pypdf`，当前验收版本为 6.14.2；基础例子不要求安装它。下载和代码许可不代表获得第三方资料使用权。
 
-输出文件必须为新文件，避免覆盖研究记录。金额单位人民币，所有费率和收益率均为小数，例如0.0005表示0.05%，1.2表示120%。
+## 已实现与边界
 
-真实使用时须替换示例发行价格、公告申购上限、现金日期、费用、情景及其依据。日期由调用方核实，不自动假定T+2；佣金、税费和券商舍入也应按实际发行期间与账单核实。
+| 能力 | 当前范围 |
+|---|---|
+| 获配与收益情景 | 预算、公告上限、百股单位、联合配售率/涨幅情景、费用、机会成本、平衡点及额外百股条件敏感性 |
+| 现金账与对照 | 明确日期的多发行和回购事件；同本金同期间比较，撞资或未结清时保留缺口 |
+| 来源与档案 | 主动来源保存、原文摘要绑定、更正标题线索、PDF 提取差异、假设快照与事后分离复盘 |
+| 官方排期与样本 | 2026 年北交所计划交易日历；悦龙科技（920188）一只历史发行的八项选定字段 |
+| 计算接口 | v1.0 情景与现金账接口，旧入口保留；与主工作台年度情景尚未证实等价 |
 
-## 如何理解输出
+没有自动申购、交易执行、经过验证的中签率预测模型、全年完整回放或收益承诺。真实个人获配、余股、券商到账及卖出结果不能由公开汇总比例还原。教学案例不计入真实发行数量。
 
-`proportional_hands` 为比例部分百股手数；`probability_zero_proportional_hands` 为输入情景权重下比例整手为零的概率，**不等于最终零获配概率**。余股按申购数量与时间排序，当前未建模。破发时额外获配也可能增加损失。
+## 输入与关键口径
 
-`net_profit` 扣除了声明的机会成本；`account_period_return` 用账户本金作分母，只覆盖本次发行期间，不是全年或复利年化。未计算闲置现金收益，未默认叠加融资成本。
+- 金额单位为人民币；收益率及费率用小数，例如 `0.0005` 表示 0.05%，`1.2` 表示 120%。
+- 公告申购上限按股数输入，申购按 100 股单位取整；比例获配不等于最终个人获配。
+- 申购日、公告退款日、退款资金可用日、上市日与卖出现金可用日分别记录，不自动猜 T+2 或上市日卖出。
+- 最低佣金取 `max(成交额×佣金率, 最低佣金)`，示例假设一次成交。净回款中已扣的费用不得重复录入。
+- 情景净收益扣声明的机会成本；现金替代差额直接比较回款，不再次扣同一机会成本。期间收益率不是全年或复利年化。
+- 现在补录历史假设标为重建，不计成事前预测；本地时间与哈希不是外部可信时间戳。
 
-`listing_return` 当前为固定情景卖出收益假设，不代表首日卖点预测。最低佣金按 `max(成交额×佣金率,最低佣金)` 计算；示例假设一次卖出成交，没有分批最低费用。
+详细契约见 [统一设计](docs/design.md)、[现金账](docs/cash-and-evidence.md)、[敏感性](docs/scenario-sensitivity.md)和 [工作台接口](docs/workbench-contract.md)。
 
-## 文档
+## 输出、来源与缺失状态
 
-- [统一设计与模块边界](docs/design.md)
-- [原方案纠错与版本变更](docs/corrections.md)
-- [规则来源与类似项目](docs/sources.md)
-- [开发路线和验收标准](docs/roadmap.md)
-- [现金账和发行事实接口](docs/cash-and-evidence.md)
-- [开发接续记录](docs/progress.md)
-- [从research-workbench补入的能力与使用方式](docs/workbench-integration.md)
-- [同期间现金方案对照口径](docs/cash-comparison.md)
-- [官方交易日历核验记录](docs/calendar-verification.md)
-- [盈亏平衡与余股敏感性](docs/scenario-sensitivity.md)
-- [历史档案、冻结与复盘](docs/history-replay.md)
-- [首个官方样本：悦龙科技](docs/public-sample-920188.md)
-- [验收矩阵与实际覆盖](docs/sample-validation.md)
-- [主工作台计算契约](docs/workbench-contract.md)
+研究包包括 `report.md`、`report.html`、`input.json`、`result.json` 和 `manifest.json`。HTML 表格经过转义；结构检查不代替完整视觉验收。摘要检查只证明保存内容一致，不认证来源真实性、计算正确性或研究判断。
 
-## 发布与复用
+资料获取、解析、计算、选定原文匹配和视觉状态分列。缺失不填零，冲突不自动选值；失败保留原因和下一步。离线复用记录与重新核对原文分别标注。仅 `capture --online` 主动访问指定来源。
 
-本仓库复用research-workbench的两个MIT许可公告比较文件，来源固定提交、版权及许可见[第三方说明](THIRD_PARTY_NOTICES.md)。不附Wind数据库、第三方公告附件或作者私人缓存。其他代码尚未统一授予开源许可证；公开可见不代表取得其复制、分发或商用许可。后续授权由仓库所有者决定。
+可运行的其他入口：
 
-研究输出不构成投资建议。实际配售、现金到账和费用以适用规则、发行公告及账户记录为准。
+```bash
+python bjx.py compare-cash examples/compare-cash.json --out-dir local-data/cash-01
+python bjx.py calendar data/bse-2026-schedule.json --out-dir local-data/calendar-01
+python bjx.py public-sample examples/public-sample.json --out-dir local-data/yuelong-01
+python bjx.py sample-validation examples/sample-validation.json --out-dir local-data/validation-01
+```
+
+公共样本入口复用真实发行字段，但预算及退款资金可用日仍是假设，不认证账户收益。来源和覆盖见 [官方日历](docs/calendar-verification.md)、[悦龙样本](docs/public-sample-920188.md)、[验收矩阵](docs/sample-validation.md)及 [历史档案](docs/history-replay.md)。
+
+## 验证范围
+
+alpha.8 已通过 72 项本地检查及 Windows/Linux、Python 3.10/3.12 检查，包含独立解压包、标准库例子和接口同输入对照。这是工程范围，不是 72 个真实研究样本或预测准确率。
+
+真实发行覆盖为一只、八项选定字段；仍缺第二个发行、全部更正、可信历史首次公开时钟、真实个人余股及到账。报告完整视觉验收与实际账户验收未完成，后者处于用户暂停状态。
+
+```bash
+python -m unittest discover -s tests -v
+python .github/scripts/check_docs.py
+python .github/scripts/check_package.py
+```
+
+## 后续路线
+
+优先补充公开发行样本及更正证据，再讨论更完整回放和跨包等价迁移。同行估值、上市后流动性只在指定范围和资料充分时研究，不扩全市场承诺。当前与历史状态见 [路线](docs/roadmap.md)、[开发记录](docs/progress.md)和 [版本变更](CHANGELOG.md)。
+
+## 与其他仓库的关系
+
+本仓库是轻量北交所计算与证据引擎；[research-workbench](https://github.com/KILING-TASI/research-workbench)负责更广的研究组织、资料与报告。当前仅提供 [版本化接口](docs/workbench-contract.md)，不修改主包，也不要求删除尚无等价实现的功能。复用范围见 [适配说明](docs/workbench-integration.md)。
+
+## 许可与第三方资料
+
+两个复用公告模块保留 research-workbench 的 MIT 许可，见 [第三方说明](THIRD_PARTY_NOTICES.md)和 [许可原文](licenses/research-workbench-MIT.txt)。其他代码尚未统一授予开源许可；本次未新增或更换 LICENSE，公开可见不代表获得复制、分发或商用授权。
+
+不附 Wind 数据库、用户账户、私人缓存或完整原公告。行情、公告、研报、商标及外部组件的权利独立适用；代码许可不授予第三方数据使用权。
 
 ## 免责声明
 
-本项目仅供学习与研究，不构成投资建议或交易指令，不保证收益或结果准确性。请在使用前阅读[免责声明与使用边界](DISCLAIMER.md)，并结合本次数据来源、假设与缺口独立判断。代码许可不包含第三方数据使用授权。
+仅供学习与研究，不构成投资建议或交易指令，不保证收益、获配或结果准确性。使用前请阅读 [免责声明与使用边界](DISCLAIMER.md)，核对本次来源、日期和假设。

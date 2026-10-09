@@ -24,9 +24,15 @@ def main():
                     raise ValueError('Private files included in release archive')
             zipped.extractall(target)
         for filename in ('vendor/announcement_versions.py', 'vendor/compare_original_versions.py',
-                         'licenses/research-workbench-MIT.txt', 'THIRD_PARTY_NOTICES.md'):
+                         'licenses/research-workbench-MIT.txt', 'THIRD_PARTY_NOTICES.md',
+                         'README.md','DISCLAIMER.md','CHANGELOG.md','data/bse-2026-schedule.json','data/public-samples/920188.json'):
             if not (target / filename).is_file():
                 raise ValueError('Dependency/attribution missing from package')
+        if (target/'README.md').read_bytes()!=(ROOT/'README.md').read_bytes():
+            # Archives normalize LF; local checkout may use CRLF on Windows.
+            if (target/'README.md').read_text(encoding='utf-8')!=(ROOT/'README.md').read_text(encoding='utf-8'):
+                raise ValueError('Packaged README differs from current checkout')
+        subprocess.run([sys.executable,'-S','.github/scripts/check_docs.py'],cwd=target,check=True)
         for mode, example in [('scenarios', 'scenarios'), ('facts', 'facts'), ('ledger', 'ledger'), ('versions', 'versions'), ('compare-cash', 'compare-cash'), ('freeze','freeze'), ('archive','archive'),('public-sample','public-sample'),('sample-validation','sample-validation')]:
             destination = temp / ('report-' + mode)
             subprocess.run([sys.executable, '-S', 'bjx.py', mode, f'examples/{example}.json',

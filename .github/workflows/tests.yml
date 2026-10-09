@@ -24,4 +24,5 @@ jobs:
       - run: python engine.py examples/scenarios.json
       - run: python research.py facts examples/facts.json
       - run: python research.py ledger examples/ledger.json
+      - run: python .github/scripts/check_docs.py
       - run: python .github/scripts/check_package.py
