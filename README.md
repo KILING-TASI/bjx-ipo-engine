@@ -109,3 +109,5 @@ python .github/scripts/check_package.py
 资金、历史样本与方案选择的 [方法卡及验收](docs/funding-history-methods.md)区分已实现与未实现统计能力。
 
 当前职责、数据入口、版本分层和本批结案范围统一见 [数据与交付契约目录](docs/data-contract-inventory.md)。包装样例仅本地无损验证，跨仓数据读取待核验，不代表九仓统一。
+
+独立安装范围：wheel 提供计算模块，可在独立环境用 `python -I -m api` 输入完整 JSON 请求；最短离线 demo 使用完整本仓源码归档，wheel 不包含 demo/示例/公开字段资源。无需其他自家仓或安装工作台。[单仓独立验收](docs/standalone-acceptance.md)分别记录两条路径。
