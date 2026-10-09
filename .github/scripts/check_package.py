@@ -31,6 +31,9 @@ def main():
             subprocess.run([sys.executable, '-S', 'bjx.py', mode, f'examples/{example}.json',
                             '--out-dir', str(destination)], cwd=target, check=True)
             subprocess.run([sys.executable, '-S', 'bjx.py', 'verify', str(destination)], cwd=target, check=True)
+        destination=temp/'report-calendar'
+        subprocess.run([sys.executable, '-S', 'bjx.py', 'calendar', 'data/bse-2026-schedule.json', '--out-dir', str(destination)],cwd=target,check=True)
+        subprocess.run([sys.executable, '-S', 'bjx.py', 'verify', str(destination)],cwd=target,check=True)
     print('Portable package examples and content binding passed; no source or visual certification.')
 
 

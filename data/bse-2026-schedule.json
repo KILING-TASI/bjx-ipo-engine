@@ -1,0 +1,117 @@
+{
+  "year": 2026,
+  "exchange": "BSE",
+  "weekdays": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sources": [
+    {
+      "id": "annual",
+      "url": "https://www.bse.cn/important_news/200027428.html",
+      "document_date": "2025-12-22",
+      "locator": "2026年度公告，一、休市安排（一）至（七）",
+      "captured_sha256": "1d6178157837f021dcb98c1206ee2f6f8cafcadbbb5b1cb0ac3637bbe82387ab",
+      "retrieved_at": "2026-10-09T04:33:06.328701+00:00",
+      "reviewed_on": "2026-10-09"
+    },
+    {
+      "id": "autumn",
+      "url": "https://www.bse.cn/important_news/200029478.html",
+      "document_date": "2026-09-17",
+      "locator": "中秋国庆专项公告，一、休市安排",
+      "captured_sha256": "2913b4e48e651e797c77ec1c84d63c10ae956a34542dc0f278cd4247d112a0bd",
+      "retrieved_at": "2026-10-09T04:33:06.592725+00:00",
+      "reviewed_on": "2026-10-09"
+    },
+    {
+      "id": "old-rules",
+      "url": "https://www.bse.cn/jygl_list/200010919.html",
+      "document_date": "2021-11-02",
+      "locator": "历史交易规则（试行）2.3.1，仅交叉核对周规则，不认证全部历史变更",
+      "captured_sha256": "9e2271bef634fd9337c4ee1cef8679a5cb99f813f6e1aae4d099b57d2a01ad18",
+      "retrieved_at": "2026-10-09T04:33:37.258793+00:00",
+      "reviewed_on": "2026-10-09"
+    },
+    {
+      "id": "rules",
+      "url": "https://www.bse.cn/jygl_list/200028217.html",
+      "document_date": "2026-04-24",
+      "locator": "2026年7月6日起施行的交易规则2.3.1",
+      "captured_sha256": "f15d8685e71e5686343600d68a7c8c8d11386bee54fc998b5638273c9ae1fbc4",
+      "retrieved_at": "2026-10-09T04:33:07.010864+00:00",
+      "reviewed_on": "2026-10-09"
+    }
+  ],
+  "holiday_closures": [
+    {
+      "name": "new-year",
+      "start": "2026-01-01",
+      "end": "2026-01-03",
+      "source_ids": [
+        "annual"
+      ]
+    },
+    {
+      "name": "spring",
+      "start": "2026-02-15",
+      "end": "2026-02-23",
+      "source_ids": [
+        "annual"
+      ]
+    },
+    {
+      "name": "qingming",
+      "start": "2026-04-04",
+      "end": "2026-04-06",
+      "source_ids": [
+        "annual"
+      ]
+    },
+    {
+      "name": "labour",
+      "start": "2026-05-01",
+      "end": "2026-05-05",
+      "source_ids": [
+        "annual"
+      ]
+    },
+    {
+      "name": "dragon-boat",
+      "start": "2026-06-19",
+      "end": "2026-06-21",
+      "source_ids": [
+        "annual"
+      ]
+    },
+    {
+      "name": "mid-autumn",
+      "start": "2026-09-25",
+      "end": "2026-09-27",
+      "source_ids": [
+        "annual",
+        "autumn"
+      ]
+    },
+    {
+      "name": "national-day",
+      "start": "2026-10-01",
+      "end": "2026-10-07",
+      "source_ids": [
+        "annual",
+        "autumn"
+      ]
+    }
+  ],
+  "explicit_weekend_closures": [
+    "2026-01-04",
+    "2026-02-14",
+    "2026-02-28",
+    "2026-05-09",
+    "2026-09-20",
+    "2026-10-10"
+  ]
+}

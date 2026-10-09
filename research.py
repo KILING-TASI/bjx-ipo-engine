@@ -73,8 +73,13 @@ class Calendar:
     def __init__(self, data):
         text(data['source'], 'calendar source')
         self.basis = text(data['basis'], 'calendar basis')
-        if self.basis not in ('assumption', 'original', 'third_party'):
+        if self.basis not in ('assumption', 'original', 'third_party', 'derived'):
             raise ValueError('invalid calendar basis')
+        if self.basis == 'derived':
+            provenance = data['derivation']
+            text(provenance['method'], 'calendar derivation method')
+            if not provenance['sources']:
+                raise ValueError('Derived calendar requires source records')
         self.start = date.fromisoformat(data['coverage_start'])
         self.end = date.fromisoformat(data['coverage_end'])
         if self.end < self.start:

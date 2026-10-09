@@ -2,7 +2,7 @@
 
 面向北交所网上发行的获配、现金占用与净收益情景研究。由四份设计材料整合修订，首版交付可运行的测算内核与统一设计规范。
 
-**当前版本：v0.2.0-alpha.3，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。示例全部为人为教学假设，不代表真实新股或2026年市场统计。v0.1.0保留为首个稳定研究原型。
+**当前版本：v0.2.0-alpha.4，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。教学示例不代表真实新股；data中的2026北交所排期来自已核对的官方公告，仍不认证实际临时开停市。真实账户验收按用户要求暂停，其他公开资料工作继续。
 
 ## 已实现
 
@@ -18,6 +18,7 @@
 - research-workbench优势适配：研究包绑定、来源保存、事实候选原文哈希绑定、公告版本线索和PDF正文差异比较。
 - 获取/解析/计算/原文核验分别记录；失败保留原因与下一步，不用成功状态掩盖缺口。
 - 同本金、同期间的两个显式现金方案对照；费用单列、精确小数现金保存，撞资或未回收本金时不比较盈亏。
+- 根据已核对的北交所2026年度与专项休市公告生成计划交易日历，调休工作周末保持休市。
 
 ## 快速开始
 
@@ -39,6 +40,7 @@ python bjx.py facts examples/facts.json --out-dir local-data/facts-01
 python bjx.py ledger examples/ledger.json --out-dir local-data/ledger-01
 python bjx.py versions examples/versions.json --out-dir local-data/versions-01
 python bjx.py compare-cash examples/compare-cash.json --out-dir local-data/cash-comparison-01
+python bjx.py calendar data/bse-2026-schedule.json --out-dir local-data/calendar-2026-01
 python bjx.py verify local-data/scenarios-01
 ```
 
@@ -66,6 +68,7 @@ python bjx.py verify local-data/scenarios-01
 - [开发接续记录](docs/progress.md)
 - [从research-workbench补入的能力与使用方式](docs/workbench-integration.md)
 - [同期间现金方案对照口径](docs/cash-comparison.md)
+- [官方交易日历核验记录](docs/calendar-verification.md)
 
 ## 发布与复用
 

@@ -11,7 +11,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-METHOD_VERSION = '0.2.0-alpha.3'
+METHOD_VERSION = '0.2.0-alpha.4'
 MAX_BYTES = 10 * 1024 * 1024
 ALLOWED_HOSTS = {'www.bse.cn', 'bse.cn', 'www.sse.com.cn', 'sse.com.cn',
                  'www.szse.cn', 'szse.cn', 'www.cninfo.com.cn', 'static.cninfo.com.cn'}
@@ -107,7 +107,7 @@ def report(mode, result, status):
     heading = {'scenarios': '北交所获配与收益情景', 'ledger': '多只资金现金账',
                'facts': '发行事实候选与缺口', 'versions': '公告版本线索',
                'capture': '公告来源保存', 'compare-pdf': '公告原文版本差异',
-               'compare-cash': '同本金同期间现金方案对照'}.get(mode, mode)
+               'compare-cash': '同本金同期间现金方案对照', 'calendar': '北交所官方排期日历'}.get(mode, mode)
     lines = ['# ' + heading, '', '状态：' + status, '']
     if status == 'blocked':
         lines += ['本次未完成。原因：' + result['message'], '',
@@ -143,6 +143,11 @@ def report(mode, result, status):
         else:
             lines += ['', '第一方案减第二方案的声明现金盈亏差：'+result['first_minus_second_cash_profit']+'元。']
         lines += ['', '闲置现金利息及尚未到账利息只在显式录入时计入；结果不认证事件完整性。']
+    elif mode == 'calendar':
+        lines += [f"排期覆盖：{result['coverage_start']}至{result['coverage_end']}。",
+                  f"按官方假期和周一至周五规则推导的计划交易日数：{result['scheduled_trading_date_count']}。",
+                  '这是计划日历，不认证临时停市、真实市场开市或账户到账。',
+                  '政府调休工作周末仍按交易所周末休市处理；不据此推断T+2退款。']
     elif mode == 'facts':
         lines += ['事实候选保留全部来源，不自动选择冲突值。', '']
         for name, field in result['fields'].items():
@@ -225,7 +230,7 @@ def publish(destination, mode, spec, result, status='completed_with_limits', art
                     created_at=datetime.now(timezone.utc).isoformat(),
                     stages=dict(acquisition='completed' if artifacts else 'not_performed',
                                 parsing='completed_extracted_text' if mode == 'compare-pdf' and status != 'blocked' else 'not_performed',
-                                calculation='completed' if mode in ('scenarios', 'ledger', 'compare-cash') and status != 'blocked' else 'not_performed',
+                                calculation='completed' if mode in ('scenarios', 'ledger', 'compare-cash', 'calendar') and status != 'blocked' else 'not_performed',
                                 source_verification='not_performed', visual_review='not_performed'),
                     files={name: dict(sha256=digest(blob), size=len(blob)) for name, blob in files.items()})
     files['manifest.json'] = encoded(manifest)
