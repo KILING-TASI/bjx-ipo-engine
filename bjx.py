@@ -13,10 +13,16 @@ from comparison import compare_cash
 from trading_calendar import build_calendar
 from history import freeze, archive, review
 from public_sample import replay_sample
+from sample_validation import validate_sample
+from api import calculate
 from vendor.announcement_versions import version_review
 
 
 def run(mode, spec, online=False):
+    if mode=='api':
+        return calculate(spec),{}
+    if mode=='sample-validation':
+        return validate_sample(spec),{}
     if mode=='public-sample':
         return replay_sample(spec)
     if mode == 'freeze':
@@ -86,7 +92,7 @@ def run(mode, spec, online=False):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['scenarios', 'ledger', 'facts', 'versions', 'capture', 'compare-pdf', 'compare-cash', 'calendar', 'freeze', 'archive', 'review', 'public-sample', 'verify'])
+    parser.add_argument('mode', choices=['scenarios', 'ledger', 'facts', 'versions', 'capture', 'compare-pdf', 'compare-cash', 'calendar', 'freeze', 'archive', 'review', 'public-sample', 'sample-validation','api','verify'])
     parser.add_argument('input', help='input JSON, or research directory for verify')
     parser.add_argument('--out-dir')
     parser.add_argument('--online', action='store_true')
@@ -115,6 +121,9 @@ def main(argv=None):
         if not isinstance(spec, dict):
             raise ValueError('Input must be a JSON object')
         result, artifacts = run(args.mode, spec, args.online)
+        if args.mode=='api' and result['status']=='failed':
+            status='blocked'
+            result=dict(result,message=result['error']['message'],next_step='核对版本契约及输入，使用新输出目录重试。')
     except (OSError, ValueError, KeyError, TypeError, ImportError, RuntimeError, ArithmeticError) as exc:
         status = 'blocked'
         result = dict(message=str(exc), failure_kind=type(exc).__name__,

@@ -2,7 +2,7 @@
 
 面向北交所网上发行的获配、现金占用与净收益情景研究。由四份设计材料整合修订，首版交付可运行的测算内核与统一设计规范。
 
-**当前版本：v0.2.0-alpha.7，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。教学示例不代表真实新股；data包含已核对的官方排期及一个公开发行样本，核验范围与资金假设分别标注。真实账户验收按用户要求暂停，其他公开资料工作继续。
+**当前版本：v0.2.0-alpha.8，研究预览版。** 不含交易执行、自动申购、经过验证的预测模型或实盘收益承诺。教学示例不代表真实新股；data包含已核对的官方排期及一个公开发行样本，核验范围与资金假设分别标注。真实账户验收按用户要求暂停，其他公开资料工作继续。
 
 ## 已实现
 
@@ -22,6 +22,7 @@
 - 盈亏平衡卖出涨幅与额外100股条件敏感性，费用和留存本金重新计算，不虚构余股概率。
 - 历史发行档案、事前本地快照与事后复盘分离；补录标为历史重建，信息时点与来源缺口保留。
 - 一个官方历史发行样本：悦龙科技920188，八项字段/来源/版本核验记录、配售率复算及假设现金占用回放。
+- 小规模公开/教学验收矩阵与v1.0计算接口，旧入口保留；主包年度情景尚未等价迁移。
 
 ## 快速开始
 
@@ -45,6 +46,7 @@ python bjx.py versions examples/versions.json --out-dir local-data/versions-01
 python bjx.py compare-cash examples/compare-cash.json --out-dir local-data/cash-comparison-01
 python bjx.py calendar data/bse-2026-schedule.json --out-dir local-data/calendar-2026-01
 python bjx.py public-sample examples/public-sample.json --out-dir local-data/yuelong-01
+python bjx.py sample-validation examples/sample-validation.json --out-dir local-data/validation-01
 python bjx.py verify local-data/scenarios-01
 ```
 
@@ -76,6 +78,8 @@ python bjx.py verify local-data/scenarios-01
 - [盈亏平衡与余股敏感性](docs/scenario-sensitivity.md)
 - [历史档案、冻结与复盘](docs/history-replay.md)
 - [首个官方样本：悦龙科技](docs/public-sample-920188.md)
+- [验收矩阵与实际覆盖](docs/sample-validation.md)
+- [主工作台计算契约](docs/workbench-contract.md)
 
 ## 发布与复用
 

@@ -4,7 +4,7 @@ from decimal import Decimal, ROUND_FLOOR
 from io import BytesIO
 from pathlib import Path
 import re
-from audit import MAX_BYTES, digest, load
+from audit import MAX_BYTES, METHOD_VERSION, digest, encoded, load
 from research import Calendar, ledger, money
 from trading_calendar import build_calendar
 
@@ -92,6 +92,10 @@ def replay_sample(spec):
         annual=money(spec['opportunity_cost_rate_assumption'],'opportunity rate')
         cost=dict(capital_days=str(days),declared_rate=str(annual),opportunity_cost=str(days*annual/365),retained_principal=str(retained),observation_end=end.isoformat(),sale_or_actual_profit='not_computed')
     return dict(mode='historical_public_sample_reconstruction',security=sample['security'],name=sample['name'],
+                engine_version=METHOD_VERSION,input_sha256=digest(encoded(spec)),
+                rule_basis='Offering announcement 2026-015 pp10-11; selected issuance-specific rules, not full legal certification',
+                sample_version='920188-selected-fields-2026-10-09',
+                effective_coverage='One historical issuance, eight reviewed fields; budget and cash dates remain assumptions',
                 record_kind='historical_reconstruction_not_prediction',source_verification=verification,
                 reviewed_fields=fields,documents=documents,quoted_allocation_fraction=str(quoted),recomputed_allocation_fraction=str(recomputed),
                 hypothetical_capital=str(capital),hypothetical_budget=str(budget),subscribed_shares=n,frozen_amount=str(frozen),
