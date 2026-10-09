@@ -1,0 +1,384 @@
+{
+  "public_sample": {
+    "mode": "historical_public_sample_reconstruction",
+    "security": "920188",
+    "name": "悦龙科技",
+    "engine_version": "0.2.0-alpha.8",
+    "input_sha256": "823c079177689f401cb8bca8b6aaf3fefa7e299532011a284b05fa351094844a",
+    "rule_basis": "Offering announcement 2026-015 pp10-11; selected issuance-specific rules, not full legal certification",
+    "sample_version": "920188-selected-fields-2026-10-09",
+    "effective_coverage": "One historical issuance, eight reviewed fields; budget and cash dates remain assumptions",
+    "record_kind": "historical_reconstruction_not_prediction",
+    "source_verification": "saved_review_record_not_rechecked",
+    "reviewed_fields": {
+      "issue_price": {
+        "value": 14.04,
+        "unit": "CNY/share",
+        "source_id": "offer",
+        "page": 8,
+        "text_anchor": "14.04",
+        "review_status": "selected_page_image_and_text_reviewed"
+      },
+      "max_subscription_shares": {
+        "value": 989600,
+        "unit": "shares",
+        "source_id": "offer",
+        "page": 10,
+        "text_anchor": "989,600",
+        "review_status": "selected_page_image_and_text_reviewed"
+      },
+      "online_issue_shares": {
+        "value": 19793879,
+        "unit": "shares",
+        "source_id": "result",
+        "page": 2,
+        "text_anchor": "19,793,879",
+        "review_status": "selected_page_image_and_text_reviewed"
+      },
+      "effective_subscription_shares": {
+        "value": 63279684500,
+        "unit": "shares",
+        "source_id": "result",
+        "page": 2,
+        "text_anchor": "63,279,684,500",
+        "review_status": "selected_page_image_and_text_reviewed"
+      },
+      "online_allocation_rate": {
+        "value": 0.0003127999,
+        "unit": "fraction",
+        "source_id": "result",
+        "page": 2,
+        "text_anchor": "0.0312799900%",
+        "review_status": "selected_page_image_and_text_reviewed"
+      },
+      "subscription_date": {
+        "value": "2026-03-16",
+        "unit": "date",
+        "source_id": "offer",
+        "page": 8,
+        "text_anchor": "2026年3月16日",
+        "review_status": "selected_page_image_and_text_reviewed"
+      },
+      "announced_refund_date": {
+        "value": "2026-03-18",
+        "unit": "date",
+        "source_id": "offer",
+        "page": 11,
+        "text_anchor": "2026年3月18日",
+        "review_status": "selected_page_image_and_text_reviewed"
+      },
+      "listing_date": {
+        "value": "2026-03-30",
+        "unit": "date",
+        "source_id": "listing",
+        "page": 1,
+        "text_anchor": "2026年3月30日",
+        "review_status": "selected_page_image_and_text_reviewed"
+      }
+    },
+    "documents": {
+      "offer": {
+        "url": "https://www.bse.cn/disclosure/2026/2026-03-12/1773305048_265801.pdf",
+        "sha256": "01f2a1dc9febe758032c004273905eaef29bed7b7a8ecefb00356915dfc97d4d",
+        "retrieved_at": "2026-10-09T10:03:44.117626+00:00",
+        "announcement_number": "2026-015",
+        "body_date": "2026-03-13",
+        "file_path_date": "2026-03-12",
+        "first_publication_time": "not_verified"
+      },
+      "result": {
+        "url": "https://www.bse.cn/disclosure/2026/2026-03-18/1773825250_806346.pdf",
+        "sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+        "retrieved_at": "2026-10-09T10:03:14.474883+00:00",
+        "announcement_number": "2026-019",
+        "body_date": "2026-03-19",
+        "file_path_date": "2026-03-18",
+        "first_publication_time": "not_verified"
+      },
+      "listing": {
+        "url": "https://www.bse.cn/disclosure/2026/2026-03-26/1774518490_702247.pdf",
+        "sha256": "012522a90d60713c17768e328b4e2f0963ddf9e089ceba1bf81f4b15df15fa3f",
+        "retrieved_at": "2026-10-09T10:03:15.000530+00:00",
+        "announcement_number": "2026-020",
+        "body_date": "2026-03-27",
+        "file_path_date": "2026-03-26",
+        "first_publication_time": "not_verified"
+      }
+    },
+    "quoted_allocation_fraction": "0.0003127999",
+    "recomputed_allocation_fraction": "0.0003127999002586683250609443225",
+    "hypothetical_capital": "10000000.00",
+    "hypothetical_budget": "10000000.00",
+    "subscribed_shares": 712200,
+    "frozen_amount": "9999288.00",
+    "proportional_shares": 200,
+    "individual_actual_allocation": "unknown",
+    "residual_allocation": "unknown",
+    "cash_reconstruction": {
+      "schema_version": "0.2-alpha",
+      "executable": true,
+      "conflicts": [],
+      "events": [
+        {
+          "date": "2026-03-16",
+          "order": 0,
+          "event_id": "freeze",
+          "kind": "freeze",
+          "available_cash": 712.0,
+          "ipo_principal": 9999288.0,
+          "repo_principal": 0.0,
+          "available_cash_exact": "712.00",
+          "ipo_principal_exact": "9999288.00",
+          "repo_principal_exact": "0"
+        },
+        {
+          "date": "2026-03-18",
+          "order": 1,
+          "event_id": "refund",
+          "kind": "refund",
+          "available_cash": 9997192.0,
+          "ipo_principal": 2808.0,
+          "repo_principal": 0.0,
+          "available_cash_exact": "9997192.00",
+          "ipo_principal_exact": "2808.00",
+          "repo_principal_exact": "0"
+        }
+      ],
+      "final_available_cash": 9997192.0,
+      "outstanding_ipo_principal": 2808.0,
+      "outstanding_repo_principal": 0.0,
+      "final_available_cash_exact": "9997192.00",
+      "outstanding_ipo_principal_exact": "2808.00",
+      "outstanding_repo_principal_exact": "0",
+      "calendar_basis": "derived",
+      "warnings": [
+        "Explicit input events only; no automatic order selection or trading.",
+        "Without complete same-day timing, commitments precede releases.",
+        "Source records and calendar completeness require independent review."
+      ]
+    },
+    "opportunity_cost_assumption": {
+      "capital_days": "20032272.00",
+      "declared_rate": "0.02",
+      "opportunity_cost": "1097.658739726027397260273973",
+      "retained_principal": "2808.00",
+      "observation_end": "2026-03-30",
+      "sale_or_actual_profit": "not_computed"
+    },
+    "limitations": [
+      "Selected fields reviewed, not full-document or complete-version certification",
+      "First publication clocks and broker cash availability not verified",
+      "Residual allocation and actual individual holdings unknown",
+      "Actual published market allocation rate is not a personal account allotment.",
+      "Refund cash date is explicitly assumed, not inferred from T+2 or certified from broker records.",
+      "No sale proceeds, first-day profit or annual return is claimed."
+    ]
+  },
+  "teaching_scenarios": {
+    "schema_version": "0.1",
+    "subscribed_shares": 444400,
+    "frozen_amount": 7999200,
+    "assumptions": {
+      "capital": 10000000,
+      "requested_budget": 8000000,
+      "issue_price": 18,
+      "annual_cash_cost_rate": 0.02,
+      "fees": {
+        "commission_rate": 0.00025,
+        "minimum_commission": 5,
+        "stamp_rate": 0.0005,
+        "transfer_rate": 1e-05
+      },
+      "subscription_date": "2026-10-12",
+      "refund_available_date": "2026-10-14",
+      "sale_cash_available_date": "2026-10-20"
+    },
+    "scenarios": [
+      {
+        "id": "low",
+        "probability": 0.3,
+        "allocation_rate": 0.00015,
+        "listing_return": -0.2,
+        "proportional_hands": 0,
+        "proportional_shares": 0,
+        "gross_profit": -0.0,
+        "sell_cost": 0,
+        "cash_cost": 876.6246575342466,
+        "capital_days": 15998400,
+        "net_profit": -876.6246575342466,
+        "cash_profit_before_opportunity_cost": -0.0,
+        "breakeven_listing_return": null,
+        "residual_extra_100_share_sensitivity": {
+          "assumed_total_shares": 100,
+          "gross_profit": -360.0,
+          "sell_cost": 5.7344,
+          "cash_cost": 877.2164383561644,
+          "capital_days": 16009200,
+          "net_profit": -1242.9508383561645,
+          "cash_profit_before_opportunity_cost": -365.7344,
+          "breakeven_listing_return": 0.4908805926334454
+        },
+        "account_period_return": -8.766246575342465e-05,
+        "basis": "演示假设，不对应真实发行"
+      },
+      {
+        "id": "middle",
+        "probability": 0.4,
+        "allocation_rate": 0.00033,
+        "listing_return": 1.2,
+        "proportional_hands": 1,
+        "proportional_shares": 100,
+        "gross_profit": 2160.0,
+        "sell_cost": 7.0196000000000005,
+        "cash_cost": 877.2164383561644,
+        "capital_days": 16009200,
+        "net_profit": 1275.7639616438355,
+        "cash_profit_before_opportunity_cost": 2152.9804,
+        "breakeven_listing_return": 0.4908805926334454,
+        "residual_extra_100_share_sensitivity": {
+          "assumed_total_shares": 200,
+          "gross_profit": 4320.0,
+          "sell_cost": 9.039200000000001,
+          "cash_cost": 877.8082191780821,
+          "capital_days": 16020000,
+          "net_profit": 3433.1525808219176,
+          "cash_profit_before_opportunity_cost": 4310.9608,
+          "breakeven_listing_return": 0.24585989387312046
+        },
+        "account_period_return": 0.00012757639616438354,
+        "basis": "演示假设，不对应真实发行"
+      },
+      {
+        "id": "high",
+        "probability": 0.3,
+        "allocation_rate": 0.0005,
+        "listing_return": 2.0,
+        "proportional_hands": 2,
+        "proportional_shares": 200,
+        "gross_profit": 7200.0,
+        "sell_cost": 10.508,
+        "cash_cost": 877.8082191780821,
+        "capital_days": 16020000,
+        "net_profit": 6311.683780821918,
+        "cash_profit_before_opportunity_cost": 7189.492,
+        "breakeven_listing_return": 0.24585989387312046,
+        "residual_extra_100_share_sensitivity": {
+          "assumed_total_shares": 300,
+          "gross_profit": 10800.0,
+          "sell_cost": 13.262,
+          "cash_cost": 878.4,
+          "capital_days": 16030800,
+          "net_profit": 9908.338,
+          "cash_profit_before_opportunity_cost": 10786.738,
+          "breakeven_listing_return": 0.16418632761967866
+        },
+        "account_period_return": 0.0006311683780821918,
+        "basis": "演示假设，不对应真实发行"
+      }
+    ],
+    "warnings": [
+      "Proportional whole lots only; residual allocation is unknown.",
+      "Extra-100-share sensitivity is conditional, not a probability, bound or guaranteed allocation.",
+      "Scenario inputs and probabilities are assumptions, not calibrated forecasts.",
+      "Cash costs use explicit dates and a simple annual rate; repo alternatives require a separate ledger."
+    ],
+    "weighted": {
+      "expected_proportional_hands": 1.0,
+      "sd_proportional_hands": 0.7745966692414834,
+      "probability_zero_proportional_hands": 0.3,
+      "expected_net_profit": 2140.8233216438357,
+      "sd_net_profit": 2872.2207195171773,
+      "probability_net_loss": 0.3,
+      "probability_basis": "教学用人为权重，未经历史校准"
+    }
+  },
+  "matrix": {
+    "mode": "bounded_public_sample_validation",
+    "real_issuance_count": 1,
+    "hypothetical_budget_case_count": 3,
+    "security": "920188",
+    "cases": [
+      {
+        "hypothetical_budget": "3000000.00",
+        "proportional_shares": 0,
+        "actual_individual_shares": "unknown",
+        "conditional_extra_100": {
+          "assumed_total_shares": 100,
+          "retained_principal": "1404.00",
+          "actual_difference": "unknown_not_observed",
+          "probability": null
+        }
+      },
+      {
+        "hypothetical_budget": "4500000.00",
+        "proportional_shares": 100,
+        "actual_individual_shares": "unknown",
+        "conditional_extra_100": {
+          "assumed_total_shares": 200,
+          "retained_principal": "2808.00",
+          "actual_difference": "unknown_not_observed",
+          "probability": null
+        }
+      },
+      {
+        "hypothetical_budget": "10000000.00",
+        "proportional_shares": 200,
+        "actual_individual_shares": "unknown",
+        "conditional_extra_100": {
+          "assumed_total_shares": 300,
+          "retained_principal": "4212.00",
+          "actual_difference": "unknown_not_observed",
+          "probability": null
+        }
+      }
+    ],
+    "teaching_multi_issue_conflict": {
+      "schema_version": "0.2-alpha",
+      "executable": false,
+      "conflicts": [
+        {
+          "date": "2026-03-18",
+          "required": 6000000.0,
+          "available": 712.0,
+          "shortage": 5999288.0,
+          "event_ids": [
+            "B-freeze"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "date": "2026-03-16",
+          "order": 0,
+          "event_id": "A-freeze",
+          "kind": "freeze",
+          "available_cash": 712.0,
+          "ipo_principal": 9999288.0,
+          "repo_principal": 0.0,
+          "available_cash_exact": "712.00",
+          "ipo_principal_exact": "9999288.00",
+          "repo_principal_exact": "0"
+        }
+      ],
+      "final_available_cash": 712.0,
+      "outstanding_ipo_principal": 9999288.0,
+      "outstanding_repo_principal": 0.0,
+      "final_available_cash_exact": "712.00",
+      "outstanding_ipo_principal_exact": "9999288.00",
+      "outstanding_repo_principal_exact": "0",
+      "calendar_basis": "derived",
+      "warnings": [
+        "Explicit input events only; no automatic order selection or trading.",
+        "Without complete same-day timing, commitments precede releases.",
+        "Source records and calendar completeness require independent review."
+      ]
+    },
+    "actual_scope": "One saved reviewed public issuance; offline source bytes not newly checked",
+    "remaining_gaps": [
+      "Real individual zero-allocation and residual differences not observed.",
+      "Second issuance and same-day refund availability are teaching assumptions.",
+      "Historical reconstruction, not pre-subscription prediction validation.",
+      "Real-account acceptance remains paused; no yearly coverage or new model."
+    ]
+  }
+}

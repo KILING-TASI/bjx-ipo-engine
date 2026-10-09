@@ -4,6 +4,7 @@ __pycache__/
 .env
 local-data/
 result.json
+!docs/preview/result.json
 build/
 dist/
 *.egg-info/
