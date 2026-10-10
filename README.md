@@ -10,6 +10,10 @@
 
 先看[保存的结果示例](docs/preview/index.html)，不需要安装 Python：图片可直接查看；HTML 请下载完整源码后用浏览器打开。示例按原记录标注教学或限定真实样本，不能换个名称就当作你的研究结果。重新计算才需要 Python。
 
+<img src="docs/screenshots/first-screen.png" alt="悦龙科技公开字段与假设预算对比的实际报告截图，2026-10-09" width="900">
+
+历史页面截图（2026-10-09）：公开发行字段与假设预算，实际个人获配未知。[截图与页面记录](docs/preview-guide.md)
+
 其他问题可看[九个工具如何选择](https://github.com/KILING-TASI/research-workbench/blob/main/references/tool-navigation.md)。各工具可独立使用，不必安装全部仓库。
 
 当前版本：[v0.2.0-alpha.13](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.13)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
@@ -24,7 +28,7 @@
 
 ## 安装和首次试用
 
-安装包见[发布页](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.13)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
+安装包见[发布页](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.13)，提供完整源码、wheel、sdist 和校验清单。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
 
 安装包版本为 `0.2.0a13`。统一安装入口需要 Python 3.10 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
 
@@ -37,21 +41,10 @@ python -m venv .venv
 
 工具名与仓库名相同；在已激活的环境中可以直接输入工具名。Linux/macOS 使用 `.venv/bin/python` 和 `.venv/bin/bjx-ipo-engine`。教学结果写入当前工作目录；`--auto-name` 自动另选新名字，旧结果保留。不加该参数时，教学入口拒绝已有目录。`bjx-ipo-engine run --help` 查看原生参数，原来的命令继续兼容。本仓提供独立 CLI，并新增 [Skill 调用指引](SKILL.md)；Skill 使用须保留完整仓库资源，pip 不会自动注册。安装可能需要联网获取普通构建依赖；教学离线。下面保留原生入口及此前发行记录，安装步骤和对应版本以本节为准。
 
-## 最短试用
-
-需要 Python 3.10 或以上。从 GitHub 下载或克隆本仓，在完整仓库根目录打开 Windows PowerShell：
-
-```powershell
-python -S demo.py --out-dir local-data/demo-01
-```
-
-这一步只用标准库，不安装其他项目，也不联网。完成后打开 `local-data/demo-01/index.html`，同目录保存输入、结果和摘要清单。目录已存在时换一个新名字，例如 `demo-02`；不会覆盖旧结果。
 
 ## 实际结果示例
 
 **预算增加不一定多获配一手，退款公告也不能直接当作资金到账证明。** 示例复用悦龙科技（920188）的公开发行字段，比较三种假设预算；个人余股、实际到账和收益仍未知。
-
-<img src="docs/screenshots/first-screen.png" alt="悦龙科技公开字段与假设预算对比的实际报告截图，2026-10-09" width="900">
 
 [完整截图与生成说明](docs/preview-guide.md) · [保存的 HTML 示例](docs/preview/index.html) · [示例输入](docs/preview/input.json)
 
@@ -76,14 +69,9 @@ python -S demo.py --out-dir local-data/demo-01
 
 本仓是独立 Python 计算引擎，提供 CLI 和 JSON 接口；另提供 [Skill 调用指引](SKILL.md)，注册时须保留完整本仓资源。无需安装其他自家专业仓。[research-workbench](https://github.com/KILING-TASI/research-workbench)可以调用它，并负责公司经营研究、综合判断和报告组织；工作台不是本引擎的运行依赖。
 
-源码最短试用无需安装。需要安装计算模块时，在本仓根目录执行：
+源码教学入口无需安装。需要安装计算模块时，按上方“安装和首次试用”操作。
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install .
-```
-
-构建依赖为 setuptools>=77，安装时可能联网取得；计算运行无普通第三方依赖。wheel只含计算模块，demo、示例和公开字段资源需使用完整本仓源码。已安装模块可用 `python -I -m api` 接收完整 JSON 请求，格式见 [接口说明](docs/workbench-contract.md)。
+构建依赖为 setuptools>=77，安装时可能联网取得；计算运行无普通第三方依赖。旧 alpha.9 wheel 仅含计算模块。当前 alpha.13 的安装后 CLI 教学入口已验收；作为 Skill 使用仍须保留完整资源。已安装模块可用 `python -I -m api` 接收完整 JSON 请求，格式见 [接口说明](docs/workbench-contract.md)。
 
 只有 PDF 原文核对需要可选组件：
 
@@ -107,7 +95,7 @@ python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01
 
 截至2026-10-10，main已集成多方案比较、公开回购参考、接口联调、独立安装及情景验收、中文使用提示；计算核心版本仍为 `0.2.0-alpha.8`，接口为 `1.0`，没有为了文案升级版本。
 
-当前软件发行版为 **v0.2.0-alpha.9**（Python包版本 `0.2.0a9`），[下载源码ZIP、wheel或sdist](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.9)。源码ZIP和sdist含demo/示例资源，wheel仅计算模块。软件发布版本与计算核心方法版本分别记录，核心仍为 `0.2.0-alpha.8`、接口仍为 `1.0`。
+历史软件发行版为 **v0.2.0-alpha.9**（Python包版本 `0.2.0a9`），[下载源码ZIP、wheel或sdist](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.9)。源码ZIP和sdist含demo/示例资源，wheel仅计算模块。软件发布版本与计算核心方法版本分别记录，核心仍为 `0.2.0-alpha.8`、接口仍为 `1.0`。
 
 旧功能版 [v0.2.0-alpha.8](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.8)，另有文档更新版。旧Release资产保持冻结，不包含后续main全部增量；本页命令面向当前main的完整源码。查看 [发行历史](https://github.com/KILING-TASI/bjx-ipo-engine/releases)、[变更记录](CHANGELOG.md)和 [开发记录](docs/progress.md)。
 
