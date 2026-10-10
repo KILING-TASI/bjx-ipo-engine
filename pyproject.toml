@@ -28,7 +28,7 @@ include = ["vendor*", "bjx_cli*"]
 
 [tool.setuptools.data-files]
 "share/bjx-ipo-engine/examples" = ["examples/scenarios.json"]
-"share/bjx-ipo-engine" = ["LICENSE", "THIRD_PARTY_NOTICES.md", "DISCLAIMER.md"]
+"share/bjx-ipo-engine" = ["SKILL.md", "LICENSE", "THIRD_PARTY_NOTICES.md", "DISCLAIMER.md"]
 "share/bjx-ipo-engine/licenses" = ["licenses/research-workbench-MIT.txt"]
 
 [project.scripts]

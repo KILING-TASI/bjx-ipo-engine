@@ -15,7 +15,7 @@ python -m venv .venv
 .\.venv\Scripts\bjx-ipo-engine.exe demo --out-dir reports/demo --auto-name
 ```
 
-工具名与仓库名相同；在已激活的环境中可以直接输入工具名。Linux/macOS 使用 `.venv/bin/python` 和 `.venv/bin/bjx-ipo-engine`。教学结果写入当前工作目录；`--auto-name` 自动另选新名字，旧结果保留。不加该参数时，教学入口拒绝已有目录。`bjx-ipo-engine run --help` 查看原生参数，原来的命令继续兼容。本仓是独立 CLI，不提供可直接发现的 Skill 安装入口。安装可能需要联网获取普通构建依赖；教学离线。下面保留原生入口及此前发行记录，本轮安装和版本以本节为准。
+工具名与仓库名相同；在已激活的环境中可以直接输入工具名。Linux/macOS 使用 `.venv/bin/python` 和 `.venv/bin/bjx-ipo-engine`。教学结果写入当前工作目录；`--auto-name` 自动另选新名字，旧结果保留。不加该参数时，教学入口拒绝已有目录。`bjx-ipo-engine run --help` 查看原生参数，原来的命令继续兼容。本仓提供独立 CLI，并新增 [Skill 调用指引](SKILL.md)；Skill 使用须保留完整仓库资源，pip 不会自动注册。安装可能需要联网获取普通构建依赖；教学离线。下面保留原生入口及此前发行记录，本轮安装和版本以本节为准。
 
 ## 最短试用
 
@@ -54,7 +54,7 @@ python -S demo.py --out-dir local-data/demo-01
 
 ## 独立使用与项目身份
 
-本仓是独立 Python 计算引擎，提供 CLI 和 JSON 接口；没有 SKILL.md，不是直接安装发现的 Codex Skill。无需安装其他自家专业仓。[research-workbench](https://github.com/KILING-TASI/research-workbench)可以调用它，并负责公司经营研究、综合判断和报告组织；工作台不是本引擎的运行依赖。
+本仓是独立 Python 计算引擎，提供 CLI 和 JSON 接口；另提供 [Skill 调用指引](SKILL.md)，注册时须保留完整本仓资源。无需安装其他自家专业仓。[research-workbench](https://github.com/KILING-TASI/research-workbench)可以调用它，并负责公司经营研究、综合判断和报告组织；工作台不是本引擎的运行依赖。
 
 源码最短试用无需安装。需要安装计算模块时，在本仓根目录执行：
 
@@ -107,3 +107,7 @@ python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01
 仅供学习与研究，不构成投资建议或交易指令；使用前核对本次来源、日期与假设，详见 [使用边界](DISCLAIMER.md)。
 
 构建记录与版本边界见 [alpha.9发布准备](docs/release-alpha9.md)。
+
+## 自然语言使用
+
+向已注册本仓 Skill 的助手直接提问。助手整理输入、调用计算并先回答能确定的部分，再解释依据和缺口；无需安装工作台。新增指引在当前 main，旧发行包保持原样，未包含这次 Skill 文件。
