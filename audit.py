@@ -251,7 +251,7 @@ def render_html(markdown, heading):
     if table_open:
         blocks.append('</table></div>')
     style = 'body{max-width:1050px;margin:32px auto;padding:0 20px;font-family:system-ui;line-height:1.7;color:#172536;background:#fafbfc}h1{font-size:26px}h2{margin-top:32px;font-size:20px}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;background:white}th,td{padding:10px 12px;border:1px solid #dbe2eb;text-align:left}th{background:#eef3f8}p{overflow-wrap:anywhere}'
-    return '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>'+html.escape(heading)+'</title><style>'+style+'</style><body>'+''.join(blocks)+'</body></html>'
+    return '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>'+html.escape(heading)+'</title><style>'+style+'</style><body>'+''.join(blocks)+'<details aria-label="指标怎么读"><summary>指标怎么读、金额怎么核</summary><p>机会成本是资金被占用期间的替代收益情景，不是实际支付的费用；退款公告日、账户可用日和卖出回款日分别核对。没有余股概率就不算期望，不称确定最优申购。</p><p>未知不当作零；比例必须配分母。只有明确完整、同币种基数时才将比例乘基数换成金额。原始结果、方法和资料版本继续保留，新解释不会改写历史冻结报告。</p></details>'+'</body></html>'
 
 
 def bind_fact_sources(spec, result):
