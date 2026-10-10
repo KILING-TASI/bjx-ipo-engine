@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bjx-ipo-engine"
-version = "0.2.0a11"
+version = "0.2.0a12"
 description = "Beijing Stock Exchange IPO scenario, cash ledger and public evidence research"
 requires-python = ">=3.10"
 license = "MIT"

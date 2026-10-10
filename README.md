@@ -2,11 +2,15 @@
 
 计算不同申购预算下的比例获配、资金占用和现金缺口，并把公告事实与假设分开保存。
 
+当前版本：[v0.2.0-alpha.12](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.12)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
+
+自然语言使用：保留完整仓库资源，按 [Skill 指引](SKILL.md)注册到支持本地 Skill 的助手；CLI 安装与 Skill 注册分别完成。可以独立使用，无需工作台。
+
 ## 安装和首次试用
 
-本轮对应[发布页](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.11)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
+本轮对应[发布页](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.12)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
 
-本轮源码版本为 `0.2.0a11`。统一安装入口需要 Python 3.10 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
+本轮源码版本为 `0.2.0a12`。统一安装入口需要 Python 3.10 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
 
 ```powershell
 python -m venv .venv
@@ -110,4 +114,4 @@ python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01
 
 ## 自然语言使用
 
-向已注册本仓 Skill 的助手直接提问。助手整理输入、调用计算并先回答能确定的部分，再解释依据和缺口；无需安装工作台。新增指引在当前 main，旧发行包保持原样，未包含这次 Skill 文件。
+向已注册本仓 Skill 的助手直接提问。助手整理输入、调用计算并先回答能确定的部分，再解释依据和缺口；无需安装工作台。新增指引自 v0.2.0-alpha.12 随包提供；更早的发行包保持原样。
