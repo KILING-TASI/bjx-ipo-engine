@@ -16,7 +16,7 @@
 
 其他问题可看[九个工具如何选择](https://github.com/KILING-TASI/research-workbench/blob/main/references/tool-navigation.md)。各工具可独立使用，不必安装全部仓库。
 
-当前版本：[v0.2.0-alpha.13](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.13)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
+当前版本：[v0.2.0-alpha.14](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.14)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
 
 自然语言使用：保留完整仓库资源，按 [Skill 指引](SKILL.md)注册到支持本地 Skill 的助手；CLI 安装与 Skill 注册分别完成。可以独立使用，无需工作台。
 
@@ -40,9 +40,9 @@
 
 ## 安装和首次试用
 
-安装包见[发布页](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.13)，提供完整源码、wheel、sdist 和校验清单。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
+安装包见[发布页](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.14)，提供完整源码、wheel、sdist 和校验清单。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
 
-安装包版本为 `0.2.0a13`。统一安装入口需要 Python 3.10 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
+安装包版本为 `0.2.0a14`。统一安装入口需要 Python 3.10 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
 
 ```powershell
 python -m venv .venv
@@ -135,3 +135,16 @@ python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01
 ## 验证范围
 
 源码教学启动、软件环境查询和安装后教学入口分别验证；软件就绪不等于真实资料已取得。中文问答需要助手按本仓Skill准备已声明输入，没有宣称任意自然语言自动发现或全市场数据闭环。旧报告、历史tag与案例证据保留。
+
+
+[15类使用者的任务路径、术语口径与验收边界](USER_SCENARIOS.md)。
+
+
+HTML报告增加“指标怎么读、金额怎么核”，先看结论和缺口，再展开口径。见 [REPORT_GUIDE.md](REPORT_GUIDE.md)。
+
+## v0.2.0-alpha.14 本轮补强
+
+报告补充资金占用、机会成本和退款/可用/回款时点解释；15类使用场景路径。各仓独立使用要求继续保留，CRM不在本轮。历史报告、tag和原始证据摘要不改写。
+
+
+[本轮审计范围与未认证事项](AUDIT_SCOPE.md)。
