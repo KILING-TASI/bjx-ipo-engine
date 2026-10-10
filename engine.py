@@ -98,10 +98,10 @@ def evaluate(data):
                                    annual_cash_cost_rate=rate, fees=fees,
                                    subscription_date=start.isoformat(), refund_available_date=refund.isoformat(),
                                    sale_cash_available_date=sale.isoformat()),
-                  scenarios=rows, warnings=['Proportional whole lots only; residual allocation is unknown.',
-                  'Extra-100-share sensitivity is conditional, not a probability, bound or guaranteed allocation.',
-                  'Scenario inputs and probabilities are assumptions, not calibrated forecasts.',
-                  'Cash costs use explicit dates and a simple annual rate; repo alternatives require a separate ledger.'])
+                  scenarios=rows, warnings=['仅计算比例整手获配；个人余股获配仍未知。',
+                  '额外100股仅为条件敏感性情景，不是概率、上下界或保证获配。',
+                  '情景参数与概率是输入假设，不是经过校准的预测。',
+                  '现金成本按明确日期与简单年率计算；回购替代方案需另建现金账。'])
     if weighted:
         mean_h = sum(r['probability'] * r['proportional_hands'] for r in rows)
         mean_n = sum(r['probability'] * r['net_profit'] for r in rows)

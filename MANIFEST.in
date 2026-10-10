@@ -8,3 +8,5 @@ recursive-include .github *.py *.yml
 global-exclude *.pyc *.pdf .env
 
 include SKILL.md
+
+include try_demo.py Start-Demo.cmd Start-Demo.sh BEGINNER.md
