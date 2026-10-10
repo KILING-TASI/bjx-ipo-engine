@@ -1,3 +1,7 @@
 *.md text eol=lf
 docs/preview/*.html text eol=lf
 docs/preview/*.json text eol=lf
+
+Start-Demo.sh text eol=lf
+
+Start-Demo.cmd text eol=crlf
