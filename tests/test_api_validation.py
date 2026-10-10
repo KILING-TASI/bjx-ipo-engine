@@ -2,7 +2,7 @@ import copy
 import unittest
 from pathlib import Path
 from audit import load
-from api import calculate
+from api import calculate,legacy_result
 from engine import evaluate
 from research import ledger
 from sample_validation import validate_sample
@@ -15,14 +15,14 @@ class ContractTests(unittest.TestCase):
         spec=load(ROOT/'examples/scenarios.json')
         before=copy.deepcopy(spec)
         out=calculate(dict(api_version='1.0',operation='scenario.v1',input=spec))
-        self.assertEqual(out['result'],evaluate(spec))
+        self.assertEqual(out['result'],legacy_result(evaluate(spec)))
         self.assertEqual(spec,before)
         self.assertEqual(out['status'],'completed_with_limits')
 
     def test_cash_same_input_exact_precision_and_unknown_state(self):
         spec=load(ROOT/'examples/ledger.json')
         out=calculate(dict(api_version='1.0',operation='cash_ledger.v1',input=spec))
-        self.assertEqual(out['result'],ledger(spec))
+        self.assertEqual(out['result'],legacy_result(ledger(spec)))
 
     def test_cash_conflict_is_infeasible_not_invalid_or_silent_financing(self):
         spec=load(ROOT/'examples/ledger.json');spec['initial_cash']=500
@@ -61,7 +61,7 @@ class ContractTests(unittest.TestCase):
         spec=load(ROOT/'examples/scenarios.json')
         p=subprocess.run([sys.executable,'-S',str(ROOT/'api.py')],input=json.dumps(dict(api_version='1.0',operation='scenario.v1',input=spec),ensure_ascii=False),capture_output=True,text=True,encoding='utf-8')
         self.assertEqual(p.returncode,0)
-        self.assertEqual(json.loads(p.stdout)['result'],evaluate(spec))
+        self.assertEqual(json.loads(p.stdout)['result'],legacy_result(evaluate(spec)))
         bad=subprocess.run([sys.executable,'-S',str(ROOT/'api.py')],input='{"api_version":"1.0","api_version":"2.0"}',capture_output=True,text=True,encoding='utf-8')
         self.assertEqual(bad.returncode,2)
         self.assertEqual(json.loads(bad.stdout)['status'],'failed')

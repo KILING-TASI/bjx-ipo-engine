@@ -17,6 +17,11 @@ LEGACY_WARNINGS={
     '来源记录与日历完整性需另行核对。':'Source records and calendar completeness require independent review.',
 }
 
+def legacy_result(result):
+    """Keep API v1 warning strings frozen while the research view is localized."""
+    if 'warnings' not in result:return result
+    return dict(result,warnings=[LEGACY_WARNINGS.get(w,w) for w in result['warnings']])
+
 
 def calculate(request):
     try:
@@ -26,8 +31,7 @@ def calculate(request):
             raise ValueError('Unsupported API version or operation')
         if not isinstance(request['input'],dict):raise ValueError('Calculation input must be an object')
         checksum=digest(encoded(request['input']))
-        result=OPERATIONS[request['operation']](request['input'])
-        if 'warnings' in result:result['warnings']=[LEGACY_WARNINGS.get(w,w) for w in result['warnings']]
+        result=legacy_result(OPERATIONS[request['operation']](request['input']))
         encoded(result)  # Reject nonfinite computed output without silently substituting zero.
         status='infeasible' if request['operation']=='cash_ledger.v1' and not result['executable'] else 'completed_with_limits'
         return dict(api_version=API_VERSION,engine_version=METHOD_VERSION,operation=request['operation'],status=status,
