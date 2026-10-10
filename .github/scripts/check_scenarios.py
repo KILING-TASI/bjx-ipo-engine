@@ -49,7 +49,7 @@ def main():
                 assert observed == expected, (case['id'], key, observed)
         if case['id'] == 'residual-unknown':
             assert 'weighted' not in result
-            assert any('unknown' in text for text in result['warnings'])
+            assert any('未知' in text for text in result['warnings'])
             assert result['scenarios'][0]['residual_extra_100_share_sensitivity'] is not None
         if case['expected_exit']:
             assert result.get('message') and result.get('next_step')

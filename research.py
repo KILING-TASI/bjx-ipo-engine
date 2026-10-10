@@ -218,9 +218,9 @@ def ledger(data):
                 outstanding_ipo_principal_exact=str(sum(frozen.values(), Decimal(0))),
                 outstanding_repo_principal_exact=str(sum(repos.values(), Decimal(0))),
                 calendar_basis=calendar.basis,
-                warnings=['Explicit input events only; no automatic order selection or trading.',
-                          'Without complete same-day timing, commitments precede releases.',
-                          'Source records and calendar completeness require independent review.'])
+                warnings=['仅处理明确输入的事件；不自动选择申购顺序或执行交易。',
+                          '同日时序不完整时，按先承诺支出、后释放资金处理。',
+                          '来源记录与日历完整性需另行核对。'])
 
 
 def main():
