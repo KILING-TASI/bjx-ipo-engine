@@ -8,3 +8,9 @@ result.json
 build/
 dist/
 *.egg-info/
+
+# Local Python installation/build outputs
+.venv/
+build/
+dist/
+*.egg-info/

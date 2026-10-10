@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bjx-ipo-engine"
-version = "0.2.0a9"
+version = "0.2.0a10"
 description = "Beijing Stock Exchange IPO scenario, cash ledger and public evidence research"
 requires-python = ">=3.10"
 license = "MIT"
@@ -24,8 +24,12 @@ py-modules = ["api", "audit", "bjx", "comparison", "engine", "history", "public_
 include-package-data = false
 
 [tool.setuptools.packages.find]
-include = ["vendor*"]
+include = ["vendor*", "bjx_cli*"]
 
 [tool.setuptools.data-files]
+"share/bjx-ipo-engine/examples" = ["examples/scenarios.json"]
 "share/bjx-ipo-engine" = ["LICENSE", "THIRD_PARTY_NOTICES.md", "DISCLAIMER.md"]
 "share/bjx-ipo-engine/licenses" = ["licenses/research-workbench-MIT.txt"]
+
+[project.scripts]
+bjx-ipo-engine = "bjx_cli._entry:main"
