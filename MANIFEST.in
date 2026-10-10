@@ -1,0 +1,8 @@
+include LICENSE THIRD_PARTY_NOTICES.md DISCLAIMER.md CHANGELOG.md demo.py
+recursive-include licenses *.txt
+recursive-include examples *.json
+recursive-include data *.json
+recursive-include docs *.md *.html *.json *.png
+recursive-include tests *.py
+recursive-include .github *.py *.yml
+global-exclude *.pyc *.pdf .env

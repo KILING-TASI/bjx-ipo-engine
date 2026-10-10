@@ -72,7 +72,9 @@ python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01
 
 截至2026-10-10，main已集成多方案比较、公开回购参考、接口联调、独立安装及情景验收、中文使用提示；计算核心版本仍为 `0.2.0-alpha.8`，接口为 `1.0`，没有为了文案升级版本。
 
-已发布功能版为 [v0.2.0-alpha.8](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.8)，另有文档更新版。旧Release资产保持冻结，不包含后续main全部增量；本页命令面向当前main的完整源码。查看 [发行历史](https://github.com/KILING-TASI/bjx-ipo-engine/releases)、[变更记录](CHANGELOG.md)和 [开发记录](docs/progress.md)。
+本次软件包候选为 **v0.2.0-alpha.9**（Python包版本 `0.2.0a9`），尚未发布；[拟发布入口](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.9)在发布后才可下载。候选源码ZIP和sdist含demo/示例资源，wheel仅计算模块。软件发布版本与计算核心方法版本分别记录，核心仍为 `0.2.0-alpha.8`、接口仍为 `1.0`。
+
+当前已发布功能版为 [v0.2.0-alpha.8](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.8)，另有文档更新版。旧Release资产保持冻结，不包含后续main全部增量；本页命令面向当前main的完整源码。查看 [发行历史](https://github.com/KILING-TASI/bjx-ipo-engine/releases)、[变更记录](CHANGELOG.md)和 [开发记录](docs/progress.md)。
 
 ## 验证、来源与许可
 
@@ -88,3 +90,5 @@ python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01
 原创代码和有权授权的原创说明采用 [MIT许可](LICENSE)。两个复用公告模块保留 [research-workbench原许可](licenses/research-workbench-MIT.txt)；第三方公告、行情、研报和外部组件的权利独立，代码许可不授予其数据使用权，详见 [第三方说明](THIRD_PARTY_NOTICES.md)。不发布原始公告PDF、账户材料或私人缓存。
 
 仅供学习与研究，不构成投资建议或交易指令；使用前核对本次来源、日期与假设，详见 [使用边界](DISCLAIMER.md)。
+
+候选资产与版本边界见 [alpha.9发布准备](docs/release-alpha9.md)。
