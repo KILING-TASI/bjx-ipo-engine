@@ -1,131 +1,90 @@
 # 北交所打新研究引擎
 
-研究北交所网上发行的比例获配情景、现金占用与公开发行证据，保存来源、假设和缺口。
+计算不同申购预算下的比例获配、资金占用和现金缺口，并把公告事实与假设分开保存。
 
-## 结果预览
+## 最短试用
 
-一页查看“预算是否跨过比例整手阶梯”“获配本金是否仍被占用”“退款公告能否代表可用现金”。实际报告截图如下，不是 AI 生成图：
+需要 Python 3.10 或以上。从 GitHub 下载或克隆本仓，在完整仓库根目录打开 Windows PowerShell：
 
-<img src="docs/screenshots/first-screen.png" alt="实际生成的悦龙公开字段与假设预算对比，2026-10-09，引擎alpha.8" width="900">
-
-[完整实际截图与生成说明](docs/preview-guide.md) · [本地 HTML 预览](docs/preview/index.html) · [对应输入](docs/preview/input.json)
-
-只有一只真实公开发行，三种预算与另一组收益情景属于假设；实际个人获配、余股与收益未知，未做真实账户验收。关键日期和假设在各结果旁单独标注。
-
-## 最短离线 demo
-
-在完整仓库目录运行，Python 3.10 及以上，标准库即可，不联网：
-
-```bash
+```powershell
 python -S demo.py --out-dir local-data/demo-01
 ```
 
-打开 `local-data/demo-01/index.html`。同目录含输入、结果和摘要清单；输出目录必须不存在，重跑换新名称，不覆盖旧研究。保存的 HTML 在 GitHub 未必直接渲染，下载完整仓库后本地打开即可。
+这一步只用标准库，不安装其他项目，也不联网。完成后打开 `local-data/demo-01/index.html`，同目录保存输入、结果和摘要清单。目录已存在时换一个新名字，例如 `demo-02`；不会覆盖旧结果。
 
-PDF 原文比较按需使用 `pypdf`，当前验收版本为 6.14.2；离线 demo 不要求安装它。纯计算示例仍可运行 `python engine.py examples/scenarios.json`。
+## 实际结果示例
 
-## 版本与状态
+**预算增加不一定多获配一手，退款公告也不能直接当作资金到账证明。** 示例复用悦龙科技（920188）的公开发行字段，比较三种假设预算；个人余股、实际到账和收益仍未知。
 
-已发布功能预览版：[v0.2.0-alpha.8](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.8)。源码计算版本为 `0.2.0-alpha.8`，接口版本为 `1.0`。当前主分支增加案例预览、离线 demo 和原创 MIT 许可，尚未发布新版本；旧发行包保持冻结，不默认含本次新增内容。
+<img src="docs/screenshots/first-screen.png" alt="悦龙科技公开字段与假设预算对比的实际报告截图，2026-10-09" width="900">
 
-说明日期：2026-10-09。[原创代码：MIT](LICENSE)，第三方和资料范围见 [许可清单](THIRD_PARTY_NOTICES.md)。下载及历史状态见 [Releases](https://github.com/KILING-TASI/bjx-ipo-engine/releases)和 [CHANGELOG](CHANGELOG.md)。
+[完整截图与生成说明](docs/preview-guide.md) · [保存的 HTML 示例](docs/preview/index.html) · [示例输入](docs/preview/input.json)
 
-## 已实现与边界
+截图是已保存的历史报告；当前源码生成的页面还包含多方案比较和公开回购参考。GitHub 不一定直接显示 HTML，下载后在本地打开。教学预算、费用和现金日期不算真实账户验证。
 
-| 能力 | 当前范围 |
+## 能做什么，暂不支持什么
+
+| 想核对的问题 | 当前能做的事 |
 |---|---|
-| 获配与收益情景 | 预算、公告上限、百股单位、联合配售率/涨幅情景、费用、机会成本、平衡点及额外百股条件敏感性 |
-| 现金账与对照 | 明确日期的多发行和回购事件；同本金同期间比较，撞资或未结清时保留缺口 |
-| 来源与档案 | 主动来源保存、原文摘要绑定、更正标题线索、PDF 提取差异、假设快照与事后分离复盘 |
-| 官方排期与样本 | 2026 年北交所计划交易日历；悦龙科技（920188）一只历史发行的八项选定字段 |
-| 计算接口 | v1.0 情景与现金账接口，旧入口保留；与主工作台年度情景尚未证实等价 |
+| 预算够不够跨过百股阶梯 | 按发行价、申购上限和百股单位取整，计算声明配售率下的比例整手 |
+| 收益会受哪些条件影响 | 比较明确的配售率、涨幅、费用和机会成本；余股额外百股只作为条件情景 |
+| 多只新股会不会撞资 | 按明确日期记冻结、退款、留存本金和卖出回款，保留资金不足与同日顺序不明的缺口 |
+| 不同资金方案怎么比较 | 在同本金、同期间下比较声明方案；单列一条公开回购定盘参考及假设费用 |
+| 公告字段从哪里来 | 保存来源、原件摘要、选定字段和更正线索，区分公告日期、取得时间及未知可得时点 |
+| 日期是否有依据 | 使用2026年北交所计划交易日历，逐案核对申购、公告退款和上市日期 |
 
-没有自动申购、交易执行、经过验证的中签率预测模型、全年完整回放或收益承诺。真实个人获配、余股、券商到账及卖出结果不能由公开汇总比例还原。教学案例不计入真实发行数量。
+暂不支持自动申购或交易、个人余股排序预测、完整年度收益回放、经过校准的中签率预测。计划交易日不认证实际开市或券商到账；缺失费用和日期不填零，冲突来源不自动选值。真实账号验收由用户暂停。
 
-## 输入与关键口径
+金额用人民币，股数用股，收益率与费率用小数，例如 `0.0005` 表示0.05%。公告退款日、退款资金可用日、上市日和卖出现金可用日分别输入。详细口径见 [现金账](docs/cash-and-evidence.md)、[情景与敏感性](docs/scenario-sensitivity.md)和 [方法说明](docs/funding-history-methods.md)。
 
-- 金额单位为人民币；收益率及费率用小数，例如 `0.0005` 表示 0.05%，`1.2` 表示 120%。
-- 公告申购上限按股数输入，申购按 100 股单位取整；比例获配不等于最终个人获配。
-- 申购日、公告退款日、退款资金可用日、上市日与卖出现金可用日分别记录，不自动猜 T+2 或上市日卖出。
-- 最低佣金取 `max(成交额×佣金率, 最低佣金)`，示例假设一次成交。净回款中已扣的费用不得重复录入。
-- 情景净收益扣声明的机会成本；现金替代差额直接比较回款，不再次扣同一机会成本。期间收益率不是全年或复利年化。
-- 现在补录历史假设标为重建，不计成事前预测；本地时间与哈希不是外部可信时间戳。
+## 独立使用与项目身份
 
-详细契约见 [统一设计](docs/design.md)、[现金账](docs/cash-and-evidence.md)、[敏感性](docs/scenario-sensitivity.md)和 [工作台接口](docs/workbench-contract.md)。
+本仓是独立 Python 计算引擎，提供 CLI 和 JSON 接口；没有 SKILL.md，不是直接安装发现的 Codex Skill。无需安装其他自家专业仓。[research-workbench](https://github.com/KILING-TASI/research-workbench)可以调用它，并负责公司经营研究、综合判断和报告组织；工作台不是本引擎的运行依赖。
 
-## 输出、来源与缺失状态
-
-研究包包括 `report.md`、`report.html`、`input.json`、`result.json` 和 `manifest.json`。HTML 表格经过转义；结构检查不代替完整视觉验收。摘要检查只证明保存内容一致，不认证来源真实性、计算正确性或研究判断。
-
-资料获取、解析、计算、选定原文匹配和视觉状态分列。缺失不填零，冲突不自动选值；失败保留原因和下一步。离线复用记录与重新核对原文分别标注。仅 `capture --online` 主动访问指定来源。
-
-可运行的其他入口：
-
-```bash
-python bjx.py compare-cash examples/compare-cash.json --out-dir local-data/cash-01
-python bjx.py calendar data/bse-2026-schedule.json --out-dir local-data/calendar-01
-python bjx.py public-sample examples/public-sample.json --out-dir local-data/yuelong-01
-python bjx.py sample-validation examples/sample-validation.json --out-dir local-data/validation-01
-```
-
-公共样本入口复用真实发行字段，但预算及退款资金可用日仍是假设，不认证账户收益。来源和覆盖见 [官方日历](docs/calendar-verification.md)、[悦龙样本](docs/public-sample-920188.md)、[验收矩阵](docs/sample-validation.md)及 [历史档案](docs/history-replay.md)。
-
-## 验证范围
-
-alpha.8 已通过 72 项本地检查及 Windows/Linux、Python 3.10/3.12 检查，包含独立解压包、标准库例子和接口同输入对照。这是工程范围，不是 72 个真实研究样本或预测准确率。
-
-真实发行覆盖为一只、八项选定字段；仍缺第二个发行、全部更正、可信历史首次公开时钟、真实个人余股及到账。报告完整视觉验收与实际账户验收未完成，后者处于用户暂停状态。
-
-```bash
-python -m unittest discover -s tests -v
-python .github/scripts/check_docs.py
-python .github/scripts/check_package.py
-```
-
-## 后续路线
-
-优先补充公开发行样本及更正证据，再讨论更完整回放和跨包等价迁移。同行估值、上市后流动性只在指定范围和资料充分时研究，不扩全市场承诺。当前与历史状态见 [路线](docs/roadmap.md)、[开发记录](docs/progress.md)和 [版本变更](CHANGELOG.md)。
-
-## 与其他仓库的关系
-
-本仓库是轻量北交所计算与证据引擎；[research-workbench](https://github.com/KILING-TASI/research-workbench)负责更广的研究组织、资料与报告。当前仅提供 [版本化接口](docs/workbench-contract.md)，不修改主包，也不要求删除尚无等价实现的功能。复用范围见 [适配说明](docs/workbench-integration.md)。
-
-## 许可与第三方资料
-
-[![Original code: MIT](https://img.shields.io/badge/original_code-MIT-blue.svg)](LICENSE)
-
-两个复用公告模块保留 research-workbench 的 MIT 许可，见 [第三方说明](THIRD_PARTY_NOTICES.md)和 [许可原文](licenses/research-workbench-MIT.txt)。用户已授权原创代码和有权授权的原创说明采用根 [MIT 许可证](LICENSE)。第三方材料不因根许可而整体转为 MIT；具体范围与未明事项见第三方说明。
-
-不附 Wind 数据库、用户账户、私人缓存或完整原公告。行情、公告、研报、商标及外部组件的权利独立适用；代码许可不授予第三方数据使用权。
-
-## 免责声明
-
-仅供学习与研究，不构成投资建议或交易指令，不保证收益、获配或结果准确性。使用前请阅读 [免责声明与使用边界](DISCLAIMER.md)，核对本次来源、日期和假设。
-
-多发行方案及有限候选比较见 [说明](docs/plan-comparison.md)，开发 PR #1 新增，未合并、未发布新版。
-
-一条官方定盘参考及显式净费用适配见 [说明](docs/public-repo-reference.md)，费用和到账为声明假设，非账户实收益。
-
-资金、历史样本与方案选择的 [方法卡及验收](docs/funding-history-methods.md)区分已实现与未实现统计能力。
-
-当前职责、数据入口、版本分层和本批结案范围统一见 [数据与交付契约目录](docs/data-contract-inventory.md)。包装样例仅本地无损验证，跨仓数据读取待核验，不代表九仓统一。
-
-独立安装范围：wheel 提供计算模块，可在独立环境用 `python -I -m api` 输入完整 JSON 请求；最短离线 demo 使用完整本仓源码归档，wheel 不包含 demo/示例/公开字段资源。无需其他自家仓或安装工作台。[单仓独立验收](docs/standalone-acceptance.md)分别记录两条路径。
-
-情景实例短入口：`python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01`。预算阶梯、余股未知、跨假期占款、同日顺序、费用与现金不足见 [十例索引及手算依据](docs/scenario-acceptance.md)，全部为教学/声明假设。
-
-## CLI 身份与安装前提
-
-本仓是独立 Python 研究计算引擎，不是可直接安装发现的 Codex Skill，没有 SKILL.md。工作台可以调用，但不是运行依赖。Python 3.10+，离线计算/demo仅需标准库；普通构建依赖 setuptools>=77。没有必须安装的其他自家专业仓。
-
-Windows PowerShell 在完整源码归档根目录可复制运行：
+源码最短试用无需安装。需要安装计算模块时，在本仓根目录执行：
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install .
-.\.venv\Scripts\python.exe -S demo.py --out-dir local-data/demo-02
 ```
 
-安装源码时 pip 可能联网取得声明的构建依赖；demo本身离线。wheel仅计算模块，不含demo/示例资源。需要 PDF 原文核对才按需执行 `.\.venv\Scripts\python.exe -m pip install ".[pdf]"`，声明 pypdf==6.14.2；已安装包环境可用 `python -m pip install "bjx-ipo-engine[pdf]==0.2.0a8"`，但公开包索引可用性未在本批验证，待审版优先从源码安装extra。使用PDF组件时不加 `-S`，否则site-packages不可见。只有显式 `capture --online` 才进行来源访问，不自动下载账户或付费资料。
+构建依赖为 setuptools>=77，安装时可能联网取得；计算运行无普通第三方依赖。wheel只含计算模块，demo、示例和公开字段资源需使用完整本仓源码。已安装模块可用 `python -I -m api` 接收完整 JSON 请求，格式见 [接口说明](docs/workbench-contract.md)。
 
-机器入口 `bjx.py` / `api.py` 继续输出JSON，提示和下一步可查新报告的report.md/result.json；`demo.py`面向人提示目录和HTML。目录已存在请换新名字，无force覆盖或自动安装。上述范围不等于Skill自然语言发现、视觉或真实取数已验收。
+只有 PDF 原文核对需要可选组件：
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install ".[pdf]"
+```
+
+声明版本为 pypdf==6.14.2。运行 PDF 入口时不要加 `-S`，否则已安装组件不可见。主动获取来源需显式使用 `capture --online`，不会自动下载私人或付费资料。安装与独立使用的实际验收范围见 [单仓验收](docs/standalone-acceptance.md)。
+
+其他可复制的离线入口：
+
+```powershell
+python bjx.py public-sample examples/public-sample.json --out-dir local-data/yuelong-01
+python bjx.py compare-plans examples/compare-plans.json --out-dir local-data/plans-01
+python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01
+```
+
+前两项输出目录含 `report.md`、`report.html`、输入、结果和摘要；情景验收输出另含预期值与实际回执。[实例索引](docs/scenario-acceptance.md)包括预算阶梯、余股未知、费用、资金不足和逐案日期边界。机器入口保持 JSON 输出，失败原因和下一步保存在报告中。
+
+## 当前源码与旧发行包
+
+截至2026-10-10，main已集成多方案比较、公开回购参考、接口联调、独立安装及情景验收、中文使用提示；计算核心版本仍为 `0.2.0-alpha.8`，接口为 `1.0`，没有为了文案升级版本。
+
+已发布功能版为 [v0.2.0-alpha.8](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.8)，另有文档更新版。旧Release资产保持冻结，不包含后续main全部增量；本页命令面向当前main的完整源码。查看 [发行历史](https://github.com/KILING-TASI/bjx-ipo-engine/releases)、[变更记录](CHANGELOG.md)和 [开发记录](docs/progress.md)。
+
+## 验证、来源与许可
+
+已完成 Windows/Linux、Python3.10/3.12工程检查，以及单仓源码归档和非editable wheel实际运行。情景验收包含手算或现金守恒预期；CI通过不等于投资有效、资料完整或账户收益已认证。
+
+真实公开发行覆盖仍为一只、八项选定字段，另有一条回购定盘参考。第一份公告已在北交、规则端和工作台实际复用，但不代表所有仓库的数据已统一。完整更正链、可信历史首次公开时刻及全部报告视觉验收仍未完成。
+
+- [公开发行样本与来源](docs/public-sample-920188.md) · [日历核验范围](docs/calendar-verification.md) · [公开回购参考](docs/public-repo-reference.md)
+- [公告复用验收](docs/announcement-reuse.md) · [数据入口与版本说明](docs/data-contract-inventory.md) · [后续路线](docs/roadmap.md)
+
+[![原创代码 MIT](https://img.shields.io/badge/原创代码-MIT-blue.svg)](LICENSE)
+
+原创代码和有权授权的原创说明采用 [MIT许可](LICENSE)。两个复用公告模块保留 [research-workbench原许可](licenses/research-workbench-MIT.txt)；第三方公告、行情、研报和外部组件的权利独立，代码许可不授予其数据使用权，详见 [第三方说明](THIRD_PARTY_NOTICES.md)。不发布原始公告PDF、账户材料或私人缓存。
+
+仅供学习与研究，不构成投资建议或交易指令；使用前核对本次来源、日期与假设，详见 [使用边界](DISCLAIMER.md)。
