@@ -132,7 +132,7 @@ def main(argv=None):
     except (OSError, ValueError, KeyError, TypeError, ImportError, RuntimeError, ArithmeticError) as exc:
         status = 'blocked'
         if isinstance(exc, ModuleNotFoundError) and exc.name and exc.name.startswith('pypdf'):
-            next_step='PDF 原文入口缺少可选组件。源码目录执行 python -m pip install ".[pdf]"；已安装包环境执行 python -m pip install "bjx-ipo-engine[pdf]==0.2.0a8"。安装后使用新输出目录重试。'
+            next_step='PDF 原文入口缺少可选组件。源码目录执行 python -m pip install ".[pdf]"；已安装包环境执行 python -m pip install "bjx-ipo-engine[pdf]==0.2.0a9"。安装后使用新输出目录重试。'
         elif isinstance(exc, KeyError):
             next_step='输入缺少必填字段，请按本入口 examples/ 示例核对字段与单位；不补默认到账日期。修正后使用新输出目录重试。'
         elif isinstance(exc, OSError):
