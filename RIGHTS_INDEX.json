@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "research-rights-index/1",
+  "repository": "bjx-ipo-engine",
+  "originalCodeLicense": "MIT",
+  "noticeFiles": [
+    {
+      "path": "LICENSE",
+      "sha256": "3c806ee777b9a488840564fe12ca3234a724256f3fde62856ccd473f1556d91e"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "d04a07e023da96f670d68cbe5c822b78f05fd53d8e95ed6a309e05476546176a"
+    }
+  ],
+  "dataRights": "Source-specific; not granted by code MIT",
+  "methodReferences": "See repository method documents; citations do not convey text or data redistribution rights",
+  "scope": "Notice-file inventory and hashes, not an authorization or legal compliance certificate",
+  "hashFormat": "utf-8-lf"
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "fixed-shared-components/1",
+  "hashFormat": "UTF-8 with LF newlines",
+  "components": [
+    {
+      "localPath": "vendor/announcement_versions.py",
+      "normalizedTextSha256": "afe0f264ec68786529538f6300992c642582f4c433d6ddf062cd1a3d34c7ccb7",
+      "canonicalRepository": "research-workbench",
+      "canonicalPath": "modules/bjx-newshare-toolkit/scripts/announcement_versions.py",
+      "syncPolicy": "fixed-with-distribution; review and regenerate manifest before replacing; no runtime source dependency",
+      "licenseScope": "see repository third-party notices; inventory does not grant rights"
+    },
+    {
+      "localPath": "vendor/compare_original_versions.py",
+      "normalizedTextSha256": "e384f9c4e91c13a773a1f14a71c3e8860bb79f0a3962b19c449eda92d917bde5",
+      "canonicalRepository": "research-workbench",
+      "canonicalPath": "modules/bjx-newshare-toolkit/scripts/compare_original_versions.py",
+      "syncPolicy": "fixed-with-distribution; review and regenerate manifest before replacing; no runtime source dependency",
+      "licenseScope": "see repository third-party notices; inventory does not grant rights"
+    }
+  ],
+  "scope": "This inventory covers discovered equal original Python text, not proof of all interfaces being equivalent; divergent variants are not merged"
+}
