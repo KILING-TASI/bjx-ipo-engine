@@ -111,3 +111,5 @@ python .github/scripts/check_package.py
 当前职责、数据入口、版本分层和本批结案范围统一见 [数据与交付契约目录](docs/data-contract-inventory.md)。包装样例仅本地无损验证，跨仓数据读取待核验，不代表九仓统一。
 
 独立安装范围：wheel 提供计算模块，可在独立环境用 `python -I -m api` 输入完整 JSON 请求；最短离线 demo 使用完整本仓源码归档，wheel 不包含 demo/示例/公开字段资源。无需其他自家仓或安装工作台。[单仓独立验收](docs/standalone-acceptance.md)分别记录两条路径。
+
+情景实例短入口：`python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01`。预算阶梯、余股未知、跨假期占款、同日顺序、费用与现金不足见 [十例索引及手算依据](docs/scenario-acceptance.md)，全部为教学/声明假设。
