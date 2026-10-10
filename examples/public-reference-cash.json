@@ -1,0 +1,85 @@
+{
+  "start": "2026-10-08",
+  "end": "2026-10-12",
+  "currency": "CNY",
+  "input_kind": "scenario",
+  "initial_cash": "100001.00",
+  "calendar": {
+    "source": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+    "basis": "derived",
+    "coverage_start": "2026-10-08",
+    "coverage_end": "2026-10-12",
+    "trading_dates": [
+      "2026-10-08",
+      "2026-10-09",
+      "2026-10-12"
+    ],
+    "derivation": {
+      "method": "Selected range weekdays minus SSE announced holidays; no actual clearing certification",
+      "sources": [
+        {
+          "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+          "document_date": "2026-09-17",
+          "reviewed_on": "2026-10-09"
+        }
+      ]
+    }
+  },
+  "plans": [
+    {
+      "id": "public-fixing-reference",
+      "basis": "Historical fixing with hypothetical principal, cash availability and fee assumptions",
+      "events": [
+        {
+          "id": "reference-open",
+          "instrument": "REFERENCE-204001",
+          "date": "2026-10-08",
+          "kind": "repo_open",
+          "amount": "100000.00",
+          "evidence": {
+            "basis": "assumption",
+            "source": "Dated public fixing applied to hypothetical principal; declared availability/fees, no account execution"
+          }
+        },
+        {
+          "id": "reference-principal",
+          "instrument": "REFERENCE-204001",
+          "date": "2026-10-09",
+          "kind": "repo_principal",
+          "amount": "100000.00",
+          "evidence": {
+            "basis": "assumption",
+            "source": "Dated public fixing applied to hypothetical principal; declared availability/fees, no account execution"
+          }
+        },
+        {
+          "id": "reference-interest",
+          "instrument": "REFERENCE-204001",
+          "date": "2026-10-12",
+          "kind": "repo_interest",
+          "amount": "11.44",
+          "evidence": {
+            "basis": "assumption",
+            "source": "Dated public fixing applied to hypothetical principal; declared availability/fees, no account execution"
+          }
+        },
+        {
+          "id": "reference-fee",
+          "instrument": "REFERENCE-204001",
+          "date": "2026-10-08",
+          "kind": "fee",
+          "amount": "1.00",
+          "evidence": {
+            "basis": "assumption",
+            "source": "Dated public fixing applied to hypothetical principal; declared availability/fees, no account execution"
+          }
+        }
+      ]
+    },
+    {
+      "id": "idle",
+      "basis": "Hypothetical idle cash, income unknown and therefore omitted",
+      "events": []
+    }
+  ]
+}

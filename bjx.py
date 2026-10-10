@@ -9,7 +9,8 @@ from urllib.parse import urlsplit
 from audit import MAX_BYTES, bind_fact_sources, capture, load, publish, verify
 from engine import evaluate
 from research import facts, ledger
-from comparison import compare_cash
+from comparison import compare_cash, compare_plans
+from repo_reference import repo_reference
 from trading_calendar import build_calendar
 from history import freeze, archive, review
 from public_sample import replay_sample
@@ -19,6 +20,10 @@ from vendor.announcement_versions import version_review
 
 
 def run(mode, spec, online=False):
+    if mode=='repo-reference':
+        return repo_reference(spec), {}
+    if mode=='compare-plans':
+        return compare_plans(spec), {}
     if mode=='api':
         return calculate(spec),{}
     if mode=='sample-validation':
@@ -92,7 +97,7 @@ def run(mode, spec, online=False):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['scenarios', 'ledger', 'facts', 'versions', 'capture', 'compare-pdf', 'compare-cash', 'calendar', 'freeze', 'archive', 'review', 'public-sample', 'sample-validation','api','verify'])
+    parser.add_argument('mode', choices=['scenarios', 'ledger', 'facts', 'versions', 'capture', 'compare-pdf', 'compare-cash', 'compare-plans', 'repo-reference', 'calendar', 'freeze', 'archive', 'review', 'public-sample', 'sample-validation','api','verify'])
     parser.add_argument('input', help='input JSON, or research directory for verify')
     parser.add_argument('--out-dir')
     parser.add_argument('--online', action='store_true')
@@ -126,8 +131,16 @@ def main(argv=None):
             result=dict(result,message=result['error']['message'],next_step='核对版本契约及输入，使用新输出目录重试。')
     except (OSError, ValueError, KeyError, TypeError, ImportError, RuntimeError, ArithmeticError) as exc:
         status = 'blocked'
+        if isinstance(exc, ModuleNotFoundError) and exc.name and exc.name.startswith('pypdf'):
+            next_step='PDF 原文入口缺少可选组件。源码目录执行 python -m pip install ".[pdf]"；已安装包环境执行 python -m pip install "bjx-ipo-engine[pdf]==0.2.0a8"。安装后使用新输出目录重试。'
+        elif isinstance(exc, KeyError):
+            next_step='输入缺少必填字段，请按本入口 examples/ 示例核对字段与单位；不补默认到账日期。修正后使用新输出目录重试。'
+        elif isinstance(exc, OSError):
+            next_step='检查输入文件是否存在及是否可读；相对路径从完整本仓根目录运行。使用新输出目录重试。'
+        else:
+            next_step='按本入口示例核对字段、单位、日期及证据；修正后使用新输出目录重试。'
         result = dict(message=str(exc), failure_kind=type(exc).__name__,
-                      next_step='核对输入、来源访问及可选依赖；使用新的输出目录重试。缺少PDF组件时安装pypdf。')
+                      next_step=next_step)
     manifest = publish(args.out_dir, args.mode, spec, result, status, artifacts)
     print(json.dumps({'status': status, 'out_dir': args.out_dir, 'method_version': manifest['method_version']}, ensure_ascii=False))
     return 2 if status == 'blocked' else 0

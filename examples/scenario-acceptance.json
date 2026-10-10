@@ -1,0 +1,498 @@
+{
+  "schema": "bjx-cli-scenarios.v1",
+  "real_sample_count": 0,
+  "scope": "Reusable existing tests promoted to actual CLI reports; no new model",
+  "cases": [
+    {
+      "id": "below-second-lot",
+      "mode": "scenarios",
+      "input": {
+        "capital": 10000000,
+        "budget": 3599,
+        "issue_price": 18,
+        "max_subscription_shares": 600000,
+        "subscription_date": "2026-10-12",
+        "refund_available_date": "2026-10-14",
+        "sale_cash_available_date": "2026-10-20",
+        "annual_cash_cost_rate": 0.02,
+        "fees": {
+          "commission_rate": 0.00025,
+          "minimum_commission": 5,
+          "stamp_rate": 0.0005,
+          "transfer_rate": 1e-05
+        },
+        "scenarios": [
+          {
+            "id": "declared",
+            "allocation_rate": 1,
+            "listing_return": 0,
+            "basis": "Teaching only; not a forecast"
+          }
+        ]
+      },
+      "expected": {
+        "subscribed_shares": 100,
+        "frozen_amount": 1800
+      },
+      "expected_exit": 0,
+      "basis": "floor(3599/18/100)*100=100; freeze100*18",
+      "sample_kind": "teaching"
+    },
+    {
+      "id": "at-second-lot",
+      "mode": "scenarios",
+      "input": {
+        "capital": 10000000,
+        "budget": 3600,
+        "issue_price": 18,
+        "max_subscription_shares": 600000,
+        "subscription_date": "2026-10-12",
+        "refund_available_date": "2026-10-14",
+        "sale_cash_available_date": "2026-10-20",
+        "annual_cash_cost_rate": 0.02,
+        "fees": {
+          "commission_rate": 0.00025,
+          "minimum_commission": 5,
+          "stamp_rate": 0.0005,
+          "transfer_rate": 1e-05
+        },
+        "scenarios": [
+          {
+            "id": "declared",
+            "allocation_rate": 1,
+            "listing_return": 0,
+            "basis": "Teaching only; not a forecast"
+          }
+        ]
+      },
+      "expected": {
+        "subscribed_shares": 200,
+        "frozen_amount": 3600
+      },
+      "expected_exit": 0,
+      "basis": "3600/(18*100)=2 lots; not proportional continuous spending",
+      "sample_kind": "teaching"
+    },
+    {
+      "id": "residual-unknown",
+      "mode": "scenarios",
+      "input": {
+        "capital": 10000000,
+        "budget": 3600,
+        "issue_price": 18,
+        "max_subscription_shares": 600000,
+        "subscription_date": "2026-10-12",
+        "refund_available_date": "2026-10-14",
+        "sale_cash_available_date": "2026-10-20",
+        "annual_cash_cost_rate": 0.02,
+        "fees": {
+          "commission_rate": 0.00025,
+          "minimum_commission": 5,
+          "stamp_rate": 0.0005,
+          "transfer_rate": 1e-05
+        },
+        "scenarios": [
+          {
+            "id": "declared",
+            "allocation_rate": 0.25,
+            "listing_return": 0,
+            "basis": "Teaching only; not a forecast"
+          }
+        ]
+      },
+      "expected": {
+        "scenarios.0.proportional_shares": 0,
+        "scenarios.0.probability": null
+      },
+      "expected_exit": 0,
+      "basis": "200*0.25=50 shares, whole proportional lot zero; extra100 conditional unknown, no weight",
+      "sample_kind": "teaching"
+    },
+    {
+      "id": "holiday-retained-principal",
+      "mode": "scenarios",
+      "input": {
+        "capital": 10000000,
+        "budget": 1800,
+        "issue_price": 18,
+        "max_subscription_shares": 600000,
+        "subscription_date": "2026-09-29",
+        "refund_available_date": "2026-09-30",
+        "sale_cash_available_date": "2026-10-08",
+        "annual_cash_cost_rate": 0.02,
+        "fees": {
+          "commission_rate": 0.00025,
+          "minimum_commission": 5,
+          "stamp_rate": 0.0005,
+          "transfer_rate": 1e-05
+        },
+        "scenarios": [
+          {
+            "id": "declared",
+            "allocation_rate": 1,
+            "listing_return": 0,
+            "basis": "Teaching only; not a forecast"
+          }
+        ]
+      },
+      "expected": {
+        "scenarios.0.capital_days": 16200,
+        "scenarios.0.cash_cost": 0.8876712328767123
+      },
+      "expected_exit": 0,
+      "basis": "1800*1 freeze day +1800*8 retained days=16200 CNY-days, natural days not trading days",
+      "sample_kind": "teaching"
+    },
+    {
+      "id": "cash-conservation",
+      "mode": "ledger",
+      "input": {
+        "initial_cash": 1000,
+        "calendar": {
+          "source": "教学日历，非官方已核验交易日历",
+          "basis": "assumption",
+          "coverage_start": "2026-10-12",
+          "coverage_end": "2026-10-20",
+          "trading_dates": [
+            "2026-10-12",
+            "2026-10-13",
+            "2026-10-14",
+            "2026-10-15",
+            "2026-10-16",
+            "2026-10-19",
+            "2026-10-20"
+          ]
+        },
+        "events": [
+          {
+            "id": "A-freeze",
+            "instrument": "DEMO-A",
+            "date": "2026-10-12",
+            "kind": "freeze",
+            "amount": 1000,
+            "evidence": {
+              "basis": "assumption",
+              "source": "教学现金计划"
+            }
+          },
+          {
+            "id": "A-refund",
+            "instrument": "DEMO-A",
+            "date": "2026-10-14",
+            "kind": "refund",
+            "amount": 800,
+            "evidence": {
+              "basis": "assumption",
+              "source": "教学现金计划"
+            }
+          },
+          {
+            "id": "A-sale",
+            "instrument": "DEMO-A",
+            "date": "2026-10-20",
+            "kind": "sale",
+            "amount": 250,
+            "principal_released": 200,
+            "evidence": {
+              "basis": "assumption",
+              "source": "教学现金计划，amount为扣除卖出费用后现金净回款"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "executable": true,
+        "final_available_cash_exact": "1050",
+        "outstanding_ipo_principal": 0
+      },
+      "expected_exit": 0,
+      "basis": "1000-1000+800+250=1050; retained200 released on sale",
+      "sample_kind": "teaching"
+    },
+    {
+      "id": "same-day-unknown",
+      "mode": "ledger",
+      "input": {
+        "initial_cash": 1000,
+        "calendar": {
+          "source": "教学日历，非官方已核验交易日历",
+          "basis": "assumption",
+          "coverage_start": "2026-10-12",
+          "coverage_end": "2026-10-20",
+          "trading_dates": [
+            "2026-10-12",
+            "2026-10-13",
+            "2026-10-14",
+            "2026-10-15",
+            "2026-10-16",
+            "2026-10-19",
+            "2026-10-20"
+          ]
+        },
+        "events": [
+          {
+            "id": "A-freeze",
+            "instrument": "DEMO-A",
+            "date": "2026-10-12",
+            "kind": "freeze",
+            "amount": 1000,
+            "evidence": {
+              "basis": "assumption",
+              "source": "教学现金计划"
+            }
+          },
+          {
+            "id": "A-refund",
+            "instrument": "DEMO-A",
+            "date": "2026-10-14",
+            "kind": "refund",
+            "amount": 800,
+            "evidence": {
+              "basis": "assumption",
+              "source": "教学现金计划"
+            }
+          },
+          {
+            "id": "second",
+            "instrument": "B",
+            "date": "2026-10-14",
+            "kind": "freeze",
+            "amount": 800,
+            "evidence": {
+              "basis": "assumption",
+              "source": "Teaching order unknown"
+            }
+          },
+          {
+            "id": "A-sale",
+            "instrument": "DEMO-A",
+            "date": "2026-10-20",
+            "kind": "sale",
+            "amount": 250,
+            "principal_released": 200,
+            "evidence": {
+              "basis": "assumption",
+              "source": "教学现金计划，amount为扣除卖出费用后现金净回款"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "executable": false,
+        "conflicts.0.shortage": 800,
+        "final_available_cash_exact": "0"
+      },
+      "expected_exit": 0,
+      "basis": "No release-before-order evidence; cannot reuse800; refund not executed before conflict",
+      "sample_kind": "teaching"
+    },
+    {
+      "id": "cash-shortage",
+      "mode": "ledger",
+      "input": {
+        "initial_cash": 900,
+        "calendar": {
+          "source": "教学日历，非官方已核验交易日历",
+          "basis": "assumption",
+          "coverage_start": "2026-10-12",
+          "coverage_end": "2026-10-20",
+          "trading_dates": [
+            "2026-10-12",
+            "2026-10-13",
+            "2026-10-14",
+            "2026-10-15",
+            "2026-10-16",
+            "2026-10-19",
+            "2026-10-20"
+          ]
+        },
+        "events": [
+          {
+            "id": "A-freeze",
+            "instrument": "DEMO-A",
+            "date": "2026-10-12",
+            "kind": "freeze",
+            "amount": 1000,
+            "evidence": {
+              "basis": "assumption",
+              "source": "教学现金计划"
+            }
+          },
+          {
+            "id": "A-refund",
+            "instrument": "DEMO-A",
+            "date": "2026-10-14",
+            "kind": "refund",
+            "amount": 800,
+            "evidence": {
+              "basis": "assumption",
+              "source": "教学现金计划"
+            }
+          },
+          {
+            "id": "A-sale",
+            "instrument": "DEMO-A",
+            "date": "2026-10-20",
+            "kind": "sale",
+            "amount": 250,
+            "principal_released": 200,
+            "evidence": {
+              "basis": "assumption",
+              "source": "教学现金计划，amount为扣除卖出费用后现金净回款"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "executable": false,
+        "conflicts.0.shortage": 100,
+        "final_available_cash_exact": "900"
+      },
+      "expected_exit": 0,
+      "basis": "1000 commitment minus900 initial=100 shortage; no partial execution",
+      "sample_kind": "teaching"
+    },
+    {
+      "id": "explicit-zero-fee",
+      "mode": "repo-reference",
+      "input": {
+        "quote_record": "data/public-repo-reference/204001-20261008.json",
+        "principal": "100000.00",
+        "dates": {
+          "trade_date": "2026-10-08",
+          "first_settlement_date": "2026-10-09",
+          "maturity_settlement_date": "2026-10-12",
+          "principal_available_date": "2026-10-09",
+          "interest_available_date": "2026-10-12",
+          "basis": "Settlement rule plus declared availability assumptions; no actual transaction",
+          "source": "https://www.sse.com.cn/disclosure/bond/ratios/",
+          "availability_basis": "Principal usable Oct9 and interest credited Oct12 explicitly assumed; broker timing unverified"
+        },
+        "calendar": {
+          "source": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+          "basis": "derived",
+          "coverage_start": "2026-10-08",
+          "coverage_end": "2026-10-12",
+          "trading_dates": [
+            "2026-10-08",
+            "2026-10-09",
+            "2026-10-12"
+          ],
+          "derivation": {
+            "method": "Selected range weekdays minus SSE announced holidays; no actual clearing certification",
+            "sources": [
+              {
+                "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+                "document_date": "2026-09-17",
+                "reviewed_on": "2026-10-09"
+              }
+            ]
+          }
+        },
+        "fee": {
+          "status": "declared",
+          "basis": "assumption",
+          "source": "Explicit teaching waiver, not unknown",
+          "principal_rate": "0",
+          "minimum": "0",
+          "fixed": "0",
+          "paid_date": "2026-10-08",
+          "rounding": "half_up_cent"
+        }
+      },
+      "expected": {
+        "fee_exact": "0.00",
+        "gross_interest_cent": "11.44",
+        "net_reference_interest": "11.44"
+      },
+      "expected_exit": 0,
+      "basis": "100000*.01392*3/365 rounds11.44; declared fee0 retained, zero cash movement omitted",
+      "sample_kind": "teaching"
+    },
+    {
+      "id": "fee-unknown",
+      "mode": "repo-reference",
+      "input": {
+        "quote_record": "data/public-repo-reference/204001-20261008.json",
+        "principal": "100000.00",
+        "dates": {
+          "trade_date": "2026-10-08",
+          "first_settlement_date": "2026-10-09",
+          "maturity_settlement_date": "2026-10-12",
+          "principal_available_date": "2026-10-09",
+          "interest_available_date": "2026-10-12",
+          "basis": "Settlement rule plus declared availability assumptions; no actual transaction",
+          "source": "https://www.sse.com.cn/disclosure/bond/ratios/",
+          "availability_basis": "Principal usable Oct9 and interest credited Oct12 explicitly assumed; broker timing unverified"
+        },
+        "calendar": {
+          "source": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+          "basis": "derived",
+          "coverage_start": "2026-10-08",
+          "coverage_end": "2026-10-12",
+          "trading_dates": [
+            "2026-10-08",
+            "2026-10-09",
+            "2026-10-12"
+          ],
+          "derivation": {
+            "method": "Selected range weekdays minus SSE announced holidays; no actual clearing certification",
+            "sources": [
+              {
+                "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+                "document_date": "2026-09-17",
+                "reviewed_on": "2026-10-09"
+              }
+            ]
+          }
+        },
+        "fee": {
+          "status": "unknown",
+          "basis": "unknown",
+          "source": "Broker tariff unverified"
+        }
+      },
+      "expected": {
+        "status": "fee_unknown_net_blocked",
+        "net_reference_interest": null,
+        "cash_plan": null
+      },
+      "expected_exit": 0,
+      "basis": "Unknown tariff cannot become explicit zero or executable net plan",
+      "sample_kind": "teaching"
+    },
+    {
+      "id": "missing-refund-date",
+      "mode": "scenarios",
+      "input": {
+        "capital": 10000000,
+        "budget": 1800,
+        "issue_price": 18,
+        "max_subscription_shares": 600000,
+        "subscription_date": "2026-10-12",
+        "sale_cash_available_date": "2026-10-20",
+        "annual_cash_cost_rate": 0.02,
+        "fees": {
+          "commission_rate": 0.00025,
+          "minimum_commission": 5,
+          "stamp_rate": 0.0005,
+          "transfer_rate": 1e-05
+        },
+        "scenarios": [
+          {
+            "id": "declared",
+            "allocation_rate": 1,
+            "listing_return": 0,
+            "basis": "Teaching only; not a forecast"
+          }
+        ]
+      },
+      "expected": {
+        "failure_kind": "KeyError"
+      },
+      "expected_exit": 2,
+      "basis": "Explicit cash available date is required; no T+2 fallback",
+      "sample_kind": "teaching"
+    }
+  ]
+}

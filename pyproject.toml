@@ -20,7 +20,7 @@ pdf = ["pypdf==6.14.2"]
 Repository = "https://github.com/KILING-TASI/bjx-ipo-engine"
 
 [tool.setuptools]
-py-modules = ["api", "audit", "bjx", "comparison", "engine", "history", "public_sample", "research", "sample_validation", "trading_calendar"]
+py-modules = ["api", "audit", "bjx", "comparison", "engine", "history", "public_sample", "repo_reference", "research", "sample_validation", "trading_calendar"]
 include-package-data = false
 
 [tool.setuptools.packages.find]

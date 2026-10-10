@@ -1,0 +1,516 @@
+{
+  "scope": "Selected common-field comparison with explicit decimal-percent mapping, not automatic production adapter or full schema equivalence",
+  "real_sample_count": 0,
+  "tolerance": "Absolute 1e-8 in selected numeric fields; share identities exact",
+  "engine_commit": "ad5231ad278f2e68fc6716f6cd54b5d73c7a805d",
+  "workbench_commit": "add664afe56e38d1ac681577289f9b282afc906d",
+  "workbench_sources_sha256": {
+    "modules/bjx-newshare-toolkit/scripts/subscription_scenarios.py": "f079fc5062ffcbe1c12ca2d0098c51adcd3ad73bd74dd45963da1b2c6bfe5edd",
+    "modules/bjx-newshare-toolkit/scripts/allocation_cash.py": "7b665b75a605b09932acc46ab53b8ba9f43a3a0b9c2c98f77d914fa6974b5aa2"
+  },
+  "cases": [
+    {
+      "id": "joint-unweighted",
+      "native_input": {
+        "capital": 10000000,
+        "budget": 8000000,
+        "issue_price": 18,
+        "max_subscription_shares": 600000,
+        "subscription_date": "2026-10-12",
+        "refund_available_date": "2026-10-14",
+        "sale_cash_available_date": "2026-10-20",
+        "annual_cash_cost_rate": 0.02,
+        "fees": {
+          "commission_rate": 0.00025,
+          "minimum_commission": 5,
+          "stamp_rate": 0.0005,
+          "transfer_rate": 1e-05
+        },
+        "scenarios": [
+          {
+            "id": "low",
+            "allocation_rate": 0.00015,
+            "listing_return": -0.2,
+            "basis": "演示假设，不对应真实发行"
+          },
+          {
+            "id": "middle",
+            "allocation_rate": 0.00033,
+            "listing_return": 1.2,
+            "basis": "演示假设，不对应真实发行"
+          },
+          {
+            "id": "high",
+            "allocation_rate": 0.0005,
+            "listing_return": 2.0,
+            "basis": "演示假设，不对应真实发行"
+          }
+        ]
+      },
+      "workbench_input": {
+        "exampleType": "teaching-only",
+        "allocation": {
+          "code": "990000",
+          "price": "18",
+          "budget": "8000000",
+          "maxShares": 600000,
+          "applyDate": "2026-10-12",
+          "refundDate": "2026-10-14",
+          "saleSettlementDate": "2026-10-20",
+          "opportunityRatePct": "2.00",
+          "financingRatePct": "0",
+          "borrowedFraction": "0",
+          "fees": {
+            "commissionPct": "0.02500",
+            "minimumCommission": "5",
+            "taxPct": "0.0500",
+            "transferFeePct": "0.00100",
+            "slippagePct": "0"
+          }
+        },
+        "scenarios": [
+          {
+            "id": "low",
+            "ratePct": "0.01500",
+            "gainPct": "-20.0",
+            "rateBasis": "Teaching same scalar input, no actual probability",
+            "gainBasis": "Teaching same scalar input, not first-day price forecast"
+          },
+          {
+            "id": "middle",
+            "ratePct": "0.03300",
+            "gainPct": "120.0",
+            "rateBasis": "Teaching same scalar input, no actual probability",
+            "gainBasis": "Teaching same scalar input, not first-day price forecast"
+          },
+          {
+            "id": "high",
+            "ratePct": "0.0500",
+            "gainPct": "200.0",
+            "rateBasis": "Teaching same scalar input, no actual probability",
+            "gainBasis": "Teaching same scalar input, not first-day price forecast"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "scenario_id": "low",
+          "fields": [
+            {
+              "native_field": "proportional_shares",
+              "workbench_field": "wholeLotShares",
+              "native": 0,
+              "workbench": 0,
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "sell_cost",
+              "workbench_field": "saleCosts",
+              "native": 0,
+              "workbench": "0",
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "cash_cost",
+              "workbench_field": "opportunityCost",
+              "native": 876.6246575342466,
+              "workbench": "876.6246575342465753424657534",
+              "abs_difference": "2.46575342466E-14",
+              "matched": true
+            },
+            {
+              "native_field": "capital_days",
+              "workbench_field": "capitalDays",
+              "native": 15998400,
+              "workbench": "15998400",
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "net_profit",
+              "workbench_field": "profitAfterOpportunityCost",
+              "native": -876.6246575342466,
+              "workbench": "-876.6246575342465753424657534",
+              "abs_difference": "2.46575342466E-14",
+              "matched": true
+            },
+            {
+              "native_field": "cash_profit_before_opportunity_cost",
+              "workbench_field": "netProfit",
+              "native": -0.0,
+              "workbench": "0.0",
+              "abs_difference": "0.0",
+              "matched": true
+            }
+          ],
+          "unknown_fragment_preserved": true
+        },
+        {
+          "scenario_id": "middle",
+          "fields": [
+            {
+              "native_field": "proportional_shares",
+              "workbench_field": "wholeLotShares",
+              "native": 100,
+              "workbench": 100,
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "sell_cost",
+              "workbench_field": "saleCosts",
+              "native": 7.0196000000000005,
+              "workbench": "7.019600",
+              "abs_difference": "5E-16",
+              "matched": true
+            },
+            {
+              "native_field": "cash_cost",
+              "workbench_field": "opportunityCost",
+              "native": 877.2164383561644,
+              "workbench": "877.2164383561643835616438356",
+              "abs_difference": "1.64383561644E-14",
+              "matched": true
+            },
+            {
+              "native_field": "capital_days",
+              "workbench_field": "capitalDays",
+              "native": 16009200,
+              "workbench": "16009200",
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "net_profit",
+              "workbench_field": "profitAfterOpportunityCost",
+              "native": 1275.7639616438355,
+              "workbench": "1275.763961643835616438356164",
+              "abs_difference": "1.16438356164E-13",
+              "matched": true
+            },
+            {
+              "native_field": "cash_profit_before_opportunity_cost",
+              "workbench_field": "netProfit",
+              "native": 2152.9804,
+              "workbench": "2152.980400",
+              "abs_difference": "0.000000",
+              "matched": true
+            }
+          ],
+          "unknown_fragment_preserved": true
+        },
+        {
+          "scenario_id": "high",
+          "fields": [
+            {
+              "native_field": "proportional_shares",
+              "workbench_field": "wholeLotShares",
+              "native": 200,
+              "workbench": 200,
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "sell_cost",
+              "workbench_field": "saleCosts",
+              "native": 10.508,
+              "workbench": "10.508000",
+              "abs_difference": "0.000000",
+              "matched": true
+            },
+            {
+              "native_field": "cash_cost",
+              "workbench_field": "opportunityCost",
+              "native": 877.8082191780821,
+              "workbench": "877.8082191780821917808219178",
+              "abs_difference": "9.17808219178E-14",
+              "matched": true
+            },
+            {
+              "native_field": "capital_days",
+              "workbench_field": "capitalDays",
+              "native": 16020000,
+              "workbench": "16020000",
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "net_profit",
+              "workbench_field": "profitAfterOpportunityCost",
+              "native": 6311.683780821918,
+              "workbench": "6311.683780821917808219178082",
+              "abs_difference": "1.91780821918E-13",
+              "matched": true
+            },
+            {
+              "native_field": "cash_profit_before_opportunity_cost",
+              "workbench_field": "netProfit",
+              "native": 7189.492,
+              "workbench": "7189.492000",
+              "abs_difference": "0.000000",
+              "matched": true
+            }
+          ],
+          "unknown_fragment_preserved": true
+        }
+      ],
+      "full_result_equivalent": false
+    },
+    {
+      "id": "announcement-cap",
+      "native_input": {
+        "capital": 10000000,
+        "budget": 8000000,
+        "issue_price": 18,
+        "max_subscription_shares": 100000,
+        "subscription_date": "2026-10-12",
+        "refund_available_date": "2026-10-14",
+        "sale_cash_available_date": "2026-10-20",
+        "annual_cash_cost_rate": 0.02,
+        "fees": {
+          "commission_rate": 0.00025,
+          "minimum_commission": 5,
+          "stamp_rate": 0.0005,
+          "transfer_rate": 1e-05
+        },
+        "scenarios": [
+          {
+            "id": "low",
+            "allocation_rate": 0.00015,
+            "listing_return": -0.2,
+            "basis": "演示假设，不对应真实发行"
+          },
+          {
+            "id": "middle",
+            "allocation_rate": 0.00033,
+            "listing_return": 1.2,
+            "basis": "演示假设，不对应真实发行"
+          },
+          {
+            "id": "high",
+            "allocation_rate": 0.0005,
+            "listing_return": 2.0,
+            "basis": "演示假设，不对应真实发行"
+          }
+        ]
+      },
+      "workbench_input": {
+        "exampleType": "teaching-only",
+        "allocation": {
+          "code": "990000",
+          "price": "18",
+          "budget": "8000000",
+          "maxShares": 100000,
+          "applyDate": "2026-10-12",
+          "refundDate": "2026-10-14",
+          "saleSettlementDate": "2026-10-20",
+          "opportunityRatePct": "2.00",
+          "financingRatePct": "0",
+          "borrowedFraction": "0",
+          "fees": {
+            "commissionPct": "0.02500",
+            "minimumCommission": "5",
+            "taxPct": "0.0500",
+            "transferFeePct": "0.00100",
+            "slippagePct": "0"
+          }
+        },
+        "scenarios": [
+          {
+            "id": "low",
+            "ratePct": "0.01500",
+            "gainPct": "-20.0",
+            "rateBasis": "Teaching same scalar input, no actual probability",
+            "gainBasis": "Teaching same scalar input, not first-day price forecast"
+          },
+          {
+            "id": "middle",
+            "ratePct": "0.03300",
+            "gainPct": "120.0",
+            "rateBasis": "Teaching same scalar input, no actual probability",
+            "gainBasis": "Teaching same scalar input, not first-day price forecast"
+          },
+          {
+            "id": "high",
+            "ratePct": "0.0500",
+            "gainPct": "200.0",
+            "rateBasis": "Teaching same scalar input, no actual probability",
+            "gainBasis": "Teaching same scalar input, not first-day price forecast"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "scenario_id": "low",
+          "fields": [
+            {
+              "native_field": "proportional_shares",
+              "workbench_field": "wholeLotShares",
+              "native": 0,
+              "workbench": 0,
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "sell_cost",
+              "workbench_field": "saleCosts",
+              "native": 0,
+              "workbench": "0",
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "cash_cost",
+              "workbench_field": "opportunityCost",
+              "native": 197.26027397260273,
+              "workbench": "197.2602739726027397260273973",
+              "abs_difference": "9.7260273973E-15",
+              "matched": true
+            },
+            {
+              "native_field": "capital_days",
+              "workbench_field": "capitalDays",
+              "native": 3600000,
+              "workbench": "3600000",
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "net_profit",
+              "workbench_field": "profitAfterOpportunityCost",
+              "native": -197.26027397260273,
+              "workbench": "-197.2602739726027397260273973",
+              "abs_difference": "9.7260273973E-15",
+              "matched": true
+            },
+            {
+              "native_field": "cash_profit_before_opportunity_cost",
+              "workbench_field": "netProfit",
+              "native": -0.0,
+              "workbench": "0.0",
+              "abs_difference": "0.0",
+              "matched": true
+            }
+          ],
+          "unknown_fragment_preserved": true
+        },
+        {
+          "scenario_id": "middle",
+          "fields": [
+            {
+              "native_field": "proportional_shares",
+              "workbench_field": "wholeLotShares",
+              "native": 0,
+              "workbench": 0,
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "sell_cost",
+              "workbench_field": "saleCosts",
+              "native": 0,
+              "workbench": "0",
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "cash_cost",
+              "workbench_field": "opportunityCost",
+              "native": 197.26027397260273,
+              "workbench": "197.2602739726027397260273973",
+              "abs_difference": "9.7260273973E-15",
+              "matched": true
+            },
+            {
+              "native_field": "capital_days",
+              "workbench_field": "capitalDays",
+              "native": 3600000,
+              "workbench": "3600000",
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "net_profit",
+              "workbench_field": "profitAfterOpportunityCost",
+              "native": -197.26027397260273,
+              "workbench": "-197.2602739726027397260273973",
+              "abs_difference": "9.7260273973E-15",
+              "matched": true
+            },
+            {
+              "native_field": "cash_profit_before_opportunity_cost",
+              "workbench_field": "netProfit",
+              "native": 0.0,
+              "workbench": "0.0",
+              "abs_difference": "0.0",
+              "matched": true
+            }
+          ],
+          "unknown_fragment_preserved": true
+        },
+        {
+          "scenario_id": "high",
+          "fields": [
+            {
+              "native_field": "proportional_shares",
+              "workbench_field": "wholeLotShares",
+              "native": 0,
+              "workbench": 0,
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "sell_cost",
+              "workbench_field": "saleCosts",
+              "native": 0,
+              "workbench": "0",
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "cash_cost",
+              "workbench_field": "opportunityCost",
+              "native": 197.26027397260273,
+              "workbench": "197.2602739726027397260273973",
+              "abs_difference": "9.7260273973E-15",
+              "matched": true
+            },
+            {
+              "native_field": "capital_days",
+              "workbench_field": "capitalDays",
+              "native": 3600000,
+              "workbench": "3600000",
+              "abs_difference": "0",
+              "matched": true
+            },
+            {
+              "native_field": "net_profit",
+              "workbench_field": "profitAfterOpportunityCost",
+              "native": -197.26027397260273,
+              "workbench": "-197.2602739726027397260273973",
+              "abs_difference": "9.7260273973E-15",
+              "matched": true
+            },
+            {
+              "native_field": "cash_profit_before_opportunity_cost",
+              "workbench_field": "netProfit",
+              "native": 0.0,
+              "workbench": "0.0",
+              "abs_difference": "0.0",
+              "matched": true
+            }
+          ],
+          "unknown_fragment_preserved": true
+        }
+      ],
+      "full_result_equivalent": false
+    }
+  ],
+  "limits": [
+    "Additional workbench slippage and financing explicitly zero, not silently dropped.",
+    "Native capital-normalized return and workbench budget/funds/day annualization not compared.",
+    "No annual equivalence, actual odds, account availability or forecast inference."
+  ]
+}

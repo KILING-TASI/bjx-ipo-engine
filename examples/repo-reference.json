@@ -1,0 +1,45 @@
+{
+  "quote_record": "data/public-repo-reference/204001-20261008.json",
+  "principal": "100000.00",
+  "dates": {
+    "trade_date": "2026-10-08",
+    "first_settlement_date": "2026-10-09",
+    "maturity_settlement_date": "2026-10-12",
+    "principal_available_date": "2026-10-09",
+    "interest_available_date": "2026-10-12",
+    "basis": "Settlement rule plus declared availability assumptions; no actual transaction",
+    "source": "https://www.sse.com.cn/disclosure/bond/ratios/",
+    "availability_basis": "Principal usable Oct9 and interest credited Oct12 explicitly assumed; broker timing unverified"
+  },
+  "calendar": {
+    "source": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+    "basis": "derived",
+    "coverage_start": "2026-10-08",
+    "coverage_end": "2026-10-12",
+    "trading_dates": [
+      "2026-10-08",
+      "2026-10-09",
+      "2026-10-12"
+    ],
+    "derivation": {
+      "method": "Selected range weekdays minus SSE announced holidays; no actual clearing certification",
+      "sources": [
+        {
+          "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+          "document_date": "2026-09-17",
+          "reviewed_on": "2026-10-09"
+        }
+      ]
+    }
+  },
+  "fee": {
+    "status": "declared",
+    "basis": "assumption",
+    "source": "Research fee assumption only: one yuan per 100000 principal, no minimum/fixed addition; not broker tariff",
+    "principal_rate": "0.00001",
+    "minimum": "0",
+    "fixed": "0",
+    "paid_date": "2026-10-08",
+    "rounding": "half_up_cent"
+  }
+}

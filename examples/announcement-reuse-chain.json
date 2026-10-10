@@ -1,0 +1,31 @@
+{
+  "scope": "one saved BSE:920188:2026-019 result notice; not nine-repository standard",
+  "status": "three_actual_consumers_source_and_payload_association_verified",
+  "source_sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+  "header_sha256": "cc1706d0cacb5d80060bfcfb2c65d00ec165234a0d04cc96eff59ced327a5836",
+  "native_payload_equal": true,
+  "consumer_outputs": {
+    "rules_receipt": {
+      "path_at_verification": "C:\\Users\\caiqi\\Documents\\Codex\\2026-10-09\\kan-x-2\\outputs\\announcement-rules-receipt-920188.json",
+      "sha256": "c2cf40940ff4cb6baf0ec4ac063787506594fb790376a1bdae212e249042a652"
+    },
+    "rules_output": {
+      "path_at_verification": "C:\\Users\\caiqi\\Documents\\Codex\\2026-10-09\\kan-x-2\\outputs\\announcement-rules-consumption-920188.json",
+      "sha256": "dc3c338d83758ed35e163ac8e29c9a25ce9b6d765f67519b77873aaf97c67c56"
+    },
+    "workbench_receipt": {
+      "path_at_verification": "C:\\Users\\caiqi\\Documents\\Codex\\2026-10-01\\skill-x20-bjx-newshare-toolkit-x20\\outputs\\expansion-acceptance-20261009\\announcement-workbench-receipt-v2.json",
+      "sha256": "6e574000ed764cb88431b8e5156ff99775c7acdb05a8e11581de790a4302e443"
+    }
+  },
+  "bjx_commit": "6ccf5a2",
+  "rules_commit_at_verification": "93108205b233774181af92f207f052d39717cb05",
+  "workbench_commit": "pending_owner_final_commit",
+  "checks": "BJX PR 1 Windows/Linux Python 3.10/3.12 passed run37970123846; external CI independently pending owner confirmation",
+  "limits": [
+    "No new download; raw PDF not published",
+    "Three specialist scopes separate; hash match is not semantic certification",
+    "First public and historical availability remain unknown",
+    "Old native inputs and frozen results unchanged"
+  ]
+}

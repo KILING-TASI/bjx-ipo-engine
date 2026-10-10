@@ -4,6 +4,83 @@ from decimal import Decimal
 from research import Calendar, ledger, money, text
 
 
+def compare_plans(data):
+    """Bounded explicit candidates; retain every failure and cost assumption."""
+    from itertools import combinations
+    from audit import METHOD_VERSION, digest, encoded
+    allowed = {'start', 'end', 'calendar', 'initial_cash', 'input_kind', 'currency',
+               'plans', 'candidate_issues', 'reference_rates'}
+    if set(data) - allowed:
+        raise ValueError('Unsupported multi-plan fields')
+    plans = list(data['plans'])
+    if not 2 <= len(plans) <= 32:
+        raise ValueError('Supply 2 to 32 explicit plans first')
+    issues = data.get('candidate_issues', [])
+    if not isinstance(issues, list) or len(issues) > 5:
+        raise ValueError('Finite search accepts at most five explicitly declared issues')
+    ids = [text(p['id'], 'plan id') for p in plans + issues]
+    if len(set(ids)) != len(ids):
+        raise ValueError('Plan and candidate issue ids must be unique')
+    for issue in issues:
+        if set(issue) != {'id', 'basis', 'events'}:
+            raise ValueError('Candidate issue requires id, basis and explicit events')
+        text(issue['basis'], 'candidate basis')
+    for n in range(len(issues)+1) if issues else []:
+        for subset in combinations(issues, n):
+            plans.append({'id': 'subset:' + ','.join(i['id'] for i in subset),
+                          'basis': 'Finite supplied-event subset, no new dates or allocation assumptions',
+                          'events': [e for i in subset for e in i['events']]})
+    if len({p['id'] for p in plans}) != len(plans):
+        raise ValueError('Generated subset id collides with a supplied plan')
+    references = data.get('reference_rates', [])
+    if not isinstance(references, list) or len(references) > 8:
+        raise ValueError('At most eight reference sensitivities')
+    required = {'id','annual_rate','observed_at','source','instrument','tenor',
+                'first_settlement','maturity_settlement','fee_basis','applicability','basis'}
+    for ref in references:
+        if set(ref) != required or ref['basis'] not in ('assumption','public_reference'):
+            raise ValueError('Reference needs complete rate/time/term/settlement/fee/applicability metadata')
+        for key in required - {'annual_rate'}:
+            text(ref[key], key)
+        money(ref['annual_rate'], 'reference annual rate')
+        date.fromisoformat(ref['observed_at'][:10])
+        first = date.fromisoformat(ref['first_settlement'])
+        if date.fromisoformat(ref['maturity_settlement']) <= first:
+            raise ValueError('Reference maturity must follow first settlement')
+        if ref['basis'] == 'public_reference':
+            from urllib.parse import urlsplit
+            url = urlsplit(ref['source'])
+            if url.scheme != 'https' or not url.hostname or url.username or url.password:
+                raise ValueError('Public rate reference requires a public HTTPS source')
+    if len({r['id'] for r in references}) != len(references):
+        raise ValueError('Reference ids must be unique')
+    common = {k:v for k,v in data.items() if k not in ('plans','candidate_issues','reference_rates')}
+    summaries = []
+    for plan in plans:
+        out = compare_cash(dict(common, plans=[plan, {'id':'baseline:'+plan['id'],
+                           'basis':'Zero-event baseline for independent replay', 'events':[]}]))
+        item = out['plans'][0]
+        item['origin'] = 'finite_subset' if plan['id'].startswith('subset:') else 'explicit'
+        item['reference_sensitivity'] = []
+        for ref in references:
+            cost = (Decimal(item['locked_capital_days']) * money(ref['annual_rate'], 'rate') / 365
+                    if item['locked_capital_days'] is not None else None)
+            item['reference_sensitivity'].append({'reference_id':ref['id'],
+                'gross_locked_capital_cost':str(cost) if cost is not None else None,
+                'adjusted_profit':None,
+                'limit':'Gross sensitivity only; not actual alternative income, no automatic fee deduction or cash-profit adjustment'})
+        summaries.append(item)
+    return {'schema_version':'multi-plan.v1','method_version':'declared-plan-comparison.1',
+            'engine_version':METHOD_VERSION,'input_sha256':digest(encoded(data)),
+            'input_kind':data['input_kind'],'start':data['start'],'end':data['end'],
+            'initial_cash':str(money(data['initial_cash'],'capital')),'plans':summaries,
+            'reference_rates':references,'candidate_count':len(summaries),
+            'warnings':['Only supplied events and finite subsets; no guaranteed optimal subscription or expected return.',
+                        'Same-day cash ordering and retained allocation principal use the existing ledger.',
+                        'Unknown extra allocation and account availability are not filled in.',
+                        'Reference costs are separate sensitivities; never deducted from explicit cash comparison.']}
+
+
 def compare_cash(data):
     if set(data) - {'start', 'end', 'calendar', 'initial_cash', 'input_kind', 'plans', 'currency'}:
         raise ValueError('Unsupported comparison fields; use explicit cash events, not precomputed returns')

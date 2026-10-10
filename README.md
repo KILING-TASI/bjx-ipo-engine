@@ -101,3 +101,31 @@ python .github/scripts/check_package.py
 ## 免责声明
 
 仅供学习与研究，不构成投资建议或交易指令，不保证收益、获配或结果准确性。使用前请阅读 [免责声明与使用边界](DISCLAIMER.md)，核对本次来源、日期和假设。
+
+多发行方案及有限候选比较见 [说明](docs/plan-comparison.md)，开发 PR #1 新增，未合并、未发布新版。
+
+一条官方定盘参考及显式净费用适配见 [说明](docs/public-repo-reference.md)，费用和到账为声明假设，非账户实收益。
+
+资金、历史样本与方案选择的 [方法卡及验收](docs/funding-history-methods.md)区分已实现与未实现统计能力。
+
+当前职责、数据入口、版本分层和本批结案范围统一见 [数据与交付契约目录](docs/data-contract-inventory.md)。包装样例仅本地无损验证，跨仓数据读取待核验，不代表九仓统一。
+
+独立安装范围：wheel 提供计算模块，可在独立环境用 `python -I -m api` 输入完整 JSON 请求；最短离线 demo 使用完整本仓源码归档，wheel 不包含 demo/示例/公开字段资源。无需其他自家仓或安装工作台。[单仓独立验收](docs/standalone-acceptance.md)分别记录两条路径。
+
+情景实例短入口：`python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01`。预算阶梯、余股未知、跨假期占款、同日顺序、费用与现金不足见 [十例索引及手算依据](docs/scenario-acceptance.md)，全部为教学/声明假设。
+
+## CLI 身份与安装前提
+
+本仓是独立 Python 研究计算引擎，不是可直接安装发现的 Codex Skill，没有 SKILL.md。工作台可以调用，但不是运行依赖。Python 3.10+，离线计算/demo仅需标准库；普通构建依赖 setuptools>=77。没有必须安装的其他自家专业仓。
+
+Windows PowerShell 在完整源码归档根目录可复制运行：
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install .
+.\.venv\Scripts\python.exe -S demo.py --out-dir local-data/demo-02
+```
+
+安装源码时 pip 可能联网取得声明的构建依赖；demo本身离线。wheel仅计算模块，不含demo/示例资源。需要 PDF 原文核对才按需执行 `.\.venv\Scripts\python.exe -m pip install ".[pdf]"`，声明 pypdf==6.14.2；已安装包环境可用 `python -m pip install "bjx-ipo-engine[pdf]==0.2.0a8"`，但公开包索引可用性未在本批验证，待审版优先从源码安装extra。使用PDF组件时不加 `-S`，否则site-packages不可见。只有显式 `capture --online` 才进行来源访问，不自动下载账户或付费资料。
+
+机器入口 `bjx.py` / `api.py` 继续输出JSON，提示和下一步可查新报告的report.md/result.json；`demo.py`面向人提示目录和HTML。目录已存在请换新名字，无force覆盖或自动安装。上述范围不等于Skill自然语言发现、视觉或真实取数已验收。

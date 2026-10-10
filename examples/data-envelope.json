@@ -1,0 +1,296 @@
+{
+  "schema": "bjx-evidence-envelope.v1-example",
+  "status": "local_roundtrip_verified_cross_repository_pending",
+  "interface": "Optional archive wrapper; not accepted by api.py; not a nine-repository standard",
+  "records": [
+    {
+      "record_id": "BSE:920188",
+      "native_schema": "unversioned-native-shape",
+      "native_path": "data/public-samples/920188.json",
+      "native_bytes_sha256": "0138c426cb011dc9bc1b2eed99f95ca9759e0dbf94aa821ae944f96b39f70d34",
+      "record_kind": "issuance_selected_facts",
+      "historical_available_at": null,
+      "historical_available_status": "not_verified",
+      "correction_chain_status": "not_exhaustively_verified",
+      "rights": "Selected facts/provenance only; external data rights independent of code MIT",
+      "payload": {
+        "security": "920188",
+        "issuer_name": "山东悦龙橡塑科技股份有限公司",
+        "name": "悦龙科技",
+        "record_kind": "historical_public_sample",
+        "reviewed_on": "2026-10-09",
+        "documents": {
+          "offer": {
+            "url": "https://www.bse.cn/disclosure/2026/2026-03-12/1773305048_265801.pdf",
+            "sha256": "01f2a1dc9febe758032c004273905eaef29bed7b7a8ecefb00356915dfc97d4d",
+            "retrieved_at": "2026-10-09T10:03:44.117626+00:00",
+            "announcement_number": "2026-015",
+            "body_date": "2026-03-13",
+            "file_path_date": "2026-03-12",
+            "first_publication_time": "not_verified"
+          },
+          "result": {
+            "url": "https://www.bse.cn/disclosure/2026/2026-03-18/1773825250_806346.pdf",
+            "sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+            "retrieved_at": "2026-10-09T10:03:14.474883+00:00",
+            "announcement_number": "2026-019",
+            "body_date": "2026-03-19",
+            "file_path_date": "2026-03-18",
+            "first_publication_time": "not_verified"
+          },
+          "listing": {
+            "url": "https://www.bse.cn/disclosure/2026/2026-03-26/1774518490_702247.pdf",
+            "sha256": "012522a90d60713c17768e328b4e2f0963ddf9e089ceba1bf81f4b15df15fa3f",
+            "retrieved_at": "2026-10-09T10:03:15.000530+00:00",
+            "announcement_number": "2026-020",
+            "body_date": "2026-03-27",
+            "file_path_date": "2026-03-26",
+            "first_publication_time": "not_verified"
+          }
+        },
+        "fields": {
+          "issue_price": {
+            "value": 14.04,
+            "unit": "CNY/share",
+            "source_id": "offer",
+            "page": 8,
+            "text_anchor": "14.04",
+            "review_status": "selected_page_image_and_text_reviewed"
+          },
+          "max_subscription_shares": {
+            "value": 989600,
+            "unit": "shares",
+            "source_id": "offer",
+            "page": 10,
+            "text_anchor": "989,600",
+            "review_status": "selected_page_image_and_text_reviewed"
+          },
+          "online_issue_shares": {
+            "value": 19793879,
+            "unit": "shares",
+            "source_id": "result",
+            "page": 2,
+            "text_anchor": "19,793,879",
+            "review_status": "selected_page_image_and_text_reviewed"
+          },
+          "effective_subscription_shares": {
+            "value": 63279684500,
+            "unit": "shares",
+            "source_id": "result",
+            "page": 2,
+            "text_anchor": "63,279,684,500",
+            "review_status": "selected_page_image_and_text_reviewed"
+          },
+          "online_allocation_rate": {
+            "value": 0.0003127999,
+            "unit": "fraction",
+            "source_id": "result",
+            "page": 2,
+            "text_anchor": "0.0312799900%",
+            "review_status": "selected_page_image_and_text_reviewed"
+          },
+          "subscription_date": {
+            "value": "2026-03-16",
+            "unit": "date",
+            "source_id": "offer",
+            "page": 8,
+            "text_anchor": "2026年3月16日",
+            "review_status": "selected_page_image_and_text_reviewed"
+          },
+          "announced_refund_date": {
+            "value": "2026-03-18",
+            "unit": "date",
+            "source_id": "offer",
+            "page": 11,
+            "text_anchor": "2026年3月18日",
+            "review_status": "selected_page_image_and_text_reviewed"
+          },
+          "listing_date": {
+            "value": "2026-03-30",
+            "unit": "date",
+            "source_id": "listing",
+            "page": 1,
+            "text_anchor": "2026年3月30日",
+            "review_status": "selected_page_image_and_text_reviewed"
+          }
+        },
+        "limitations": [
+          "Selected fields reviewed, not full-document or complete-version certification",
+          "First publication clocks and broker cash availability not verified",
+          "Residual allocation and actual individual holdings unknown"
+        ]
+      }
+    },
+    {
+      "record_id": "BSE:2026",
+      "native_schema": "unversioned-native-shape",
+      "native_path": "data/bse-2026-schedule.json",
+      "native_bytes_sha256": "66b115ce0abb849fcb7ff79119910e97cb583c3ffc95a50c57cf46a5a31853c4",
+      "record_kind": "scheduled_calendar",
+      "historical_available_at": null,
+      "historical_available_status": "not_verified",
+      "correction_chain_status": "not_exhaustively_verified",
+      "rights": "Selected facts/provenance only; external data rights independent of code MIT",
+      "payload": {
+        "year": 2026,
+        "exchange": "BSE",
+        "weekdays": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "sources": [
+          {
+            "id": "annual",
+            "url": "https://www.bse.cn/important_news/200027428.html",
+            "document_date": "2025-12-22",
+            "locator": "2026年度公告，一、休市安排（一）至（七）",
+            "captured_sha256": "1d6178157837f021dcb98c1206ee2f6f8cafcadbbb5b1cb0ac3637bbe82387ab",
+            "retrieved_at": "2026-10-09T04:33:06.328701+00:00",
+            "reviewed_on": "2026-10-09"
+          },
+          {
+            "id": "autumn",
+            "url": "https://www.bse.cn/important_news/200029478.html",
+            "document_date": "2026-09-17",
+            "locator": "中秋国庆专项公告，一、休市安排",
+            "captured_sha256": "2913b4e48e651e797c77ec1c84d63c10ae956a34542dc0f278cd4247d112a0bd",
+            "retrieved_at": "2026-10-09T04:33:06.592725+00:00",
+            "reviewed_on": "2026-10-09"
+          },
+          {
+            "id": "old-rules",
+            "url": "https://www.bse.cn/jygl_list/200010919.html",
+            "document_date": "2021-11-02",
+            "locator": "历史交易规则（试行）2.3.1，仅交叉核对周规则，不认证全部历史变更",
+            "captured_sha256": "9e2271bef634fd9337c4ee1cef8679a5cb99f813f6e1aae4d099b57d2a01ad18",
+            "retrieved_at": "2026-10-09T04:33:37.258793+00:00",
+            "reviewed_on": "2026-10-09"
+          },
+          {
+            "id": "rules",
+            "url": "https://www.bse.cn/jygl_list/200028217.html",
+            "document_date": "2026-04-24",
+            "locator": "2026年7月6日起施行的交易规则2.3.1",
+            "captured_sha256": "f15d8685e71e5686343600d68a7c8c8d11386bee54fc998b5638273c9ae1fbc4",
+            "retrieved_at": "2026-10-09T04:33:07.010864+00:00",
+            "reviewed_on": "2026-10-09"
+          }
+        ],
+        "holiday_closures": [
+          {
+            "name": "new-year",
+            "start": "2026-01-01",
+            "end": "2026-01-03",
+            "source_ids": [
+              "annual"
+            ]
+          },
+          {
+            "name": "spring",
+            "start": "2026-02-15",
+            "end": "2026-02-23",
+            "source_ids": [
+              "annual"
+            ]
+          },
+          {
+            "name": "qingming",
+            "start": "2026-04-04",
+            "end": "2026-04-06",
+            "source_ids": [
+              "annual"
+            ]
+          },
+          {
+            "name": "labour",
+            "start": "2026-05-01",
+            "end": "2026-05-05",
+            "source_ids": [
+              "annual"
+            ]
+          },
+          {
+            "name": "dragon-boat",
+            "start": "2026-06-19",
+            "end": "2026-06-21",
+            "source_ids": [
+              "annual"
+            ]
+          },
+          {
+            "name": "mid-autumn",
+            "start": "2026-09-25",
+            "end": "2026-09-27",
+            "source_ids": [
+              "annual",
+              "autumn"
+            ]
+          },
+          {
+            "name": "national-day",
+            "start": "2026-10-01",
+            "end": "2026-10-07",
+            "source_ids": [
+              "annual",
+              "autumn"
+            ]
+          }
+        ],
+        "explicit_weekend_closures": [
+          "2026-01-04",
+          "2026-02-14",
+          "2026-02-28",
+          "2026-05-09",
+          "2026-09-20",
+          "2026-10-10"
+        ]
+      }
+    },
+    {
+      "record_id": "SSE:204001",
+      "native_schema": "public-repo-fixing.v1",
+      "native_path": "data/public-repo-reference/204001-20261008.json",
+      "native_bytes_sha256": "5d2b96ee93b439f10730b5f4e031d7caca6ca34c7cc4ad48284a83ab2824f121",
+      "record_kind": "repo_daily_fixing",
+      "historical_available_at": null,
+      "historical_available_status": "not_verified",
+      "correction_chain_status": "not_exhaustively_verified",
+      "rights": "Selected facts/provenance only; external data rights independent of code MIT",
+      "payload": {
+        "schema": "public-repo-fixing.v1",
+        "instrument": "204001",
+        "tenor_days": 1,
+        "quote_kind": "daily_fixing_not_executable_quote",
+        "trade_date": "2026-10-08",
+        "rate_percent": "1.392",
+        "annual_rate_fraction": "0.01392",
+        "page_updated_at": "2026-10-08T22:30:00+08:00",
+        "retrieved_at": "2026-10-09T12:31:46.201422+00:00",
+        "reviewed_on": "2026-10-09",
+        "source": "https://bond.sse.com.cn/data/standard/repocurve/onerepo/",
+        "selected_row": "20261008,1.392,1.277,1.404,1.333",
+        "selected_field": "RATE_1DAY / first numeric field; not close price or four/five-day mean",
+        "raw_sha256": "6393895722ef0cf633806d56535f9525cc364de89a1d77ec27e157b473864093",
+        "rule_source": "https://www.sse.com.cn/lawandrules/sselawsrules2025/bond/trading/currency/c/c_20250606_10781048.shtml",
+        "rule_attachment_sha256": "b148bd3ce4e9fae7bce6d4328cfa4caf95999e068fa29f03d9a65f74550d1844",
+        "supporting_sources": {
+          "fixing-method": {
+            "url": "https://www.sse.com.cn/disclosure/bond/ratios/",
+            "sha256": "5dccba498be1e8f0682337f5dbbeb3fec60b920848e8e90cecc16f8042d4ab07",
+            "status": "captured_selected_text_reviewed"
+          },
+          "sse-holiday": {
+            "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+            "sha256": "779cbf7cc7ab2c4b34db17ceee29e266bc483e075860d8313b85c1d5d0f307bc",
+            "status": "captured_selected_text_reviewed"
+          }
+        },
+        "source_status": "saved selected-field review; source contains damaged text labels in raw HTML; numeric row/table/code/time matched with rendered web text",
+        "rights": "Selected numerical fact summary and provenance only; no official HTML or attachment redistribution"
+      }
+    }
+  ]
+}

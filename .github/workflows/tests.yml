@@ -26,3 +26,11 @@ jobs:
       - run: python research.py ledger examples/ledger.json
       - run: python .github/scripts/check_docs.py
       - run: python .github/scripts/check_package.py
+      - run: python .github/scripts/check_standalone.py --out-dir standalone-acceptance
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standalone-${{ matrix.os }}-${{ matrix.python }}
+          path: |
+            standalone-acceptance/acceptance.json
+            standalone-acceptance/installed-api-result.json
+            standalone-acceptance/report/*

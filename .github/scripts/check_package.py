@@ -35,11 +35,17 @@ def main():
             if (target/'README.md').read_text(encoding='utf-8')!=(ROOT/'README.md').read_text(encoding='utf-8'):
                 raise ValueError('Packaged README differs from current checkout')
         subprocess.run([sys.executable,'-S','.github/scripts/check_docs.py'],cwd=target,check=True)
+        subprocess.run([sys.executable,'-S','.github/scripts/check_bridge_cases.py'],cwd=target,check=True)
+        subprocess.run([sys.executable,'-S','.github/scripts/check_scenarios.py',
+                        '--out-dir',str(temp/'scenario-acceptance')],cwd=target,check=True)
+        subprocess.run([sys.executable,'-S','.github/scripts/check_scenarios.py',
+                        '--fixture','examples/cn-scenario-acceptance.json',
+                        '--out-dir',str(temp/'cn-scenario-acceptance')],cwd=target,check=True)
         subprocess.run([sys.executable,'-S','demo.py','--out-dir',str(temp/'short-demo')],cwd=target,check=True)
         license_text=(target/'LICENSE').read_text(encoding='utf-8')
         if 'MIT License' not in license_text or 'Copyright (c) 2026 KILING-TASI' not in license_text:
             raise ValueError('Original code license missing or unexpectedly changed')
-        for mode, example in [('scenarios', 'scenarios'), ('facts', 'facts'), ('ledger', 'ledger'), ('versions', 'versions'), ('compare-cash', 'compare-cash'), ('freeze','freeze'), ('archive','archive'),('public-sample','public-sample'),('sample-validation','sample-validation')]:
+        for mode, example in [('scenarios', 'scenarios'), ('facts', 'facts'), ('ledger', 'ledger'), ('versions', 'versions'), ('compare-cash', 'compare-cash'), ('compare-plans','compare-plans'), ('repo-reference','repo-reference'), ('freeze','freeze'), ('archive','archive'),('public-sample','public-sample'),('sample-validation','sample-validation')]:
             destination = temp / ('report-' + mode)
             subprocess.run([sys.executable, '-S', 'bjx.py', mode, f'examples/{example}.json',
                             '--out-dir', str(destination)], cwd=target, check=True)
