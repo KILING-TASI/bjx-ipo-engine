@@ -28,7 +28,7 @@ def money(value, name):
 def evidence(record):
     basis = record['basis']
     if basis not in ('original', 'third_party', 'assumption', 'derived'):
-        raise ValueError('invalid evidence basis')
+        raise ValueError('evidence.basis 须为 original / third_party / assumption / derived 之一')
     text(record['source'], 'source')
     if basis in ('original', 'third_party'):
         if urlparse(record['source']).scheme != 'https':
@@ -74,7 +74,7 @@ class Calendar:
         text(data['source'], 'calendar source')
         self.basis = text(data['basis'], 'calendar basis')
         if self.basis not in ('assumption', 'original', 'third_party', 'derived'):
-            raise ValueError('invalid calendar basis')
+            raise ValueError('calendar.basis 须为 assumption / original / third_party / derived 之一；original 表示原文来源登记，仍须核对出处与适用日期')
         if self.basis == 'derived':
             provenance = data['derivation']
             text(provenance['method'], 'calendar derivation method')

@@ -98,7 +98,7 @@ def compare_cash(data):
         raise ValueError('Comparison requires positive initial cash')
     kind = data['input_kind']
     if kind not in ('teaching', 'scenario', 'historical_replay'):
-        raise ValueError('Declare teaching, scenario or historical_replay input_kind')
+        raise ValueError('input_kind 须为 teaching / scenario / historical_replay 之一；混合公开数据与假设用 scenario，不能填 mixed')
     plans = data['plans']
     if not isinstance(plans, list) or len(plans) != 2:
         raise ValueError('Exactly two explicit cash plans required')
