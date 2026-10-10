@@ -1,4 +1,4 @@
-# 北交所打新研究引擎
+# 北交所新股获配与资金研究
 
 计算不同申购预算下的比例获配、资金占用和现金缺口，并把公告事实与假设分开保存。
 
@@ -25,6 +25,18 @@
 完整源码解压后，需要 Python 3.10+。Windows 可运行 `Start-Demo.cmd`；或在源码目录执行 `python try_demo.py`。Linux/macOS 用 `sh Start-Demo.sh`。不需要先执行 pip 安装，不自动下载数据或覆盖旧报告；缺 Python 会提示处理路径。
 
 换成自己的资料，先看[中文资料准备与错误处理](BEGINNER.md)。已安装 CLI 可运行 `bjx-ipo-engine doctor` 检查软件环境；它不检查资料或认证来源。
+
+## 名称与使用入口
+
+| 用途 | 名称 |
+|---|---|
+| 中文展示名称 | 北交所新股获配与资金研究 |
+| GitHub 仓库／Python 发行包 | `bjx-ipo-engine` |
+| Skill 注册名 | `bjx-ipo-engine` |
+| 安装后的命令 | `bjx-ipo-engine` |
+| Python 模块 | `bjx_cli` |
+
+中文名称用于介绍；安装、调用和已有记录沿用表中的技术标识。CLI 安装与 Skill 注册分别完成，使用 Skill 时保留完整仓库资源。
 
 ## 安装和首次试用
 
