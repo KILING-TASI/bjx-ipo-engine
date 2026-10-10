@@ -4,6 +4,7 @@ from datetime import datetime, timezone, timedelta
 import html
 from pathlib import Path
 import tempfile
+import sys
 from audit import METHOD_VERSION, digest, encoded, load
 from engine import evaluate
 from comparison import compare_plans, compare_cash
@@ -63,8 +64,16 @@ def demo(destination):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out-dir',required=True);a=p.parse_args()
-    result=demo(a.out_dir)
-    print('Offline preview created: '+str(result/'index.html')+'; explicit inputs and limits included, no account verification.')
+    try:
+        result=demo(a.out_dir)
+    except FileExistsError:
+        print('未生成预览：输出目录已存在。请将 --out-dir 改为一个新目录名；原结果未覆盖。',file=sys.stderr)
+        return 1
+    except (OSError, ValueError, KeyError, ImportError):
+        print('未生成预览：请从完整本仓根目录运行，并核对 examples/、data/ 资源和读取权限；使用新的输出目录重试。',file=sys.stderr)
+        return 1
+    print('已生成离线案例预览：公开字段配合教学预算、费用和现金日期，不是账户验收。\n结果目录：'+str(result)+'\n请打开：'+str(result/'index.html')+'\n输入、结果和摘要清单保存在同一目录。')
+    return 0
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':sys.exit(main())
