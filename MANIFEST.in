@@ -6,3 +6,5 @@ recursive-include docs *.md *.html *.json *.png
 recursive-include tests *.py
 recursive-include .github *.py *.yml
 global-exclude *.pyc *.pdf .env
+
+include SKILL.md
