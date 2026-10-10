@@ -90,3 +90,5 @@ python -S .github/scripts/check_scenarios.py --out-dir local-data/scenarios-01
 原创代码和有权授权的原创说明采用 [MIT许可](LICENSE)。两个复用公告模块保留 [research-workbench原许可](licenses/research-workbench-MIT.txt)；第三方公告、行情、研报和外部组件的权利独立，代码许可不授予其数据使用权，详见 [第三方说明](THIRD_PARTY_NOTICES.md)。不发布原始公告PDF、账户材料或私人缓存。
 
 仅供学习与研究，不构成投资建议或交易指令；使用前核对本次来源、日期与假设，详见 [使用边界](DISCLAIMER.md)。
+
+候选资产与版本边界见 [alpha.9发布准备](docs/release-alpha9.md)。
