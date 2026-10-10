@@ -1,0 +1,73 @@
+{
+  "schema": "bjx-cn-cli-scenarios.v1",
+  "real_sample_count": 1,
+  "new_real_sample_count": 0,
+  "scope": "Existing920188 selected public fields; hypothetical budgets/cash, not3real samples",
+  "cases": [
+    {
+      "id": "cn-offer-cap-and-priority-unknown",
+      "mode": "public-sample",
+      "input": {
+        "sample": "data/public-samples/920188.json",
+        "capital": "20000000.00",
+        "budget": "20000000.00",
+        "refund_available_date_assumption": "2026-03-18",
+        "observation_end": "2026-03-30",
+        "opportunity_cost_rate_assumption": "0.02",
+        "calendar_schedule": "data/bse-2026-schedule.json"
+      },
+      "expected": {
+        "subscribed_shares": 989600,
+        "frozen_amount": "13893984.00",
+        "proportional_shares": 300,
+        "individual_actual_allocation": "unknown",
+        "residual_allocation": "unknown",
+        "reviewed_fields.subscription_date.value": "2026-03-16",
+        "reviewed_fields.listing_date.value": "2026-03-30"
+      },
+      "expected_exit": 0,
+      "basis": "Official 2026-015 pp8,10-11 cap989600/price14.04; 989600*14.04=13893984; floor(989600*.0003127999/100)*100=300; no full population sizes/timestamps, no personal residual",
+      "sample_kind": "same_public_fields_hypothetical_budget_and_cash"
+    },
+    {
+      "id": "cn-announced-refund-not-cash",
+      "mode": "public-sample",
+      "input": {
+        "sample": "data/public-samples/920188.json",
+        "capital": "10000000.00",
+        "budget": "10000000.00",
+        "observation_end": "2026-03-30",
+        "opportunity_cost_rate_assumption": "0.02",
+        "calendar_schedule": "data/bse-2026-schedule.json"
+      },
+      "expected": {
+        "reviewed_fields.announced_refund_date.value": "2026-03-18",
+        "cash_reconstruction": null,
+        "opportunity_cost_assumption": null,
+        "individual_actual_allocation": "unknown"
+      },
+      "expected_exit": 0,
+      "basis": "Offer p11 announced3/18 does not certify broker cash usability; absent assumption prevents cash/return reconstruction",
+      "sample_kind": "same_public_fields_hypothetical_budget_and_cash"
+    },
+    {
+      "id": "cn-refund-weekend-rejected",
+      "mode": "public-sample",
+      "input": {
+        "sample": "data/public-samples/920188.json",
+        "capital": "10000000.00",
+        "budget": "10000000.00",
+        "refund_available_date_assumption": "2026-03-21",
+        "observation_end": "2026-03-30",
+        "opportunity_cost_rate_assumption": "0.02",
+        "calendar_schedule": "data/bse-2026-schedule.json"
+      },
+      "expected": {
+        "failure_kind": "ValueError"
+      },
+      "expected_exit": 2,
+      "basis": "Declared refund usability Saturday3/21 is outside explicit BSE planned calendar; reject ledger rather than move to Monday silently",
+      "sample_kind": "same_public_fields_hypothetical_budget_and_cash"
+    }
+  ]
+}

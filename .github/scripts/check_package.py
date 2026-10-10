@@ -38,6 +38,9 @@ def main():
         subprocess.run([sys.executable,'-S','.github/scripts/check_bridge_cases.py'],cwd=target,check=True)
         subprocess.run([sys.executable,'-S','.github/scripts/check_scenarios.py',
                         '--out-dir',str(temp/'scenario-acceptance')],cwd=target,check=True)
+        subprocess.run([sys.executable,'-S','.github/scripts/check_scenarios.py',
+                        '--fixture','examples/cn-scenario-acceptance.json',
+                        '--out-dir',str(temp/'cn-scenario-acceptance')],cwd=target,check=True)
         subprocess.run([sys.executable,'-S','demo.py','--out-dir',str(temp/'short-demo')],cwd=target,check=True)
         license_text=(target/'LICENSE').read_text(encoding='utf-8')
         if 'MIT License' not in license_text or 'Copyright (c) 2026 KILING-TASI' not in license_text:

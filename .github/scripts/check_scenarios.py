@@ -24,10 +24,11 @@ def value_at(result, path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out-dir', required=True)
+    parser.add_argument('--fixture', default='examples/scenario-acceptance.json')
     args = parser.parse_args()
     out = Path(args.out_dir).resolve()
     out.mkdir(parents=True, exist_ok=False)
-    fixture = ROOT / 'examples/scenario-acceptance.json'
+    fixture = ROOT / args.fixture
     spec = json.loads(fixture.read_bytes())
     receipts = []
     for case in spec['cases']:
@@ -66,8 +67,9 @@ def main():
                          'existing_output_rejected_unchanged': True, 'files': before})
     (out / 'acceptance.json').write_text(json.dumps({'schema': spec['schema'],
         'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
-        'real_sample_count': 0, 'status': 'passed', 'cases': receipts,
-        'limits': 'Teaching CLI cases; no original PDFs, account, calibrated forecast or visual certification'},
+        'real_sample_count': spec['real_sample_count'], 'scope': spec.get('scope'),
+        'status': 'passed', 'cases': receipts,
+        'limits': 'Declared budgets/cash assumptions; no original PDFs, account, calibrated forecast or visual certification'},
         ensure_ascii=False, indent=2), encoding='utf-8')
     print(str(len(receipts)) + ' hand-derived CLI scenario reports passed; old outputs unchanged')
 
