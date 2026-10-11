@@ -92,3 +92,16 @@
 报告补充资金占用、机会成本和退款/可用/回款时点解释；15类使用场景路径。
 
 审计覆盖独立使用、选定反例、跨仓格式一致性及15类任务路径；这不是全市场数据认证、真实客户覆盖或机构生产就绪承诺。原代码MIT，第三方原许可及数据权利独立。
+
+
+## 历史首页版本状态说明（归档于2026-10-11）
+
+以下是当时首页的记录，不是当前下载或完成状态。当前发行入口以README为准。
+
+## 当前源码与旧发行包
+
+截至2026-10-10，main已集成多方案比较、公开回购参考、接口联调、独立安装及情景验收、中文使用提示；计算核心版本仍为 `0.2.0-alpha.8`，接口为 `1.0`，没有为了文案升级版本。
+
+历史软件发行版为 **v0.2.0-alpha.9**（Python包版本 `0.2.0a9`），[下载源码ZIP、wheel或sdist](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.9)。源码ZIP和sdist含demo/示例资源，wheel仅计算模块。软件发布版本与计算核心方法版本分别记录，核心仍为 `0.2.0-alpha.8`、接口仍为 `1.0`。
+
+旧功能版 [v0.2.0-alpha.8](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.8)，另有文档更新版。旧Release资产保持冻结，不包含后续main全部增量；本页命令面向当前main的完整源码。查看 [发行历史](https://github.com/KILING-TASI/bjx-ipo-engine/releases)、[变更记录](CHANGELOG.md)和 [开发记录](docs/progress.md)。
