@@ -2,7 +2,7 @@
 
 比较申购预算下的比例获配情景、资金占用与现金冲突。
 
-[![原创代码 MIT](https://img.shields.io/badge/原创代码-MIT-green)](LICENSE) · [当前发行版 v0.2.0-alpha.17](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.17) · [运行检查](https://github.com/KILING-TASI/bjx-ipo-engine/actions)
+[![原创代码 MIT](https://img.shields.io/badge/原创代码-MIT-green)](LICENSE) · [当前发行版 v0.2.0-alpha.18](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.18) · [运行检查](https://github.com/KILING-TASI/bjx-ipo-engine/actions)
 
 ## 能解决什么问题
 
@@ -12,7 +12,7 @@
 
 ## 快速开始
 
-从[发行页](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.17)下载完整源码并解压，需要 Python 3.10 或以上。在源码目录执行：
+从[发行页](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.18)下载完整源码并解压，需要 Python 3.10 或以上。在源码目录执行：
 
 ```text
 python try_demo.py --no-open --out-dir reports/first-demo
