@@ -105,3 +105,8 @@
 历史软件发行版为 **v0.2.0-alpha.9**（Python包版本 `0.2.0a9`），[下载源码ZIP、wheel或sdist](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.9)。源码ZIP和sdist含demo/示例资源，wheel仅计算模块。软件发布版本与计算核心方法版本分别记录，核心仍为 `0.2.0-alpha.8`、接口仍为 `1.0`。
 
 旧功能版 [v0.2.0-alpha.8](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.8)，另有文档更新版。旧Release资产保持冻结，不包含后续main全部增量；本页命令面向当前main的完整源码。查看 [发行历史](https://github.com/KILING-TASI/bjx-ipo-engine/releases)、[变更记录](CHANGELOG.md)和 [开发记录](docs/progress.md)。
+
+## 0.2.0a17
+
+- Skill版本元数据与命令行包对齐，发行页、独立安装与结果状态说明统一。
+- 计算方法继续按各自结果内的方法版本复查。
