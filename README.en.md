@@ -4,7 +4,7 @@ Compare declared online issuance allocations, cash occupation and opportunity-co
 
 [中文说明](README.md) · [Release v0.2.0-alpha.18](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.18) · [Skill instructions](SKILL.md) · [Input preparation](BEGINNER.md)
 
-Current release: **alpha prerelease**. Python **3.10+**. Base runtime dependencies: none. Optional extras: `pdf`. See [USAGE.md](USAGE.md) for scope.
+Current release: **v0.2.0-alpha.18 · alpha prerelease**. Python **3.10+**. Base runtime dependencies: none. Optional extras: `pdf`. See [USAGE.md](USAGE.md) for scope.
 
 ## First run
 
