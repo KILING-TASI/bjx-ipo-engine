@@ -2,13 +2,13 @@
 
 Compare declared online issuance allocations, cash occupation and opportunity-cost scenarios. Unknown residual-share ranking and uncalibrated probabilities remain unknown; no order execution.
 
-[中文说明](README.md) · [Release v0.2.0-alpha.18](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.18) · [Skill instructions](SKILL.md) · [Input preparation](BEGINNER.md)
+[中文说明](README.md) · [Release v0.2.0-alpha.19](https://github.com/KILING-TASI/bjx-ipo-engine/releases/tag/v0.2.0-alpha.19) · [Skill instructions](SKILL.md) · [Input preparation](BEGINNER.md)
 
-Current release: **v0.2.0-alpha.18 · alpha prerelease**. Python **3.10+**. Base runtime dependencies: none. Optional extras: `pdf`. See [USAGE.md](USAGE.md) for scope.
+Current release: **v0.2.0-alpha.19 · alpha prerelease**. Python **3.10+**. Base runtime dependencies: none. Optional extras: `pdf`. See [USAGE.md](USAGE.md) for scope.
 
 ## First run
 
-Download the [complete source ZIP](https://github.com/KILING-TASI/bjx-ipo-engine/releases/download/v0.2.0-alpha.18/bjx-ipo-engine-v0.2.0-alpha.18-source.zip), extract it and enter the directory containing `try_demo.py`:
+Download the [complete source ZIP](https://github.com/KILING-TASI/bjx-ipo-engine/releases/download/v0.2.0-alpha.19/bjx-ipo-engine-v0.2.0-alpha.19-source.zip), extract it and enter the directory containing `try_demo.py`:
 
 ```console
 python try_demo.py --no-open --out-dir reports/first-demo

@@ -2,7 +2,7 @@
 name: bjx-ipo-engine
 description: 用户问北交所新股申购预算、比例获配、资金占用或方案差别时使用。区分公告事实与假设，提供条件比较，不执行申购。
 metadata:
-  version: 0.2.0a18
+  version: 0.2.0a19
 license: MIT
 ---
 

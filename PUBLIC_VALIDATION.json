@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "public-validation/1",
+  "repository": "bjx-ipo-engine",
+  "registeredOn": "2026-10-15",
+  "hashFormat": "UTF-8 with LF newlines; BOM ignored; original response hashes remain in original receipts",
+  "coverage": "limited-public-inputs",
+  "sourceAuthenticityCertified": false,
+  "evidence": [
+    {
+      "path": "data/public-samples/920188.json",
+      "kind": "public-facts",
+      "normalizedSha256": "a82d83e8fda20f057a6e6f28aa4225512789e1e587b579d2f1853bd25db64e72",
+      "sourceUrls": [
+        "https://www.bse.cn/disclosure/2026/2026-03-12/1773305048_265801.pdf",
+        "https://www.bse.cn/disclosure/2026/2026-03-18/1773825250_806346.pdf",
+        "https://www.bse.cn/disclosure/2026/2026-03-26/1774518490_702247.pdf"
+      ]
+    }
+  ],
+  "checkFiles": [
+    "test_public_sample.py"
+  ],
+  "gaps": [
+    "仅选定历史发行；首次发布时间与未核余股保留未知",
+    "资金占用、机会成本含显式假设，不认证真实到账"
+  ],
+  "limits": "registry and selected counterexamples; no new original-document authentication or investment-effect certification"
+}
