@@ -12,6 +12,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: python -m pip install ".[pdf]"
       - run: python tools/verify_public_validation.py --run-checks --output reports/public-validation-ci.json
       - uses: actions/upload-artifact@v4
         with:
